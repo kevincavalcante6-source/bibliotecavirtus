@@ -490,31 +490,6 @@
 .home-section {
   padding-bottom: var(--s-10);
 }
-.pillars {
-  display: grid;
-  gap: var(--s-7);
-  padding-bottom: var(--s-10);
-}
-@media (min-width: 900px) {
-  .pillars {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--s-6);
-    padding-bottom: var(--s-11);
-  }
-}
-.pillar {
-  border-top: 1px solid var(--border);
-  padding-top: var(--s-5);
-}
-.pillar h3 {
-  margin-top: var(--s-4);
-  font-size: 24px;
-}
-.pillar p {
-  margin-top: var(--s-3);
-  color: var(--secondary);
-}
-
 /* ================================================================= detalhe */
 .detail {
   position: relative;

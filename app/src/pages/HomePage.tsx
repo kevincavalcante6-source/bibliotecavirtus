@@ -128,28 +128,6 @@ export function HomePage() {
         </>
       )}
 
-      <section className="wrap pillars">
-        <div className="pillar">
-          <div className="label">Curadoria</div>
-          <h3>Uma coleção, não um catálogo.</h3>
-          <p>Cada conteúdo entra por escolha. O que não combina com a biblioteca fica de fora.</p>
-        </div>
-        <div className="pillar">
-          <div className="label">Identidade</div>
-          <h3>Uma estética consistente.</h3>
-          <p>
-            Wallpapers e widgets que conversam entre si, para que a tela inteira tenha a mesma
-            linguagem.
-          </p>
-        </div>
-        <div className="pillar">
-          <div className="label">Arquivo íntegro</div>
-          <h3>Sem corte, sem distorção.</h3>
-          <p>
-            O download entrega o arquivo original, na proporção e na resolução em que foi criado.
-          </p>
-        </div>
-      </section>
     </>
   );
 }
