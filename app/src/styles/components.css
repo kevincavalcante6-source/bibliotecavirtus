@@ -518,88 +518,167 @@
 /* ================================================================= detalhe */
 .detail {
   position: relative;
-  min-height: 100%;
-  overflow: hidden;
-  background: var(--bg);
+  padding-bottom: var(--s-9);
 }
-.detail__bg {
+.detail__crumb {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: 44px;
+  margin-block: var(--s-4);
+  color: var(--secondary);
+  transition: color var(--transition);
+}
+.detail__crumb:hover {
+  color: var(--text);
+}
+.detail__crumb span {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.detail__panel {
+  display: grid;
+  gap: var(--s-6);
+  padding: var(--s-4);
+  border: 1px solid var(--border);
+  border-radius: var(--r-4);
+  background: var(--near-black);
+}
+@media (min-width: 900px) {
+  .detail__panel {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+    align-items: center;
+    gap: var(--s-8);
+    padding: var(--s-5);
+  }
+}
+@media (min-width: 1200px) {
+  .detail__panel {
+    grid-template-columns: minmax(0, 1fr) 400px;
+    gap: var(--s-9);
+    padding: var(--s-6);
+  }
+}
+
+/* O palco carrega a ambientação: o próprio wallpaper ampliado, desfocado e
+   escurecido atrás da imagem original, que fica inteira e nítida na frente. */
+.detail__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  min-height: 400px;
+  padding: var(--s-6) var(--s-4);
+  border-radius: var(--r-3);
+  background: var(--dark);
+}
+@media (min-width: 900px) {
+  .detail__stage {
+    min-height: 560px;
+    padding: var(--s-7);
+  }
+}
+@media (min-width: 1200px) {
+  .detail__stage {
+    min-height: 660px;
+  }
+}
+.detail__ambient {
   position: absolute;
-  inset: -10%;
-  z-index: 0;
+  inset: -15%;
   background-size: cover;
   background-position: center;
-  filter: blur(80px);
-  transform: scale(1.2);
+  filter: blur(48px);
+  transform: scale(1.15);
 }
 .detail__veil {
   position: absolute;
   inset: 0;
-  z-index: 1;
-  background: rgba(5, 5, 5, 0.78);
+  background: rgba(5, 5, 5, 0.62);
 }
-.detail__body {
-  position: relative;
-  z-index: 2;
-}
-.detail__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-block: var(--s-3);
-}
-.detail__inner {
+.detail__back {
+  position: absolute;
+  z-index: 3;
+  top: var(--s-3);
+  left: var(--s-3);
+  width: 44px;
+  height: 44px;
   display: grid;
-  gap: var(--s-7);
-  justify-items: center;
-  padding-bottom: var(--s-8);
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(8px);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color var(--transition);
 }
-@media (min-width: 1040px) {
-  .detail__inner {
-    grid-template-columns: auto minmax(320px, 400px);
-    gap: var(--s-9);
-    align-items: center;
-    justify-items: start;
-  }
+.detail__back:hover {
+  border-color: var(--border-hover);
 }
 .detail__frame {
-  width: 100%;
-  max-width: 360px;
+  position: relative;
+  z-index: 2;
+  height: 300px;
 }
-@media (min-width: 1040px) {
+@media (min-width: 700px) {
   .detail__frame {
-    width: auto;
-    max-width: none;
-    height: min(76vh, 860px);
+    height: 440px;
   }
-  .detail__frame .media {
-    height: 100%;
-    width: auto;
+}
+@media (min-width: 1200px) {
+  .detail__frame {
+    height: 540px;
   }
 }
 .detail__frame .media {
-  border-radius: var(--r-4);
-  box-shadow: 0 48px 96px rgba(0, 0, 0, 0.6);
+  height: 100%;
+  width: auto;
+  border-radius: var(--r-3);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.66);
 }
+
 .detail__info {
-  width: 100%;
+  display: grid;
+  align-content: start;
+  gap: var(--s-4);
+  padding: var(--s-2);
+}
+@media (min-width: 900px) {
+  .detail__info {
+    padding: 0;
+  }
 }
 .detail__info h1 {
-  margin-top: var(--s-4);
-  font-size: clamp(30px, 5vw, 44px);
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.15;
+}
+.chip {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding-inline: var(--s-3);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--secondary);
 }
 .detail__info .lede {
-  margin-top: var(--s-4);
+  color: var(--secondary);
+  max-width: 34ch;
 }
 .detail__actions {
-  margin-top: var(--s-6);
-  display: flex;
+  display: grid;
   gap: var(--s-3);
-}
-.detail__actions .btn--primary {
-  flex: 1;
+  margin-top: var(--s-2);
 }
 .spec {
-  margin-top: var(--s-7);
+  margin-top: var(--s-4);
   border-top: 1px solid var(--border);
 }
 .spec div {

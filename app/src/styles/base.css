@@ -154,6 +154,15 @@ img {
 .btn--primary:hover:not(:disabled) {
   opacity: 0.88;
 }
+/* Variante da referência do detalhe: champanhe sobre texto escuro, feita com
+   os dois tons dourados que já existem no sistema. */
+.btn--gold {
+  background: linear-gradient(180deg, var(--accent) 0%, var(--gold-soft) 100%);
+  color: var(--bg);
+}
+.btn--gold:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
 .btn--secondary {
   background: transparent;
   color: var(--text);

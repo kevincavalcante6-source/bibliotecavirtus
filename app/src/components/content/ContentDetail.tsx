@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MediaFrame } from "@/components/content/MediaFrame";
 import { Icon } from "@/components/ui/Icon";
 import { LoadingState } from "@/components/states/LoadingState";
@@ -24,13 +24,12 @@ function FavoriteButton({ content }: { content: Content }) {
   return (
     <button
       type="button"
-      className="icon-btn"
-      style={{ width: 52, height: 52 }}
+      className="btn btn--secondary btn--block"
       aria-pressed={favorite}
-      aria-label={favorite ? "Remover dos favoritos" : "Favoritar"}
       onClick={() => void toggleFavorite()}
     >
-      <Icon name="heart" size={20} />
+      <Icon name="heart" size={18} />
+      {favorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
     </button>
   );
 }
@@ -90,7 +89,7 @@ export function ContentDetail({ contentId, onClose }: Props) {
   if (status === "loading") {
     return (
       <div className="detail">
-        <div className="detail__body wrap">
+        <div className="wrap">
           <LoadingState label="Abrindo" />
         </div>
       </div>
@@ -100,7 +99,7 @@ export function ContentDetail({ contentId, onClose }: Props) {
   if (status === "missing") {
     return (
       <div className="detail">
-        <div className="detail__body wrap">
+        <div className="wrap">
           <EmptyState
             title="Conteúdo não encontrado"
             message="Este item não está mais na biblioteca."
@@ -115,7 +114,7 @@ export function ContentDetail({ contentId, onClose }: Props) {
   if (status === "error" || !content) {
     return (
       <div className="detail">
-        <div className="detail__body wrap">
+        <div className="wrap">
           <ErrorState message={error ?? undefined} onRetry={() => setReloadKey((key) => key + 1)} />
         </div>
       </div>
@@ -123,41 +122,47 @@ export function ContentDetail({ contentId, onClose }: Props) {
   }
 
   const display = fullSrc ?? content.thumbnail_url;
+  const kind = content.type === "widget" ? "Widget" : "Wallpaper";
 
   return (
     <div className="detail">
-      {display && (
-        <div className="detail__bg" style={{ backgroundImage: `url("${display}")` }} aria-hidden="true" />
-      )}
-      <div className="detail__veil" aria-hidden="true" />
+      <div className="wrap">
+        <Link className="detail__crumb" to="/biblioteca">
+          <Icon name="grid" size={18} />
+          <span>Biblioteca</span>
+        </Link>
 
-      <div className="detail__body">
-        <div className="wrap detail__top">
-          <button
-            type="button"
-            className="btn btn--ghost"
-            onClick={() => (onClose ? onClose() : navigate("/biblioteca"))}
-          >
-            <Icon name="chevronLeft" />
-            Voltar
-          </button>
-          {onClose && (
-            <button type="button" className="icon-btn" onClick={onClose} aria-label="Fechar">
-              <Icon name="close" />
+        <div className="detail__panel">
+          {/* Palco: a ambientação é o próprio wallpaper ampliado, desfocado e
+              escurecido; a imagem original fica inteira e nítida na frente. */}
+          <div className="detail__stage">
+            {display && (
+              <div
+                className="detail__ambient"
+                style={{ backgroundImage: `url("${display}")` }}
+                aria-hidden="true"
+              />
+            )}
+            <div className="detail__veil" aria-hidden="true" />
+
+            <button
+              type="button"
+              className="detail__back"
+              onClick={() => (onClose ? onClose() : navigate("/biblioteca"))}
+              aria-label="Voltar"
+            >
+              <Icon name="chevronLeft" size={20} />
             </button>
-          )}
-        </div>
 
-        <div className="wrap detail__inner">
-          <div className="detail__frame">
-            <MediaFrame content={content} src={display} priority />
+            <div className="detail__frame">
+              <MediaFrame content={content} src={display} priority />
+            </div>
           </div>
 
           <div className="detail__info">
-            <div className="label label--accent">
-              {content.type === "widget" ? "Widget" : "Wallpaper"}
-            </div>
             <h1>{content.title}</h1>
+            <span className="chip">{kind}</span>
+
             <p className="lede">
               {session
                 ? "Arquivo original, na resolução em que foi criado."
@@ -167,12 +172,12 @@ export function ContentDetail({ contentId, onClose }: Props) {
             <div className="detail__actions">
               <button
                 type="button"
-                className="btn btn--primary"
+                className="btn btn--gold btn--block"
                 onClick={() => void download(content)}
                 disabled={busyId === content.id}
               >
-                <Icon name="download" />
-                {busyId === content.id ? "Preparando…" : "Baixar"}
+                <Icon name="download" size={18} />
+                {busyId === content.id ? "Preparando…" : `Baixar ${kind}`}
               </button>
               <FavoriteButton content={content} />
             </div>
@@ -184,9 +189,7 @@ export function ContentDetail({ contentId, onClose }: Props) {
               </div>
               <div>
                 <span>Resolução</span>
-                <b>
-                  {content.width && content.height ? `${content.width} × ${content.height}` : "—"}
-                </b>
+                <b>{content.width && content.height ? `${content.width} × ${content.height}` : "—"}</b>
               </div>
               <div>
                 <span>Arquivo</span>
