@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MediaFrame } from "@/components/content/MediaFrame";
 import { Icon } from "@/components/ui/Icon";
+import { useAutoRotate } from "@/hooks/useAutoRotate";
 import { useFavoriteToggle } from "@/hooks/useFavoriteToggle";
 import type { Content } from "@/types/models";
 
@@ -15,6 +16,9 @@ const SWIPE_THRESHOLD = 44;
  * original; o anterior e o próximo ficam ampliados atrás, desfocados e
  * escurecidos, sangrando nas bordas do painel. Eles também são a navegação —
  * tocar em um traz aquele conteúdo para o centro, e no toque vale arrastar.
+ *
+ * A vitrine avança sozinha, devagar, enquanto ninguém a toca; ao primeiro
+ * gesto ela para e entrega o controle (ver useAutoRotate).
  */
 export function RecentShowcase({ items }: { items: Content[] }) {
   const navigate = useNavigate();
@@ -27,16 +31,40 @@ export function RecentShowcase({ items }: { items: Content[] }) {
   const front = at(0);
   const { favorite, toggleFavorite } = useFavoriteToggle(front ?? ({ id: "" } as Content));
 
+  const advance = useCallback(() => {
+    setIndex((current) => (current + 1) % Math.max(1, total));
+  }, [total]);
+
+  const rotation = useAutoRotate<HTMLDivElement>({
+    enabled: total > 1,
+    onAdvance: advance,
+  });
+
+  // Qualquer gesto da pessoa encerra a rotação: a partir daí quem conduz é ela.
+  const go = useCallback(
+    (delta: number) => {
+      rotation.stop();
+      setIndex((current) => (current + delta + total) % total);
+    },
+    [rotation, total],
+  );
+
   if (!front) return null;
 
   const cycles = total > 1;
   const previous = cycles ? at(-1) : undefined;
   const next = cycles ? at(1) : undefined;
-  const go = (delta: number) => setIndex((current) => (current + delta + total) % total);
 
   return (
     <section className="wrap home-section">
-      <div className="showcase">
+      <div
+        className="showcase"
+        ref={rotation.containerRef}
+        onMouseEnter={rotation.pause}
+        onMouseLeave={rotation.resume}
+        onFocusCapture={rotation.pause}
+        onBlurCapture={rotation.resume}
+      >
         <header className="showcase__head">
           <span className="label">Recém-adicionados</span>
           <Link className="showcase__more" to="/biblioteca">
@@ -129,7 +157,7 @@ export function RecentShowcase({ items }: { items: Content[] }) {
         </div>
 
         {cycles && (
-          <p className="showcase__counter" aria-live="polite">
+          <p className="showcase__counter" aria-live={rotation.running ? "off" : "polite"}>
             {index + 1} / {total}
           </p>
         )}
