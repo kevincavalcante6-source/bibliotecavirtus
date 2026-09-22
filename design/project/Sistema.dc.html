@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Biblioteca Virtus — Design System</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; background: #050505; font-family: Inter, system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: #F5F5F0; text-decoration: none; }
+a:hover { color: #C8A96A; }
+</style>
+</helmet>
+<div style="width: 1440px; height: 1720px; box-sizing: border-box; padding: 80px 120px; background: #050505; color: #F5F5F0; overflow: hidden;">
+
+  <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.24em; color: {{accent}};">DESIGN SYSTEM</div>
+  <h1 style="margin: 24px 0 0; font-size: 48px; line-height: 1.15; font-weight: 600; letter-spacing: -0.025em;">Biblioteca Virtus</h1>
+  <p style="margin: 16px 0 0; max-width: 560px; font-size: 16px; line-height: 1.65; color: #A8A8A2;">Minimalismo premium, tecnologia e propósito. Menos elementos, mais intenção.</p>
+
+  <div style="margin-top: 72px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; letter-spacing: 0.2em; color: #6F6F69;">CORES</div>
+  <div style="margin-top: 28px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: 24px; row-gap: 32px;">
+    <div><div style="height: 88px; border-radius: 12px; background: #050505; border: 1px solid rgba(255,255,255,0.08);"></div><div style="margin-top: 12px; font-size: 13px; font-weight: 500;">Background</div><div style="margin-top: 4px; font-size: 12px; color: #6F6F69;">#050505</div></div>
+    <div><div style="height: 88px; border-radius: 12px; background: #0A0A0A; border: 1px solid rgba(255,255,255,0.08);"></div><div style="margin-top: 12px; font-size: 13px; font-weight: 500;">Near black</div><div style="margin-top: 4px; font-size: 12px; color: #6F6F69;">#0A0A0A</div></div>
+    <div><div style="height: 88px; border-radius: 12px; background: #111111; border: 1px solid rgba(255,255,255,0.08);"></div><div style="margin-top: 12px; font-size: 13px; font-weight: 500;">Dark</div><div style="margin-top: 4px; font-size: 12px; color: #6F6F69;">#111111</div></div>
+    <div><div style="height: 88px; border-radius: 12px; background: #171717; border: 1px solid rgba(255,255,255,0.08);"></div><div style="margin-top: 12px; font-size: 13px; font-weight: 500;">Dark 2</div><div style="margin-top: 4px; font-size: 12px; color: #6F6F69;">#171717</div></div>
+    <div><div style="height: 88px; border-radius: 12px; background: #F5F5F0;"></div><div style="margin-top: 12px; font-size: 13px; font-weight: 500;">Texto primário</div><div style="margin-top: 4px; font-size: 12px; color: #6F6F69;">#F5F5F0</div></div>
+    <div><div style="height: 88px; border-radius: 12px; background: #A8A8A2;"></div><div style="margin-top: 12px; font-size: 13px; font-weight: 500;">Secundário</div><div style="margin-top: 4px; font-size: 12px; color: #6F6F69;">#A8A8A2</div></div>
+    <div><div style="height: 88px; border-radius: 12px; background: #6F6F69;"></div><div style="margin-top: 12px; font-size: 13px; font-weight: 500;">Muted</div><div style="margin-top: 4px; font-size: 12px; color: #6F6F69;">#6F6F69</div></div>
+    <div><div style="height: 88px; border-radius: 12px; background: #454541;"></div><div style="margin-top: 12px; font-size: 13px; font-weight: 500;">Disabled</div><div style="margin-top: 4px; font-size: 12px; color: #6F6F69;">#454541</div></div>
+    <div><div style="height: 88px; border-radius: 12px; background: #C8A96A;"></div><div style="margin-top: 12px; font-size: 13px; font-weight: 500;">Champagne</div><div style="margin-top: 4px; font-size: 12px; color: #6F6F69;">#C8A96A</div></div>
+    <div><div style="height: 88px; border-radius: 12px; background: #B89A60;"></div><div style="margin-top: 12px; font-size: 13px; font-weight: 500;">Gold soft</div><div style="margin-top: 4px; font-size: 12px; color: #6F6F69;">#B89A60</div></div>
+    <div><div style="height: 88px; border-radius: 12px; background: #806B42;"></div><div style="margin-top: 12px; font-size: 13px; font-weight: 500;">Gold dark</div><div style="margin-top: 4px; font-size: 12px; color: #6F6F69;">#806B42</div></div>
+    <div><div style="height: 88px; border-radius: 12px; background: #0A0A0A; border: 1px solid rgba(255,255,255,0.14);"></div><div style="margin-top: 12px; font-size: 13px; font-weight: 500;">Borda / hover</div><div style="margin-top: 4px; font-size: 12px; color: #6F6F69;">0.08 / 0.14</div></div>
+  </div>
+
+  <div style="margin-top: 72px; display: flex; gap: 64px;">
+
+    <div style="width: 600px; flex-shrink: 0;">
+      <div style="padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; letter-spacing: 0.2em; color: #6F6F69;">TIPOGRAFIA — INTER</div>
+      <div style="margin-top: 28px; display: flex; align-items: baseline; gap: 24px;">
+        <span style="width: 96px; flex-shrink: 0; font-size: 11px; letter-spacing: 0.16em; color: #6F6F69;">HERO 76</span>
+        <span style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em;">Seu ambiente.</span>
+      </div>
+      <div style="margin-top: 24px; display: flex; align-items: baseline; gap: 24px;">
+        <span style="width: 96px; flex-shrink: 0; font-size: 11px; letter-spacing: 0.16em; color: #6F6F69;">H1 48</span>
+        <span style="font-size: 32px; font-weight: 600; letter-spacing: -0.025em;">Biblioteca Virtus</span>
+      </div>
+      <div style="margin-top: 24px; display: flex; align-items: baseline; gap: 24px;">
+        <span style="width: 96px; flex-shrink: 0; font-size: 11px; letter-spacing: 0.16em; color: #6F6F69;">H2 44</span>
+        <span style="font-size: 28px; font-weight: 600; letter-spacing: -0.02em;">Recém-adicionados</span>
+      </div>
+      <div style="margin-top: 24px; display: flex; align-items: baseline; gap: 24px;">
+        <span style="width: 96px; flex-shrink: 0; font-size: 11px; letter-spacing: 0.16em; color: #6F6F69;">H3 26</span>
+        <span style="font-size: 22px; font-weight: 600;">Uma coleção, não um catálogo</span>
+      </div>
+      <div style="margin-top: 24px; display: flex; align-items: baseline; gap: 24px;">
+        <span style="width: 96px; flex-shrink: 0; font-size: 11px; letter-spacing: 0.16em; color: #6F6F69;">BODY 17</span>
+        <span style="font-size: 17px; line-height: 1.65; color: #A8A8A2;">Line-height 1.5–1.7 · peso 400</span>
+      </div>
+      <div style="margin-top: 24px; display: flex; align-items: baseline; gap: 24px;">
+        <span style="width: 96px; flex-shrink: 0; font-size: 11px; letter-spacing: 0.16em; color: #6F6F69;">LABEL 11</span>
+        <span style="font-size: 11px; font-weight: 500; letter-spacing: 0.24em; color: #6F6F69;">RECÉM-ADICIONADOS</span>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1;">
+      <div style="padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; letter-spacing: 0.2em; color: #6F6F69;">ESPAÇAMENTO</div>
+      <div style="margin-top: 28px; display: flex; align-items: flex-end; gap: 12px;">
+        <div style="width: 4px; height: 4px; background: #C8A96A;"></div>
+        <div style="width: 8px; height: 8px; background: #B89A60;"></div>
+        <div style="width: 12px; height: 12px; background: #B89A60;"></div>
+        <div style="width: 16px; height: 16px; background: #806B42;"></div>
+        <div style="width: 24px; height: 24px; background: #806B42;"></div>
+        <div style="width: 32px; height: 32px; background: #454541;"></div>
+        <div style="width: 48px; height: 48px; background: #454541;"></div>
+        <div style="width: 64px; height: 64px; background: #2A2A27;"></div>
+        <div style="width: 80px; height: 80px; background: #232320;"></div>
+      </div>
+      <div style="margin-top: 16px; font-size: 12px; color: #6F6F69;">4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 80 · 96 · 128 · 160</div>
+
+      <div style="margin-top: 48px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; letter-spacing: 0.2em; color: #6F6F69;">RAIOS</div>
+      <div style="margin-top: 28px; display: flex; gap: 20px;">
+        <div><div style="width: 88px; height: 64px; border-radius: 8px; background: #111111; border: 1px solid rgba(255,255,255,0.08);"></div><div style="margin-top: 10px; font-size: 12px; color: #6F6F69;">8px</div></div>
+        <div><div style="width: 88px; height: 64px; border-radius: 12px; background: #111111; border: 1px solid rgba(255,255,255,0.08);"></div><div style="margin-top: 10px; font-size: 12px; color: #6F6F69;">12px</div></div>
+        <div><div style="width: 88px; height: 64px; border-radius: 16px; background: #111111; border: 1px solid rgba(255,255,255,0.08);"></div><div style="margin-top: 10px; font-size: 12px; color: #6F6F69;">16px</div></div>
+        <div><div style="width: 88px; height: 64px; border-radius: 20px; background: #111111; border: 1px solid rgba(255,255,255,0.08);"></div><div style="margin-top: 10px; font-size: 12px; color: #6F6F69;">20px</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top: 72px; display: flex; gap: 64px;">
+
+    <div style="width: 600px; flex-shrink: 0;">
+      <div style="padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; letter-spacing: 0.2em; color: #6F6F69;">BOTÕES E CAMPOS</div>
+      <div style="margin-top: 28px; display: flex; align-items: center; gap: 16px;">
+        <button type="button" style="height: 52px; padding: 0 28px; background: #F5F5F0; color: #050505; border: 0; border-radius: 12px; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Primário</button>
+        <button type="button" style="height: 52px; padding: 0 28px; background: transparent; color: #F5F5F0; border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; font-family: inherit; font-size: 15px; font-weight: 500; cursor: pointer;">Secundário</button>
+        <button type="button" disabled style="height: 52px; padding: 0 28px; background: transparent; color: #454541; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; font-family: inherit; font-size: 15px; font-weight: 500;">Desativado</button>
+      </div>
+      <div style="margin-top: 20px; display: flex; align-items: center; gap: 16px;">
+        <label for="campo-ds" style="font-size: 12px; letter-spacing: 0.16em; color: #6F6F69;">CAMPO</label>
+        <div style="width: 320px; height: 48px; box-sizing: border-box; padding: 0 14px; display: flex; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: #0A0A0A;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6F6F69" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+          <input id="campo-ds" type="text" placeholder="Buscar" style="flex-grow: 1; height: 44px; background: transparent; border: 0; outline: none; color: #F5F5F0; font-family: inherit; font-size: 15px;">
+        </div>
+      </div>
+      <div style="margin-top: 32px; display: flex; align-items: center; gap: 20px; color: #A8A8A2;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <span style="font-size: 12px; color: #6F6F69;">Ícones com stroke 1.5</span>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1;">
+      <div style="padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; letter-spacing: 0.2em; color: #6F6F69;">REGRAS DE IMAGEM</div>
+      <div style="margin-top: 28px; display: flex; gap: 24px;">
+        <div style="flex-grow: 1; flex-basis: 0;">
+          <div style="position: relative; height: 180px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: #0A0A0A; display: flex; align-items: center; justify-content: center;">
+            <div style="position: absolute; inset: -20px; background: radial-gradient(120% 80% at 50% 0%, #1D1D1A 0%, #0C0C0B 55%, #060606 100%); filter: blur(24px);"></div>
+            <div style="position: absolute; inset: 0; background: rgba(5,5,5,0.7);"></div>
+            <div style="position: relative; width: 64px; height: 139px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.14); background: radial-gradient(120% 80% at 50% 0%, #1D1D1A 0%, #0C0C0B 55%, #060606 100%);"></div>
+          </div>
+          <div style="margin-top: 14px; font-size: 14px; font-weight: 500;">Preencher com o próprio wallpaper</div>
+          <p style="margin: 8px 0 0; font-size: 13px; line-height: 1.6; color: #A8A8A2;">Fundo: a mesma imagem ampliada, desfocada e escurecida. Frente: a imagem original, nítida.</p>
+        </div>
+        <div style="flex-grow: 1; flex-basis: 0;">
+          <div style="position: relative; height: 180px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: #0A0A0A; display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <div style="width: 64px; height: 139px; border-radius: 10px; border: 1px dashed rgba(200,169,106,0.5); background: #0C0C0B;"></div>
+            <div style="width: 96px; height: 100px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); background: #0C0C0B; position: relative;">
+              <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 18px; color: #806B42;">✕</div>
+            </div>
+          </div>
+          <div style="margin-top: 14px; font-size: 14px; font-weight: 500;">Nunca esticar, cortar ou deformar</div>
+          <p style="margin: 8px 0 0; font-size: 13px; line-height: 1.6; color: #A8A8A2;">A proporção e a resolução originais são preservadas em toda a interface.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08);">
+        <div style="font-size: 13px; line-height: 2; color: #A8A8A2;">
+          Premium sem ostentação.<br>
+          Motivacional sem ser apelativa.<br>
+          Tecnológica sem ser fria.<br>
+          Minimalista sem ser vazia.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C8A96A","options":["#C8A96A","#B89A60","#806B42","#A8A8A2"],"section":"Marca"},"$preview":{"width":1440,"height":1720}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#C8A96A' };
+  }
+}
+</script>
+</body>
+</html>

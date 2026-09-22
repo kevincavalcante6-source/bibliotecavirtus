@@ -1,0 +1,35 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-09-22T00:00:00Z" },
+  "title": "Biblioteca Virtus",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "designSystems": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1440, "h": 2900, "title": "Home — Desktop", "is_interactive": true, "radius": 16 },
+    "Biblioteca.dc.html": { "x": 1520, "y": 0, "w": 1440, "h": 1960, "title": "Biblioteca — Desktop", "is_interactive": true, "radius": 16 },
+    "Detalhe.dc.html": { "x": 3040, "y": 0, "w": 1440, "h": 1120, "title": "Wallpaper — Detalhe", "is_interactive": true, "radius": 16 },
+    "Acesso.dc.html": { "x": 4560, "y": 0, "w": 1440, "h": 1240, "title": "Acesso — Oferta", "is_interactive": true, "radius": 16 },
+    "Mobile-Home.dc.html": { "x": 0, "y": 3220, "w": 390, "h": 1640, "title": "Início — Mobile", "is_interactive": true, "radius": 20 },
+    "Mobile-Biblioteca.dc.html": { "x": 470, "y": 3220, "w": 390, "h": 1560, "title": "Biblioteca — Mobile", "is_interactive": true, "radius": 20 },
+    "Mobile-Detalhe.dc.html": { "x": 940, "y": 3220, "w": 390, "h": 900, "title": "Wallpaper — Mobile", "is_interactive": true, "radius": 20 },
+    "Sistema.dc.html": { "x": 1410, "y": 3220, "w": 1440, "h": 1720, "title": "Design System", "radius": 16 }
+  },
+  "order": [
+    "Main.dc.html",
+    "Biblioteca.dc.html",
+    "Detalhe.dc.html",
+    "Acesso.dc.html",
+    "Mobile-Home.dc.html",
+    "Mobile-Biblioteca.dc.html",
+    "Mobile-Detalhe.dc.html",
+    "Sistema.dc.html"
+  ],
+  "notes": {
+    "t1": { "x": 0, "y": -300, "text": "Biblioteca Virtus — Desktop", "kind": "title1", "maxW": 6000 },
+    "t2": { "x": 0, "y": 2930, "text": "Mobile e Design System", "kind": "title1", "maxW": 2850 },
+    "n1": { "x": 6100, "y": 0, "text": "As áreas marcadas IMAGEM são placeholders: substituir pelos wallpapers reais, sempre na proporção e resolução originais.", "w": 360, "fill": "gray" },
+    "n2": { "x": 6100, "y": 320, "text": "Sem prova social, números, depoimentos, escassez ou bônus — nada foi inventado. A modalidade de cobrança está marcada como [DEFINIR] na tela de Acesso.", "w": 360, "fill": "gray" },
+    "n3": { "x": 6100, "y": 700, "text": "Fluxo clicável: Home → Biblioteca → Detalhe → Acesso (Play). O mesmo no mobile, com tab bar própria.", "w": 360, "fill": "gray" }
+  }
+}

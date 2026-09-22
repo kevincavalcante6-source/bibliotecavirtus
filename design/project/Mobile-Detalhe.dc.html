@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Biblioteca Virtus — Wallpaper (mobile)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; background: #050505; font-family: Inter, system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: #F5F5F0; text-decoration: none; }
+a:hover { color: #C8A96A; }
+button.prim:hover { color: #050505; }
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 900px; box-sizing: border-box; background: #050505; color: #F5F5F0; overflow: hidden;">
+
+  <div style="position: absolute; inset: -60px; background: radial-gradient(120% 80% at 50% 0%, #1D1D1A 0%, #0C0C0B 55%, #060606 100%); filter: blur(56px); transform: scale(1.2);"></div>
+  <div style="position: absolute; inset: 0; background: rgba(5,5,5,0.76);"></div>
+
+  <div style="position: relative; height: 100%; display: flex; flex-direction: column;">
+
+    <header style="height: 60px; box-sizing: border-box; padding: 0 12px 0 20px; display: flex; align-items: center; justify-content: space-between;">
+      <a href="Mobile-Biblioteca.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: #A8A8A2;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        Voltar
+      </a>
+      <button type="button" aria-label="Adicionar aos favoritos" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: transparent; border: 0; color: #F5F5F0; cursor: pointer;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+      </button>
+    </header>
+
+    <div style="box-sizing: border-box; padding: 8px 20px 0; display: flex; justify-content: center;">
+      <div style="position: relative; width: 240px; height: 520px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: radial-gradient(120% 80% at 50% 0%, #1D1D1A 0%, #0C0C0B 55%, #060606 100%); box-shadow: 0 32px 64px rgba(0,0,0,0.6);">
+        <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 180px; text-align: center; font-size: 9px; line-height: 1.8; letter-spacing: 0.2em; color: #454541;">IMAGEM ORIGINAL<br>PROPORÇÃO PRESERVADA</div>
+      </div>
+    </div>
+
+    <div style="box-sizing: border-box; padding: 28px 20px 0;">
+      <div style="font-size: 10px; font-weight: 500; letter-spacing: 0.22em; color: {{accent}};">FUNDAMENTOS</div>
+      <h1 style="margin: 12px 0 0; font-size: 30px; line-height: 1.2; font-weight: 600; letter-spacing: -0.02em;">Disciplina</h1>
+      <div style="margin-top: 12px; display: flex; gap: 16px; font-size: 12px; color: #6F6F69;">
+        <span>iPhone · 9:19.5</span>
+        <span>1290 × 2796</span>
+        <span>PNG</span>
+      </div>
+    </div>
+
+    <div style="margin-top: auto; box-sizing: border-box; padding: 0 20px 28px; display: flex; gap: 12px;">
+      <button type="button" class="prim" style="flex-grow: 1; height: 52px; display: flex; align-items: center; justify-content: center; gap: 10px; background: #F5F5F0; color: #050505; border: 0; border-radius: 12px; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Baixar
+      </button>
+      <button type="button" style="width: 120px; height: 52px; display: flex; align-items: center; justify-content: center; background: transparent; color: #F5F5F0; border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 500; cursor: pointer;">Android</button>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C8A96A","options":["#C8A96A","#B89A60","#806B42","#A8A8A2"],"section":"Marca"},"$preview":{"width":390,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#C8A96A' };
+  }
+}
+</script>
+</body>
+</html>

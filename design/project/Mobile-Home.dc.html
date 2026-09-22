@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Biblioteca Virtus — Início (mobile)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; background: #050505; font-family: Inter, system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: #F5F5F0; text-decoration: none; }
+a:hover { color: #C8A96A; }
+a.prim:hover { color: #050505; }
+</style>
+</helmet>
+<div style="width: 390px; height: 1640px; box-sizing: border-box; background: #050505; color: #F5F5F0; display: flex; flex-direction: column; overflow: hidden;">
+
+  <header style="height: 64px; box-sizing: border-box; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08);">
+    <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.16em;">BIBLIOTECA VIRTUS</span>
+    <button type="button" aria-label="Buscar" style="width: 44px; height: 44px; margin-right: -10px; display: flex; align-items: center; justify-content: center; background: transparent; border: 0; color: #F5F5F0; cursor: pointer;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+    </button>
+  </header>
+
+  <section style="box-sizing: border-box; padding: 56px 20px 48px;">
+    <div style="font-size: 10px; font-weight: 500; letter-spacing: 0.22em; color: {{accent}};">WALLPAPERS E WIDGETS</div>
+    <h1 style="margin: 24px 0 0; font-size: 44px; line-height: 1.08; font-weight: 600; letter-spacing: -0.03em;">SEU AMBIENTE.<br>SUA MENTE.<br>SEU PROPÓSITO.</h1>
+    <p style="margin: 24px 0 0; font-size: 16px; line-height: 1.6; color: #A8A8A2;">Uma biblioteca digital para transformar o ambiente que acompanha você todos os dias.</p>
+    <a class="prim" href="Mobile-Biblioteca.dc.html" style="margin-top: 32px; height: 52px; display: flex; align-items: center; justify-content: center; gap: 10px; background: #F5F5F0; color: #050505; font-size: 15px; font-weight: 600; border-radius: 12px;">
+      Ver a biblioteca
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </a>
+    <div style="margin-top: 40px; display: flex; align-items: center; gap: 12px;">
+      <span style="width: 28px; height: 1px; background: rgba(255,255,255,0.14);"></span>
+      <span style="font-size: 13px; color: #6F6F69;">Seu ambiente também fala com você.</span>
+    </div>
+  </section>
+
+  <section style="box-sizing: border-box; padding: 0 20px 48px;">
+    <div style="display: flex; align-items: baseline; justify-content: space-between;">
+      <span style="font-size: 10px; font-weight: 500; letter-spacing: 0.22em; color: #6F6F69;">RECÉM-ADICIONADOS</span>
+      <a href="Mobile-Biblioteca.dc.html" style="font-size: 13px; color: #A8A8A2;">Ver tudo</a>
+    </div>
+
+    <div style="position: relative; margin-top: 24px; height: 500px;">
+      <div style="position: absolute; right: 0; top: 46px; width: 180px; height: 390px; border-radius: 16px; filter: blur(10px); opacity: 0.4; background: radial-gradient(100% 70% at 30% 10%, #1B1815 0%, #0A0A09 60%, #060606 100%);"></div>
+      <div style="position: absolute; left: 0; top: 60px; width: 160px; height: 347px; border-radius: 16px; filter: blur(12px); opacity: 0.32; background: linear-gradient(180deg, #171716 0%, #0A0A09 60%, #060606 100%);"></div>
+      <a href="Mobile-Detalhe.dc.html" style="position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 230px; height: 498px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: radial-gradient(120% 80% at 50% 0%, #1D1D1A 0%, #0C0C0B 55%, #060606 100%); box-shadow: 0 32px 64px rgba(0,0,0,0.55); display: block;">
+        <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 10px; letter-spacing: 0.24em; color: #454541;">IMAGEM</span>
+        <span style="position: absolute; left: 0; right: 0; bottom: 0; height: 45%; background: linear-gradient(180deg, rgba(5,5,5,0) 0%, rgba(5,5,5,0.72) 100%);"></span>
+        <span style="position: absolute; left: 18px; right: 18px; bottom: 18px; display: block;">
+          <span style="display: block; font-size: 10px; letter-spacing: 0.2em; color: #A8A8A2;">NOVO</span>
+          <span style="display: block; margin-top: 6px; font-size: 18px; font-weight: 600;">Disciplina</span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <section style="box-sizing: border-box; padding: 0 20px 48px;">
+    <div style="font-size: 10px; font-weight: 500; letter-spacing: 0.22em; color: #6F6F69;">DA COLEÇÃO</div>
+    <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;">
+      <div>
+        <div style="position: relative; width: 100%; height: 362px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: radial-gradient(90% 60% at 20% 80%, #1A1713 0%, #090908 65%, #060606 100%);">
+          <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 9px; letter-spacing: 0.22em; color: #454541;">IMAGEM</div>
+        </div>
+        <div style="margin-top: 12px; font-size: 14px; font-weight: 500;">Propósito</div>
+        <div style="margin-top: 4px; font-size: 11px; color: #6F6F69;">iPhone · 9:19.5</div>
+      </div>
+      <div>
+        <div style="position: relative; width: 100%; height: 362px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: linear-gradient(200deg, #1C1A16 0%, #0A0A09 55%, #060606 100%);">
+          <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 9px; letter-spacing: 0.22em; color: #454541;">IMAGEM</div>
+        </div>
+        <div style="margin-top: 12px; font-size: 14px; font-weight: 500;">Silêncio</div>
+        <div style="margin-top: 4px; font-size: 11px; color: #6F6F69;">Android · 9:20</div>
+      </div>
+    </div>
+  </section>
+
+  <nav style="margin-top: auto; height: 80px; box-sizing: border-box; padding: 0 12px 12px; display: flex; align-items: center; border-top: 1px solid rgba(255,255,255,0.08); background: #0A0A0A;">
+    <a href="Mobile-Home.dc.html" style="flex-grow: 1; flex-basis: 0; height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #F5F5F0; font-size: 10px; letter-spacing: 0.06em;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1Z"></path></svg>
+      Início
+    </a>
+    <a href="Mobile-Biblioteca.dc.html" style="flex-grow: 1; flex-basis: 0; height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #6F6F69; font-size: 10px; letter-spacing: 0.06em;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+      Buscar
+    </a>
+    <a href="Mobile-Biblioteca.dc.html" style="flex-grow: 1; flex-basis: 0; height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #6F6F69; font-size: 10px; letter-spacing: 0.06em;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+      Favoritos
+    </a>
+    <a href="Mobile-Home.dc.html" style="flex-grow: 1; flex-basis: 0; height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #6F6F69; font-size: 10px; letter-spacing: 0.06em;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      Perfil
+    </a>
+  </nav>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C8A96A","options":["#C8A96A","#B89A60","#806B42","#A8A8A2"],"section":"Marca"},"$preview":{"width":390,"height":1640}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#C8A96A' };
+  }
+}
+</script>
+</body>
+</html>

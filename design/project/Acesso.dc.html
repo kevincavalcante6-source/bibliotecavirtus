@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Biblioteca Virtus — Acesso</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; background: #050505; font-family: Inter, system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: #F5F5F0; text-decoration: none; }
+a:hover { color: #C8A96A; }
+button.prim:hover { color: #050505; }
+</style>
+</helmet>
+<div style="width: 1440px; height: 1240px; box-sizing: border-box; background: #050505; color: #F5F5F0; display: flex; flex-direction: column; overflow: hidden;">
+
+  <header style="height: 88px; box-sizing: border-box; padding: 0 120px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08);">
+    <div style="display: flex; align-items: baseline; gap: 14px;">
+      <a href="Main.dc.html" style="font-size: 13px; font-weight: 600; letter-spacing: 0.18em;">BIBLIOTECA VIRTUS</a>
+      <span style="font-size: 10px; font-weight: 500; letter-spacing: 0.22em; color: #6F6F69;">VIRTUS MIND</span>
+    </div>
+    <a href="Biblioteca.dc.html" style="font-size: 14px; color: #A8A8A2;">Ver a biblioteca</a>
+  </header>
+
+  <section style="box-sizing: border-box; padding: 120px 120px 0; display: flex; gap: 96px;">
+
+    <div style="width: 560px; flex-shrink: 0;">
+      <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.24em; color: {{accent}};">ACESSO</div>
+      <h1 style="margin: 32px 0 0; font-size: 56px; line-height: 1.1; font-weight: 600; letter-spacing: -0.03em;">Biblioteca Virtus</h1>
+      <p style="margin: 28px 0 0; max-width: 460px; font-size: 18px; line-height: 1.65; color: #A8A8A2;">Wallpapers e widgets com curadoria, para iPhone e Android. Novos conteúdos são adicionados à coleção.</p>
+
+      <div style="margin-top: 56px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.08);">
+        <div style="display: flex; align-items: flex-end; gap: 16px;">
+          <span style="font-size: 64px; line-height: 1; font-weight: 600; letter-spacing: -0.03em;">R$14,90</span>
+          <span style="padding-bottom: 8px; font-size: 14px; color: #6F6F69;">valor anterior <s style="color: #454541;">R$29,90</s></span>
+        </div>
+        <div style="margin-top: 20px; display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border: 1px dashed rgba(255,255,255,0.14); border-radius: 8px; font-size: 11px; letter-spacing: 0.16em; color: #6F6F69;">[DEFINIR MODALIDADE DE ACESSO]</div>
+      </div>
+
+      <div style="margin-top: 48px;">
+        <button type="button" class="prim" style="width: 360px; height: 56px; display: flex; align-items: center; justify-content: center; gap: 12px; background: #F5F5F0; color: #050505; border: 0; border-radius: 12px; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;">
+          Quero acessar
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+        <p style="margin: 20px 0 0; max-width: 360px; font-size: 13px; line-height: 1.6; color: #6F6F69;">Não prometemos transformação. Entregamos curadoria, estética e intenção.</p>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1;">
+      <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.24em; color: #6F6F69;">O QUE ESTÁ INCLUÍDO</div>
+      <div style="margin-top: 32px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; row-gap: 0;">
+
+        <div style="padding: 20px 0; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span style="font-size: 15px;">Wallpapers da coleção</span>
+        </div>
+        <div style="padding: 20px 0; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span style="font-size: 15px;">Versões para iPhone</span>
+        </div>
+        <div style="padding: 20px 0; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span style="font-size: 15px;">Versões para Android</span>
+        </div>
+        <div style="padding: 20px 0; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span style="font-size: 15px;">Widgets</span>
+        </div>
+        <div style="padding: 20px 0; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span style="font-size: 15px;">Novos conteúdos</span>
+        </div>
+        <div style="padding: 20px 0; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span style="font-size: 15px;">Favoritos</span>
+        </div>
+        <div style="padding: 20px 0; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span style="font-size: 15px;">Downloads</span>
+        </div>
+        <div style="padding: 20px 0; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span style="font-size: 15px;">Busca</span>
+        </div>
+        <div style="padding: 20px 0; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span style="font-size: 15px;">Perfil</span>
+        </div>
+        <div style="padding: 20px 0; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#454541" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle></svg>
+          <span style="font-size: 15px; color: #454541;">[ITEM A DEFINIR]</span>
+        </div>
+
+      </div>
+
+      <div style="margin-top: 64px; display: flex; gap: 48px;">
+        <div style="flex-grow: 1; flex-basis: 0;">
+          <div style="font-size: 15px; font-weight: 600;">Funciona no meu aparelho?</div>
+          <p style="margin: 12px 0 0; font-size: 14px; line-height: 1.65; color: #A8A8A2;">Cada conteúdo é entregue na proporção do seu aparelho, em resolução original. Sem corte, sem distorção.</p>
+        </div>
+        <div style="flex-grow: 1; flex-basis: 0;">
+          <div style="font-size: 15px; font-weight: 600;">É só um wallpaper?</div>
+          <p style="margin: 12px 0 0; font-size: 14px; line-height: 1.65; color: #A8A8A2;">É o que você vê primeiro todos os dias. A biblioteca existe para que isso seja uma escolha, e não um acaso.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <footer style="box-sizing: border-box; margin-top: auto; padding: 48px 120px 56px; display: flex; align-items: center; justify-content: space-between;">
+    <span style="font-size: 13px; color: #6F6F69;">Biblioteca Virtus — Virtus Mind</span>
+    <a href="Main.dc.html" style="font-size: 13px; color: #A8A8A2;">Voltar ao início</a>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C8A96A","options":["#C8A96A","#B89A60","#806B42","#A8A8A2"],"section":"Marca"},"$preview":{"width":1440,"height":1240}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#C8A96A' };
+  }
+}
+</script>
+</body>
+</html>
