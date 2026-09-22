@@ -1,0 +1,42 @@
+.demo-banner {
+  position: relative;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--gutter);
+  background: var(--near-black);
+  border-bottom: 1px solid var(--border);
+}
+.demo-banner p {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.demo-banner b {
+  color: var(--secondary);
+  font-weight: 600;
+}
+.demo-banner__dot {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.demo-banner button {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+}
+.demo-banner button:hover {
+  color: var(--text);
+}
