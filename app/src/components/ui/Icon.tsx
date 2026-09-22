@@ -59,6 +59,12 @@ const PATHS = {
       <polyline points="3 13 12 18 21 13" />
     </>
   ),
+  mail: (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <polyline points="3.5 6.5 12 13 20.5 6.5" />
+    </>
+  ),
   logout: (
     <>
       <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />

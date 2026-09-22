@@ -53,19 +53,66 @@ export function AppShell() {
       </main>
 
       <footer className="site-footer">
-        <div className="wrap">
-          <div>
-            <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: "0.16em" }}>
-              BIBLIOTECA VIRTUS
+        <div className="wrap site-footer__top">
+          <div className="site-footer__brand">
+            <div className="site-footer__mark">BIBLIOTECA VIRTUS</div>
+            <p>Virtus Mind</p>
+          </div>
+
+          <div className="site-footer__cols">
+            <nav aria-labelledby="rodape-navegacao">
+              <h2 id="rodape-navegacao" className="site-footer__title">
+                Navegação
+              </h2>
+              <ul>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/biblioteca">Biblioteca</Link>
+                </li>
+                <li>
+                  <Link to="/widgets">Widgets</Link>
+                </li>
+                <li>
+                  {session ? <Link to="/perfil">Perfil</Link> : <Link to="/login">Entrar</Link>}
+                </li>
+              </ul>
+            </nav>
+
+            <div>
+              <h2 className="site-footer__title">Redes sociais</h2>
+              <ul>
+                <li>
+                  <a
+                    href="https://instagram.com/_virtusmind"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    @_virtusmind
+                  </a>
+                </li>
+              </ul>
             </div>
-            <div style={{ marginTop: 10, fontSize: 13, color: "var(--muted)" }}>Virtus Mind</div>
+
+            <div>
+              <h2 className="site-footer__title">Contato</h2>
+              <ul>
+                <li>
+                  <a href="mailto:mindvirtus24@gmail.com">
+                    <Icon name="mail" size={16} />
+                    mindvirtus24@gmail.com
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="links">
-            <Link to="/biblioteca">Biblioteca</Link>
-            <Link to="/widgets">Widgets</Link>
-            <Link to="/favoritos">Favoritos</Link>
-            <Link to="/downloads">Meus downloads</Link>
-          </div>
+        </div>
+
+        <div className="wrap">
+          <p className="site-footer__bottom">
+            © {new Date().getFullYear()} Virtus Mind. Todos os direitos reservados.
+          </p>
         </div>
       </footer>
 
