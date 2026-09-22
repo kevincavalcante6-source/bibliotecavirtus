@@ -76,9 +76,10 @@ export async function getContent(id: string): Promise<Content | null> {
   return store.content.find((item) => item.id === id) ?? null;
 }
 
-export async function listRecent(limit = 6): Promise<Content[]> {
+export async function listRecent(limit = 6, type?: ContentType): Promise<Content[]> {
   await delay();
-  return sorted().slice(0, limit);
+  const rows = type ? sorted().filter((item) => item.type === type) : sorted();
+  return rows.slice(0, limit);
 }
 
 export async function listByIds(ids: string[]): Promise<Content[]> {

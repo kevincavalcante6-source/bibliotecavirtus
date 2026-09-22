@@ -26,7 +26,7 @@ export function HomePage() {
     try {
       // Três consultas enxutas em paralelo, cada uma com seu limite.
       const [recent, wallpapers, widgets] = await Promise.all([
-        listRecent(3),
+        listRecent(8, "wallpaper"),
         listContent({ type: "wallpaper", page: 0, pageSize: 8 }),
         listContent({ type: "widget", page: 0, pageSize: 4 }),
       ]);

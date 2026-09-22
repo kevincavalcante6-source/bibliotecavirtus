@@ -287,9 +287,18 @@
   z-index: 1;
   height: 116%;
   aspect-ratio: 9 / 19.5;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
   filter: blur(8px);
   opacity: 0.62;
-  pointer-events: none;
+  transition: opacity var(--transition), filter var(--transition);
+}
+.showcase__flank:hover,
+.showcase__flank:focus-visible {
+  filter: blur(5px);
+  opacity: 0.78;
 }
 .showcase__flank--left {
   transform: translate(-110%, -50%);
@@ -333,6 +342,13 @@
   z-index: 3;
   height: 400px;
   aspect-ratio: 9 / 19.5;
+  animation: showcase-in 240ms ease both;
+}
+@keyframes showcase-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
 }
 @media (min-width: 700px) {
   .showcase__feature {
@@ -393,6 +409,49 @@
 .showcase__fav[aria-pressed="true"] svg {
   fill: currentColor;
 }
+/* Setas discretas: aparecem no desktop, onde não há gesto de arraste. */
+.showcase__nav {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: none;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.72);
+  backdrop-filter: blur(8px);
+  color: var(--secondary);
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+}
+.showcase__nav:hover {
+  color: var(--text);
+  border-color: var(--border-hover);
+}
+.showcase__nav--prev {
+  left: 0;
+}
+.showcase__nav--next {
+  right: 0;
+}
+@media (min-width: 900px) and (hover: hover) {
+  .showcase__nav {
+    display: grid;
+  }
+}
+.showcase__counter {
+  position: relative;
+  z-index: 4;
+  margin-top: var(--s-4);
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
 .showcase__caption {
   position: absolute;
   z-index: 3;

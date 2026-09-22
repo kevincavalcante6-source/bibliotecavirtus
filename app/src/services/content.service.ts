@@ -51,12 +51,15 @@ export async function getContent(id: string): Promise<Content | null> {
 }
 
 /** Recém-adicionados: sempre derivado de created_at, nunca de lista manual. */
-export async function listRecent(limit = 6): Promise<Content[]> {
-  const { data, error } = await supabase
+export async function listRecent(limit = 6, type?: ContentType): Promise<Content[]> {
+  let query = supabase
     .from("content")
     .select(COLUMNS)
     .order("created_at", { ascending: false })
     .limit(limit);
+  if (type) query = query.eq("type", type);
+
+  const { data, error } = await query;
   if (error) throw error;
   return (data ?? []) as Content[];
 }
