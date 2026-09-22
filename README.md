@@ -11,25 +11,35 @@ Conceito de comunicação: *"Seu ambiente também fala com você."*
 
 ## Estado atual
 
-Design do produto (canvas de artboards navegáveis), publicado como Design Artifact.
-Nada de código de aplicação foi implementado ainda.
+Três camadas, na ordem em que foram construídas:
 
-Telas desenhadas:
-
-| Arquivo | Tela |
+| Pasta | O que é |
 | --- | --- |
-| `design/project/Main.dc.html` | Home desktop — Hero + Recém-adicionados + pilares + fecho |
-| `design/project/Biblioteca.dc.html` | Biblioteca desktop — busca, filtros, grid 4 colunas, estado de hover |
-| `design/project/Detalhe.dc.html` | Wallpaper detail — fundo ampliado/desfocado, imagem original nítida |
-| `design/project/Acesso.dc.html` | Acesso / oferta — R$14,90, o que está incluído, objeções |
-| `design/project/Mobile-Home.dc.html` | Início mobile (390×844 base) |
-| `design/project/Mobile-Biblioteca.dc.html` | Biblioteca mobile — grid 2 colunas, tab bar |
-| `design/project/Mobile-Detalhe.dc.html` | Wallpaper detail mobile |
-| `design/project/Sistema.dc.html` | Design System — cores, tipografia, espaçamento, componentes |
+| `app/` | **A aplicação.** React + TypeScript + Vite com Supabase (Postgres, Auth, Storage). É o produto. |
+| `supabase/` | Esquema, RLS, funções e buckets — a migração que dá vida ao `app/`. |
+| `design/` | Canvas de design: 8 artboards com as telas e o design system. |
+| `site/` | Protótipo estático inicial, mantido como referência visual. |
 
-`design/project/canvas.json` é o índice do canvas (posições, títulos, anotações).
+Para rodar a aplicação, veja [`app/README.md`](app/README.md).
 
----
+### Páginas
+
+Home · Biblioteca · Widgets · Login · Cadastro · Recuperar acesso · Perfil ·
+Favoritos · Meus downloads · Admin (painel, envio individual, envio em massa).
+
+### O que já funciona de ponta a ponta
+
+- Autenticação real (Supabase Auth): criar conta, entrar, sair, sessão
+  persistente com refresh de token, recuperação de senha, edição do nome.
+- Biblioteca e Widgets com busca, paginação por rolagem, estados de carregando,
+  vazio e erro com nova tentativa.
+- Favoritos e downloads gravados no banco, por usuário.
+- Contador de downloads incrementado no servidor, dentro de uma transação.
+- Detalhe com fundo desfocado a partir da própria imagem, proporção preservada e
+  restauração exata do scroll ao fechar.
+- Admin protegido por RLS com painel de números reais, envio individual e envio
+  em massa de até 35 arquivos por operação, com progresso por arquivo, progresso
+  geral, deduplicação por SHA-256, identificação de erro e retry.
 
 ## Design System oficial
 
@@ -112,9 +122,10 @@ Sensação desejada: *"Eu quero isso porque combina comigo."*
 
 ---
 
-## Pendências marcadas no design
+## Pendências
 
-- Wallpapers reais (as áreas marcadas `IMAGEM` são placeholders)
+- Criar o projeto Supabase e rodar a migração (instruções em `app/README.md`)
+- Subir os wallpapers e widgets reais pela área administrativa
 - Modalidade de cobrança — marcada como `[DEFINIR MODALIDADE DE ACESSO]` na tela de Acesso
 - Nenhuma prova social, número, depoimento, bônus, order bump, upsell ou escassez foi criado —
   esses elementos não existem hoje e não devem ser inventados

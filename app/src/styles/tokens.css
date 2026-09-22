@@ -1,0 +1,72 @@
+/* Design System Biblioteca Virtus — fonte única dos tokens.
+   Nenhum componente declara cor, raio ou espaçamento fora desta escala. */
+:root {
+  /* superfícies */
+  --bg: #050505;
+  --near-black: #0a0a0a;
+  --dark: #111111;
+  --dark-2: #171717;
+
+  /* texto */
+  --text: #f5f5f0;
+  --secondary: #a8a8a2;
+  --muted: #6f6f69;
+  --disabled: #454541;
+
+  /* acento — usar com extrema moderação */
+  --accent: #c8a96a;
+  --gold-soft: #b89a60;
+  --gold-dark: #806b42;
+
+  /* traços */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.14);
+
+  /* semântico (separado do acento da marca) */
+  --danger: #c97a6a;
+  --success: #8fa87a;
+
+  /* espaçamento */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 80px;
+  --s-10: 96px;
+  --s-11: 128px;
+  --s-12: 160px;
+
+  /* raios */
+  --r-1: 8px;
+  --r-2: 12px;
+  --r-3: 16px;
+  --r-4: 20px;
+
+  /* layout */
+  --container: 1280px;
+  --gutter: 20px;
+  --header-h: 64px;
+  --tabbar-h: 72px;
+
+  --transition: 200ms ease;
+
+  color-scheme: dark;
+}
+
+@media (min-width: 720px) {
+  :root {
+    --gutter: 24px;
+    --header-h: 80px;
+  }
+}
+
+@media (min-width: 1040px) {
+  :root {
+    --gutter: 40px;
+    --header-h: 88px;
+  }
+}
