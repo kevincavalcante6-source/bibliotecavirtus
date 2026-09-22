@@ -113,6 +113,12 @@ Inter — pesos 400, 500, 600, 700. Família única.
 
 Somente microinterações, 150–300ms: fade, opacity, translate pequeno, scale muito sutil.
 
+**Exceção deliberada** — a vitrine de Recém-adicionados avança sozinha a cada 6s.
+É movimento constante, e é intencional: ali o conteúdo é o produto, e mostrá-lo
+tem função. A rotação pausa sob o ponteiro ou o foco, para fora da tela e em
+segundo plano, encerra ao primeiro gesto da pessoa e não existe para quem pediu
+`prefers-reduced-motion`. Fora deste caso, a regra acima continua valendo.
+
 ### Copy
 
 Premium, minimalista, emocional, direta, contemplativa. Frases curtas e muito espaço.
