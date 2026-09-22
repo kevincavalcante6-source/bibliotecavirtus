@@ -54,8 +54,8 @@ export function HomePage() {
           SEU PROPÓSITO.
         </h1>
         <p className="lede">
-          Uma biblioteca digital para transformar o ambiente que acompanha você todos os dias.
-          Wallpapers e widgets com curadoria, para iPhone e Android.
+          Wallpapers e widgets criados para transformar o ambiente que acompanha você todos os
+          dias.
         </p>
         <div className="hero__cta">
           <Link className="btn btn--primary" to="/biblioteca">

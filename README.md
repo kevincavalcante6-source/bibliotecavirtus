@@ -3,7 +3,7 @@
 Biblioteca digital premium de wallpapers e widgets para dispositivos móveis.
 
 > **SEU AMBIENTE. SUA MENTE. SEU PROPÓSITO.**
-> Uma biblioteca digital para transformar o ambiente que acompanha você todos os dias.
+> Wallpapers e widgets criados para transformar o ambiente que acompanha você todos os dias.
 
 Conceito de comunicação: *"Seu ambiente também fala com você."*
 

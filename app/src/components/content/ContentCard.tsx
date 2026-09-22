@@ -5,7 +5,6 @@ import { useAuth } from "@/auth/AuthProvider";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useToast } from "@/components/feedback/ToastProvider";
 import { readableError } from "@/lib/supabase";
-import { formatNumber, formatRatio } from "@/lib/format";
 import type { Content } from "@/types/models";
 
 export function ContentCard({ content, priority }: { content: Content; priority?: boolean }) {
@@ -59,12 +58,10 @@ export function ContentCard({ content, priority }: { content: Content; priority?
         <Icon name="heart" size={18} />
       </button>
 
+      {/* Só o nome. Proporção, formato e downloads vivem no detalhe, onde há
+          espaço para eles sem competir com a arte. */}
       <div className="card__meta">
         <h3>{content.title}</h3>
-        <p>
-          {content.type === "widget" ? "Widget" : formatRatio(content.width, content.height)}
-          {content.download_count > 0 && ` · ${formatNumber(content.download_count)} downloads`}
-        </p>
       </div>
     </article>
   );
