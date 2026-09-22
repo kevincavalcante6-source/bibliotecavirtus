@@ -6,9 +6,8 @@ import { LoadingState } from "@/components/states/LoadingState";
 import { ErrorState } from "@/components/states/ErrorState";
 import { EmptyState } from "@/components/states/EmptyState";
 import { useAuth } from "@/auth/AuthProvider";
-import { useFavorites } from "@/hooks/useFavorites";
+import { useFavoriteToggle } from "@/hooks/useFavoriteToggle";
 import { useDownload } from "@/hooks/useDownload";
-import { useToast } from "@/components/feedback/ToastProvider";
 import { getContent } from "@/services/content.service";
 import { signedOriginalUrl } from "@/services/storage.service";
 import { readableError } from "@/lib/supabase";
@@ -20,11 +19,25 @@ interface Props {
   onClose?: () => void;
 }
 
+function FavoriteButton({ content }: { content: Content }) {
+  const { favorite, toggleFavorite } = useFavoriteToggle(content);
+  return (
+    <button
+      type="button"
+      className="icon-btn"
+      style={{ width: 52, height: 52 }}
+      aria-pressed={favorite}
+      aria-label={favorite ? "Remover dos favoritos" : "Favoritar"}
+      onClick={() => void toggleFavorite()}
+    >
+      <Icon name="heart" size={20} />
+    </button>
+  );
+}
+
 export function ContentDetail({ contentId, onClose }: Props) {
   const navigate = useNavigate();
   const { session } = useAuth();
-  const { isFavorite, toggle } = useFavorites();
-  const { notify, notifyError } = useToast();
 
   const [content, setContent] = useState<Content | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error" | "missing">("loading");
@@ -74,21 +87,6 @@ export function ContentDetail({ contentId, onClose }: Props) {
     };
   }, [contentId, session, reloadKey]);
 
-  async function onToggleFavorite() {
-    if (!content) return;
-    if (!session) {
-      notify("Entre na sua conta para salvar favoritos.");
-      navigate("/login", { state: { from: `/w/${content.id}` } });
-      return;
-    }
-    try {
-      const next = await toggle(content.id);
-      notify(next ? "Adicionado aos favoritos" : "Removido dos favoritos");
-    } catch (caught) {
-      notifyError(readableError(caught, "Não foi possível atualizar seus favoritos."));
-    }
-  }
-
   if (status === "loading") {
     return (
       <div className="detail">
@@ -124,7 +122,6 @@ export function ContentDetail({ contentId, onClose }: Props) {
     );
   }
 
-  const favorite = isFavorite(content.id);
   const display = fullSrc ?? content.thumbnail_url;
 
   return (
@@ -177,16 +174,7 @@ export function ContentDetail({ contentId, onClose }: Props) {
                 <Icon name="download" />
                 {busyId === content.id ? "Preparando…" : "Baixar"}
               </button>
-              <button
-                type="button"
-                className="icon-btn"
-                style={{ width: 52, height: 52 }}
-                aria-pressed={favorite}
-                aria-label={favorite ? "Remover dos favoritos" : "Favoritar"}
-                onClick={() => void onToggleFavorite()}
-              >
-                <Icon name="heart" size={20} />
-              </button>
+              <FavoriteButton content={content} />
             </div>
 
             <div className="spec">
