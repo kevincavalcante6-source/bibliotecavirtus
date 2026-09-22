@@ -11,7 +11,7 @@ import { useDownload } from "@/hooks/useDownload";
 import { getContent } from "@/services/content.service";
 import { signedOriginalUrl } from "@/services/storage.service";
 import { readableError } from "@/lib/supabase";
-import { formatBytes, formatDate, formatNumber, formatRatio } from "@/lib/format";
+import { formatDate, formatNumber } from "@/lib/format";
 import type { Content } from "@/types/models";
 
 interface Props {
@@ -183,21 +183,6 @@ export function ContentDetail({ contentId, onClose }: Props) {
             </div>
 
             <div className="spec">
-              <div>
-                <span>Proporção</span>
-                <b>{formatRatio(content.width, content.height)}</b>
-              </div>
-              <div>
-                <span>Resolução</span>
-                <b>{content.width && content.height ? `${content.width} × ${content.height}` : "—"}</b>
-              </div>
-              <div>
-                <span>Arquivo</span>
-                <b>
-                  {(content.mime_type?.split("/")[1] ?? "—").toUpperCase()} ·{" "}
-                  {formatBytes(content.file_size)}
-                </b>
-              </div>
               <div>
                 <span>Downloads</span>
                 <b>{formatNumber(downloads ?? content.download_count)}</b>

@@ -31,18 +31,18 @@ interface Seed {
 }
 
 const SEEDS: Seed[] = [
-  { title: "Disciplina", type: "wallpaper", art: wallpaperArt("#242421", "#0C0C0B", "DISCIPLINA"), width: 1290, height: 2796, downloads: 148, age: 0 },
-  { title: "Propósito", type: "wallpaper", art: wallpaperArt("#26211A", "#0A0A09", "PROPÓSITO"), width: 1290, height: 2796, downloads: 203, age: 1 },
-  { title: "Origem", type: "widget", art: widgetArt("#0A0A0A", "#141412", "PROPÓSITO", "Construir"), width: 800, height: 800, downloads: 44, age: 2 },
-  { title: "Fé", type: "wallpaper", art: wallpaperArt("#1F1D24", "#09090A", "FÉ"), width: 1290, height: 2796, downloads: 97, age: 3 },
-  { title: "Silêncio", type: "wallpaper", art: wallpaperArt("#1B1B1A", "#0A0A09", "SILÊNCIO"), width: 1440, height: 3200, downloads: 64, age: 5 },
-  { title: "Rotina", type: "widget", art: widgetArt("#0A0A0A", "#16140F", "HOJE", "Uma coisa"), width: 800, height: 800, downloads: 26, age: 6 },
-  { title: "Foco", type: "wallpaper", art: wallpaperArt("#231F19", "#0B0B0A", "FOCO"), width: 1440, height: 3200, downloads: 132, age: 8 },
-  { title: "Constância", type: "wallpaper", art: wallpaperArt("#1E1E1C", "#0A0A09", "CONSTÂNCIA"), width: 1290, height: 2796, downloads: 51, age: 10 },
-  { title: "Norte", type: "wallpaper", art: wallpaperArt("#20201D", "#090909", "NORTE"), width: 1290, height: 2796, downloads: 38, age: 12 },
-  { title: "Ordem", type: "wallpaper", art: wallpaperArt("#1C1B18", "#0A0A09", "ORDEM"), width: 1440, height: 3200, downloads: 29, age: 14 },
-  { title: "Amanhecer", type: "wallpaper", art: wallpaperArt("#2A231A", "#0B0A09", "AMANHECER"), width: 1290, height: 2796, downloads: 71, age: 16 },
-  { title: "Virtus", type: "wallpaper", art: wallpaperArt("#222220", "#0A0A09", "VIRTUS"), width: 1440, height: 3200, downloads: 189, age: 18 },
+  { title: "Disciplina", type: "wallpaper", art: wallpaperArt("#242421", "#0C0C0B", "DISCIPLINA"), width: 1290, height: 2796, downloads: 0, age: 0 },
+  { title: "Propósito", type: "wallpaper", art: wallpaperArt("#26211A", "#0A0A09", "PROPÓSITO"), width: 1290, height: 2796, downloads: 0, age: 1 },
+  { title: "Origem", type: "widget", art: widgetArt("#0A0A0A", "#141412", "PROPÓSITO", "Construir"), width: 800, height: 800, downloads: 0, age: 2 },
+  { title: "Fé", type: "wallpaper", art: wallpaperArt("#1F1D24", "#09090A", "FÉ"), width: 1290, height: 2796, downloads: 0, age: 3 },
+  { title: "Silêncio", type: "wallpaper", art: wallpaperArt("#1B1B1A", "#0A0A09", "SILÊNCIO"), width: 1440, height: 3200, downloads: 0, age: 5 },
+  { title: "Rotina", type: "widget", art: widgetArt("#0A0A0A", "#16140F", "HOJE", "Uma coisa"), width: 800, height: 800, downloads: 0, age: 6 },
+  { title: "Foco", type: "wallpaper", art: wallpaperArt("#231F19", "#0B0B0A", "FOCO"), width: 1440, height: 3200, downloads: 0, age: 8 },
+  { title: "Constância", type: "wallpaper", art: wallpaperArt("#1E1E1C", "#0A0A09", "CONSTÂNCIA"), width: 1290, height: 2796, downloads: 0, age: 10 },
+  { title: "Norte", type: "wallpaper", art: wallpaperArt("#20201D", "#090909", "NORTE"), width: 1290, height: 2796, downloads: 0, age: 12 },
+  { title: "Ordem", type: "wallpaper", art: wallpaperArt("#1C1B18", "#0A0A09", "ORDEM"), width: 1440, height: 3200, downloads: 0, age: 14 },
+  { title: "Amanhecer", type: "wallpaper", art: wallpaperArt("#2A231A", "#0B0A09", "AMANHECER"), width: 1290, height: 2796, downloads: 0, age: 16 },
+  { title: "Virtus", type: "wallpaper", art: wallpaperArt("#222220", "#0A0A09", "VIRTUS"), width: 1440, height: 3200, downloads: 0, age: 18 },
 ];
 
 export const SEED_CONTENT: Content[] = SEEDS.map((seed, index) => ({

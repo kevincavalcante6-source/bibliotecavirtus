@@ -24,23 +24,6 @@ export function formatNumber(value: number): string {
   return value.toLocaleString("pt-BR");
 }
 
-/**
- * Proporção legível a partir das dimensões reais do arquivo.
- * Quando a redução exata não dá um par curto (1290 × 2796 vira 215:466), a
- * proporção é normalizada no lado 9, como o mercado escreve: 9:19,5.
- */
-export function formatRatio(width: number | null, height: number | null): string {
-  if (!width || !height) return "—";
-  const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
-  const divisor = gcd(width, height);
-  const w = width / divisor;
-  const h = height / divisor;
-  if (w <= 32 && h <= 32) return `${w}:${h}`;
-
-  const short = (value: number) => Number(value.toFixed(1)).toString().replace(".", ",");
-  return width < height ? `9:${short((height / width) * 9)}` : `${short((width / height) * 9)}:9`;
-}
-
 export function plural(count: number, one: string, many: string): string {
   return `${formatNumber(count)} ${count === 1 ? one : many}`;
 }
