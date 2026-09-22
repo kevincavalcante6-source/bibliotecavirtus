@@ -113,10 +113,11 @@ Inter — pesos 400, 500, 600, 700. Família única.
 
 Somente microinterações, 150–300ms: fade, opacity, translate pequeno, scale muito sutil.
 
-**Exceção deliberada** — a vitrine de Recém-adicionados avança sozinha a cada 6s.
+**Exceção deliberada** — a vitrine de Recém-adicionados avança sozinha a cada 3s.
 É movimento constante, e é intencional: ali o conteúdo é o produto, e mostrá-lo
-tem função. A rotação pausa sob o ponteiro ou o foco, para fora da tela e em
-segundo plano, encerra ao primeiro gesto da pessoa e não existe para quem pediu
+tem função. A rotação fica parada enquanto o ponteiro estiver sobre a seção,
+para fora da tela e em segundo plano, recua por alguns segundos depois de
+qualquer gesto da pessoa (e depois retoma), e não existe para quem pediu
 `prefers-reduced-motion`. Fora deste caso, a regra acima continua valendo.
 
 ### Copy

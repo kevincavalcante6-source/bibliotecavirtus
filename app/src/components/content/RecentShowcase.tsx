@@ -17,8 +17,9 @@ const SWIPE_THRESHOLD = 44;
  * escurecidos, sangrando nas bordas do painel. Eles também são a navegação —
  * tocar em um traz aquele conteúdo para o centro, e no toque vale arrastar.
  *
- * A vitrine avança sozinha, devagar, enquanto ninguém a toca; ao primeiro
- * gesto ela para e entrega o controle (ver useAutoRotate).
+ * A vitrine avança sozinha enquanto ninguém a toca. Qualquer gesto da pessoa
+ * a faz recuar por alguns segundos e depois ela retoma; com o ponteiro em
+ * cima, fica parada o tempo que for (ver useAutoRotate).
  */
 export function RecentShowcase({ items }: { items: Content[] }) {
   const navigate = useNavigate();
@@ -40,10 +41,10 @@ export function RecentShowcase({ items }: { items: Content[] }) {
     onAdvance: advance,
   });
 
-  // Qualquer gesto da pessoa encerra a rotação: a partir daí quem conduz é ela.
+  // Qualquer gesto da pessoa tem prioridade: a rotação recua e volta depois.
   const go = useCallback(
     (delta: number) => {
-      rotation.stop();
+      rotation.hold();
       setIndex((current) => (current + delta + total) % total);
     },
     [rotation, total],
@@ -60,10 +61,9 @@ export function RecentShowcase({ items }: { items: Content[] }) {
       <div
         className="showcase"
         ref={rotation.containerRef}
-        onMouseEnter={rotation.pause}
-        onMouseLeave={rotation.resume}
-        onFocusCapture={rotation.pause}
-        onBlurCapture={rotation.resume}
+        onMouseEnter={rotation.enter}
+        onMouseLeave={rotation.leave}
+        onFocusCapture={rotation.hold}
       >
         <header className="showcase__head">
           <span className="label">Recém-adicionados</span>
