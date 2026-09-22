@@ -97,6 +97,9 @@
   gap: var(--s-3);
 }
 .card__open {
+  /* Ancora o overlay na imagem. Sem isto ele mede o card inteiro e o botão
+     desce por cima do título e da descrição. */
+  position: relative;
   display: block;
   width: 100%;
   padding: 0;
@@ -104,6 +107,7 @@
   background: none;
   cursor: pointer;
   text-align: left;
+  border-radius: var(--r-3);
 }
 .card__open:hover .media {
   transform: scale(1.012);
@@ -117,6 +121,9 @@
   align-items: flex-end;
   padding: var(--s-3);
   background: rgba(5, 5, 5, 0.38);
+  /* Acompanha o raio da moldura: o overlay é irmão da imagem, não é recortado
+     pelo overflow dela. */
+  border-radius: var(--r-3);
   opacity: 0;
   transition: opacity var(--transition);
 }
