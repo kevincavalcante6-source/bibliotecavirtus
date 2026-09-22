@@ -273,13 +273,13 @@
   left: 2%;
   height: 68%;
   filter: blur(16px);
-  opacity: 0.28;
+  opacity: 0.34;
 }
 .showcase__layer--near {
   left: 20%;
   height: 84%;
   filter: blur(9px);
-  opacity: 0.5;
+  opacity: 0.58;
 }
 .showcase__front {
   position: relative;
