@@ -36,10 +36,11 @@ const STEPS: Record<Platform, Step[]> = {
       title: "Colocar um widget",
       body: [
         "Salve a imagem do widget nas Fotos, como no primeiro passo.",
-        "Toque e segure num espaço vazio da tela de início e toque em Editar → Adicionar Widget (ou no +).",
-        "Escolha um widget de foto e selecione a imagem.",
+        "Baixe o app Widgetsmith na App Store.",
+        "No Widgetsmith, crie um widget no tamanho que quiser (pequeno, médio ou grande), escolha o estilo de foto e selecione a imagem salva.",
+        "Na tela de início, toque e segure num espaço vazio e toque em Editar → Adicionar Widget (ou no +). Procure o Widgetsmith e adicione no mesmo tamanho.",
       ],
-      note: "Para escolher exatamente qual imagem aparece, use um app de widget de foto da App Store (busque por “photo widget”).",
+      note: "Se aparecer um widget diferente, toque e segure nele, toque em Editar Widget e escolha o que você criou.",
     },
     {
       title: "Ter a Biblioteca como aplicativo",
