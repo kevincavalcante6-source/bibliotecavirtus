@@ -550,14 +550,16 @@
   place-items: center;
   overflow: hidden;
   min-height: 400px;
-  padding: var(--s-6) var(--s-4);
+  /* Topo e base maiores que o botão de voltar (12 + 44px): mesmo uma arte
+     larga, que ocupa o palco de lado a lado, nunca fica sob o botão. */
+  padding: var(--s-8) var(--s-4);
   border-radius: var(--r-3);
   background: var(--dark);
 }
 @media (min-width: 900px) {
   .detail__stage {
     min-height: 560px;
-    padding: var(--s-7);
+    padding: var(--s-8) var(--s-7);
   }
 }
 @media (min-width: 1200px) {
