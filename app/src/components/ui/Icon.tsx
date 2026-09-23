@@ -21,6 +21,12 @@ const PATHS = {
       <circle cx="12" cy="7" r="4" />
     </>
   ),
+  phone: (
+    <>
+      <rect x="6" y="2" width="12" height="20" rx="2.5" />
+      <line x1="11" y1="18.5" x2="13" y2="18.5" />
+    </>
+  ),
   grid: (
     <>
       <rect x="3" y="3" width="7" height="7" rx="1.5" />

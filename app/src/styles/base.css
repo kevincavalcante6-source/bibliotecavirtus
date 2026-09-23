@@ -434,8 +434,11 @@ img {
   backdrop-filter: blur(16px);
   border-top: 1px solid var(--border);
 }
+/* Cinco abas: min-width 0 deixa todas dividirem a largura por igual, mesmo
+   num celular de 320px, sem que "Wallpapers" empurre as vizinhas. */
 .tabbar a {
   flex: 1;
+  min-width: 0;
   min-height: 56px;
   display: flex;
   flex-direction: column;
@@ -443,7 +446,8 @@ img {
   justify-content: center;
   gap: 5px;
   font-size: 10px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
   color: var(--muted);
 }
 .tabbar a.is-active {
