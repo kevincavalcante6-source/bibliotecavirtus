@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MediaFrame } from "@/components/content/MediaFrame";
 import { Icon } from "@/components/ui/Icon";
@@ -9,12 +9,16 @@ import { useAuth } from "@/auth/AuthProvider";
 import { useFavoriteToggle } from "@/hooks/useFavoriteToggle";
 import { useDownload } from "@/hooks/useDownload";
 import { usePreparedOriginal } from "@/hooks/usePreparedOriginal";
+import { useBrowse } from "@/hooks/useBrowse";
 import { savesToPhotosViaShare } from "@/lib/device";
 import { getContent } from "@/services/content.service";
 import { signedOriginalUrl } from "@/services/storage.service";
 import { readableError } from "@/lib/supabase";
 import { formatDate, formatNumber } from "@/lib/format";
 import type { Content } from "@/types/models";
+
+/** Distância mínima do arrasto lateral para trocar de item. */
+const SWIPE_THRESHOLD = 56;
 
 interface Props {
   contentId: string;
@@ -50,11 +54,17 @@ export function ContentDetail({ contentId, onClose }: Props) {
   const { download, busyId } = useDownload((_id, total) => setDownloads(total));
   const toPhotos = savesToPhotosViaShare();
   const prepared = usePreparedOriginal(content, toPhotos ? fullSrc : null);
+  const { previousId, nextId, go, direction } = useBrowse(content);
+
+  // Trocando pelas setas, o item atual fica na tela até o próximo chegar:
+  // nada de tela de carregamento piscando entre um e outro.
+  const shownId = useRef<string | null>(null);
+  const frame = useRef<HTMLDivElement | null>(null);
+  const touch = useRef<{ x: number; y: number; axis: "x" | "y" | null } | null>(null);
 
   useEffect(() => {
     let active = true;
-    setStatus("loading");
-    setFullSrc(null);
+    if (!shownId.current) setStatus("loading");
 
     void (async () => {
       try {
@@ -64,7 +74,9 @@ export function ContentDetail({ contentId, onClose }: Props) {
           setStatus("missing");
           return;
         }
+        shownId.current = item.id;
         setContent(item);
+        setFullSrc(null);
         setDownloads(item.download_count);
         setStatus("ready");
 
@@ -89,6 +101,55 @@ export function ContentDetail({ contentId, onClose }: Props) {
       active = false;
     };
   }, [contentId, session, reloadKey]);
+
+  // Setas do teclado no computador. Campos de texto continuam com as setas.
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      const target = event.target as HTMLElement | null;
+      if (target && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName))) return;
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        go(1);
+      } else if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        go(-1);
+      }
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [go]);
+
+  // Arrasto no celular: a arte acompanha o dedo; no fim da lista ela resiste.
+  function onTouchStart(event: React.TouchEvent) {
+    const point = event.touches[0];
+    touch.current = { x: point.clientX, y: point.clientY, axis: null };
+  }
+  function onTouchMove(event: React.TouchEvent) {
+    const start = touch.current;
+    if (!start) return;
+    const point = event.touches[0];
+    const dx = point.clientX - start.x;
+    const dy = point.clientY - start.y;
+    if (!start.axis && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
+      start.axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+    }
+    if (start.axis !== "x" || !frame.current) return;
+    const blocked = (dx < 0 && !nextId) || (dx > 0 && !previousId);
+    frame.current.style.transition = "none";
+    frame.current.style.transform = `translateX(${dx * (blocked ? 0.15 : 0.5)}px)`;
+  }
+  function onTouchEnd(event: React.TouchEvent) {
+    const start = touch.current;
+    touch.current = null;
+    if (!start) return;
+    if (frame.current) {
+      frame.current.style.transition = "";
+      frame.current.style.transform = "";
+    }
+    const dx = event.changedTouches[0].clientX - start.x;
+    if (start.axis === "x" && Math.abs(dx) > SWIPE_THRESHOLD) go(dx < 0 ? 1 : -1);
+  }
 
   if (status === "loading") {
     return (
@@ -139,7 +200,13 @@ export function ContentDetail({ contentId, onClose }: Props) {
         <div className="detail__panel">
           {/* Palco: a ambientação é o próprio wallpaper ampliado, desfocado e
               escurecido; a imagem original fica inteira e nítida na frente. */}
-          <div className="detail__stage">
+          <div
+            className="detail__stage"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            onTouchCancel={onTouchEnd}
+          >
             {display && (
               <div
                 className="detail__ambient"
@@ -158,9 +225,33 @@ export function ContentDetail({ contentId, onClose }: Props) {
               <Icon name="chevronLeft" size={20} />
             </button>
 
-            <div className="detail__frame">
-              <MediaFrame content={content} src={display} priority natural />
+            <div className="detail__frame" ref={frame}>
+              <div
+                key={content.id}
+                className={`detail__swap${direction ? ` detail__swap--${direction === 1 ? "next" : "prev"}` : ""}`}
+              >
+                <MediaFrame key={content.id} content={content} src={display} priority natural />
+              </div>
             </div>
+
+            <button
+              type="button"
+              className="detail__nav detail__nav--prev"
+              onClick={() => go(-1)}
+              disabled={!previousId}
+              aria-label="Anterior"
+            >
+              <Icon name="chevronLeft" size={20} />
+            </button>
+            <button
+              type="button"
+              className="detail__nav detail__nav--next"
+              onClick={() => go(1)}
+              disabled={!nextId}
+              aria-label="Próximo"
+            >
+              <Icon name="chevronRight" size={20} />
+            </button>
           </div>
 
           <div className="detail__info">

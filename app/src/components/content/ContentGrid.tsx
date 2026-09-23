@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { ContentCard } from "@/components/content/ContentCard";
+import type { BrowseState } from "@/lib/browse";
 import type { Content } from "@/types/models";
 
 interface Props {
@@ -8,10 +9,16 @@ interface Props {
   hasMore?: boolean;
   loadingMore?: boolean;
   onLoadMore?: () => void;
+  /** A lista é a coleção inteira em ordem (ver BrowseState.continues). */
+  continues?: boolean;
 }
 
-export function ContentGrid({ items, widget, hasMore, loadingMore, onLoadMore }: Props) {
+export function ContentGrid({ items, widget, hasMore, loadingMore, onLoadMore, continues = false }: Props) {
   const sentinel = useRef<HTMLDivElement | null>(null);
+  const browse = useMemo<BrowseState>(
+    () => ({ ids: items.map((item) => item.id), continues }),
+    [items, continues],
+  );
 
   // Paginação por observador: a próxima página entra quando o rodapé da lista
   // se aproxima, sem botão e sem carregar tudo de uma vez.
@@ -33,7 +40,7 @@ export function ContentGrid({ items, widget, hasMore, loadingMore, onLoadMore }:
     <>
       <div className={`grid${widget ? " grid--widgets" : ""}`}>
         {items.map((item, index) => (
-          <ContentCard key={item.id} content={item} priority={index < 4} />
+          <ContentCard key={item.id} content={item} priority={index < 4} browse={browse} />
         ))}
       </div>
 

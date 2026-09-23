@@ -30,6 +30,7 @@ export async function listContent({
     .from("content")
     .select(CONTENT_COLUMNS, { count: "exact" })
     .order("created_at", { ascending: false })
+    .order("id", { ascending: false })
     .range(page * pageSize, page * pageSize + pageSize - 1);
 
   if (type) query = query.eq("type", type);
@@ -50,12 +51,47 @@ export async function getContent(id: string): Promise<Content | null> {
   return (data as Content) ?? null;
 }
 
+export interface Neighbors {
+  /** Mais novo que o atual — o item anterior na listagem. */
+  previousId: string | null;
+  /** Mais antigo que o atual — o próximo item na listagem. */
+  nextId: string | null;
+}
+
+/**
+ * Vizinhos do item na mesma ordem das listagens (created_at desc, id desc),
+ * dentro do mesmo tipo. Só os ids — o detalhe carrega o resto ao navegar.
+ */
+export async function getNeighbors(content: Content): Promise<Neighbors> {
+  const at = `"${content.created_at}"`;
+  const base = () => supabase.from("content").select("id").eq("type", content.type).limit(1);
+
+  const [newer, older] = await Promise.all([
+    base()
+      .or(`created_at.gt.${at},and(created_at.eq.${at},id.gt.${content.id})`)
+      .order("created_at", { ascending: true })
+      .order("id", { ascending: true }),
+    base()
+      .or(`created_at.lt.${at},and(created_at.eq.${at},id.lt.${content.id})`)
+      .order("created_at", { ascending: false })
+      .order("id", { ascending: false }),
+  ]);
+  if (newer.error) throw newer.error;
+  if (older.error) throw older.error;
+
+  return {
+    previousId: (newer.data?.[0] as { id: string } | undefined)?.id ?? null,
+    nextId: (older.data?.[0] as { id: string } | undefined)?.id ?? null,
+  };
+}
+
 /** Recém-adicionados: sempre derivado de created_at, nunca de lista manual. */
 export async function listRecent(limit = 6, type?: ContentType): Promise<Content[]> {
   let query = supabase
     .from("content")
     .select(CONTENT_COLUMNS)
     .order("created_at", { ascending: false })
+    .order("id", { ascending: false })
     .limit(limit);
   if (type) query = query.eq("type", type);
 

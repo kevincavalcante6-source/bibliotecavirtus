@@ -12,6 +12,7 @@ import { useDownload } from "@/hooks/useDownload";
 import { hideDownload, listDownloads } from "@/services/downloads.service";
 import { readableError } from "@/lib/supabase";
 import { formatDate, plural } from "@/lib/format";
+import type { BrowseState } from "@/lib/browse";
 
 export function DownloadsPage() {
   const { user } = useAuth();
@@ -42,6 +43,9 @@ export function DownloadsPage() {
       notifyError(readableError(caught, "Não foi possível remover agora."));
     }
   }
+
+  // O detalhe percorre o histórico na ordem desta página, e para no último.
+  const browse: BrowseState = { ids: items.map(({ content }) => content.id), continues: false };
 
   return (
     <>
@@ -74,7 +78,7 @@ export function DownloadsPage() {
           <div className="grid">
             {items.map(({ content, at }) => (
               <article className="card" key={content.id}>
-                <Link to={`/w/${content.id}`} state={{ background: location }} className="card__open">
+                <Link to={`/w/${content.id}`} state={{ background: location, browse }} className="card__open">
                   <MediaFrame content={content} src={content.thumbnail_url} natural />
                 </Link>
 

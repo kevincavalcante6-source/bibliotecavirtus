@@ -106,7 +106,7 @@ export function HomePage() {
                   <Icon name="arrowRight" size={16} />
                 </Link>
               </div>
-              <ContentGrid items={data.wallpapers} />
+              <ContentGrid items={data.wallpapers} continues />
             </section>
           )}
 
@@ -122,7 +122,7 @@ export function HomePage() {
                   <Icon name="arrowRight" size={16} />
                 </Link>
               </div>
-              <ContentGrid items={data.widgets} widget />
+              <ContentGrid items={data.widgets} widget continues />
             </section>
           )}
         </>

@@ -1,9 +1,11 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MediaFrame } from "@/components/content/MediaFrame";
 import { Icon } from "@/components/ui/Icon";
 import { useAutoRotate } from "@/hooks/useAutoRotate";
 import { useFavoriteToggle } from "@/hooks/useFavoriteToggle";
+import { useLastVisit } from "@/hooks/useLastVisit";
+import type { BrowseState, DetailState } from "@/lib/browse";
 import type { Content } from "@/types/models";
 
 const SWIPE_THRESHOLD = 44;
@@ -28,6 +30,8 @@ export function RecentShowcase({ items }: { items: Content[] }) {
   const touchStart = useRef<number | null>(null);
 
   const total = items.length;
+  const { isNew } = useLastVisit();
+  const browse = useMemo<BrowseState>(() => ({ ids: items.map((item) => item.id), continues: true }), [items]);
   const at = (offset: number) => items[(index + offset + total * 2) % total];
   const front = at(0);
   const { favorite, toggleFavorite } = useFavoriteToggle(front ?? ({ id: "" } as Content));
@@ -121,12 +125,15 @@ export function RecentShowcase({ items }: { items: Content[] }) {
             <button
               type="button"
               className="showcase__front"
-              onClick={() => navigate(`/w/${front.id}`, { state: { background: location } })}
+              onClick={() => {
+                const state: DetailState = { background: location, browse };
+                navigate(`/w/${front.id}`, { state });
+              }}
               aria-label={`Abrir ${front.title}`}
             >
               <MediaFrame content={front} src={front.thumbnail_url} priority natural />
               <span className="showcase__caption">
-                <em>NOVO</em>
+                {isNew(front) && <em>NOVO</em>}
                 <b>{front.title}</b>
               </span>
             </button>

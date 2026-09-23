@@ -2,6 +2,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import type { Location } from "react-router-dom";
 import { AppShell } from "@/components/layout/AppShell";
 import { ScrollManager } from "@/components/layout/ScrollManager";
+import { LastVisitProvider } from "@/hooks/useLastVisit";
 import { DetailOverlay } from "@/components/content/DetailOverlay";
 import { RequireAccess, RequireAdmin, RequireAuth } from "@/auth/guards";
 import { HomePage } from "@/pages/HomePage";
@@ -28,7 +29,7 @@ export function App() {
   const background = (location.state as { background?: Location } | null)?.background;
 
   return (
-    <>
+    <LastVisitProvider>
       <ScrollManager />
       <Routes location={background ?? location}>
         <Route element={<AppShell />}>
@@ -91,6 +92,6 @@ export function App() {
           <Route path="/w/:id" element={<RequireAccess><DetailOverlay /></RequireAccess>} />
         </Routes>
       )}
-    </>
+    </LastVisitProvider>
   );
 }

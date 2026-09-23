@@ -148,6 +148,24 @@
   font-size: 13px;
   font-weight: 600;
 }
+/* Publicado depois da visita anterior desta pessoa — datas reais. */
+.card__new {
+  position: absolute;
+  z-index: 3;
+  top: var(--s-2);
+  left: var(--s-2);
+  padding: 5px 10px;
+  border: 1px solid rgba(200, 169, 106, 0.32);
+  border-radius: 999px;
+  background: rgba(10, 10, 10, 0.66);
+  backdrop-filter: blur(8px);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
 .card__fav {
   position: absolute;
   z-index: 4;
@@ -546,6 +564,8 @@
    escurecido atrás da imagem original, que fica inteira e nítida na frente. */
 .detail__stage {
   position: relative;
+  /* O arrasto lateral é nosso (trocar de item); o vertical segue rolando. */
+  touch-action: pan-y;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -597,6 +617,52 @@
   cursor: pointer;
   transition: border-color var(--transition);
 }
+/* Anterior / próximo. No celular e no tablet ficam na faixa de baixo do
+   palco (a mesma folga do botão de voltar); no computador, nas laterais. Em
+   nenhum dos dois cobrem a arte. */
+.detail__nav {
+  position: absolute;
+  z-index: 3;
+  bottom: var(--s-3);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(8px);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color var(--transition), opacity var(--transition);
+}
+.detail__nav--prev {
+  left: var(--s-3);
+}
+.detail__nav--next {
+  right: var(--s-3);
+}
+.detail__nav:hover {
+  border-color: var(--border-hover);
+}
+.detail__nav:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+@media (min-width: 900px) {
+  .detail__nav {
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .detail__nav--prev {
+    left: 2px;
+  }
+  .detail__nav--next {
+    right: 2px;
+  }
+}
+
 .detail__back:hover {
   border-color: var(--border-hover);
 }
@@ -619,6 +685,39 @@
 @media (min-width: 1200px) {
   .detail__frame {
     --frame-h: 540px;
+  }
+}
+/* Volta ao centro quando o arrasto não chega a trocar de item. */
+.detail__frame {
+  transition: transform 220ms ease;
+}
+.detail__swap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.detail__swap--next {
+  animation: detail-swap-next 260ms ease both;
+}
+.detail__swap--prev {
+  animation: detail-swap-prev 260ms ease both;
+}
+@keyframes detail-swap-next {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+}
+@keyframes detail-swap-prev {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .detail__swap--next,
+  .detail__swap--prev {
+    animation: none;
   }
 }
 .detail__frame .media {

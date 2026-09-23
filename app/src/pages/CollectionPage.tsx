@@ -87,6 +87,7 @@ export function CollectionPage({ type, eyebrow, title, lede, searchPlaceholder }
             hasMore={feed.hasMore}
             loadingMore={feed.status === "loading-more"}
             onLoadMore={feed.loadMore}
+            continues={!search}
           />
         )}
       </section>

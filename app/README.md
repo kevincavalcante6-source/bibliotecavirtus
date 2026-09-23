@@ -21,7 +21,8 @@ em vez de quebrar em silêncio.
    cada um inteiro: `0001_init.sql` cria as tabelas, as políticas de RLS, as
    funções e os dois buckets de storage; `0002_downloads_history.sql` permite
    que cada pessoa tire itens do próprio histórico sem afetar a contagem;
-   `0003_access_control.sql` restringe a biblioteca a quem comprou.
+   `0003_access_control.sql` restringe a biblioteca a quem comprou;
+   `0004_visits.sql` guarda a visita anterior de cada pessoa, para o selo "Novo".
 3. Em **Project Settings → API**, copie `Project URL` e `anon public` para
    `.env.local`.
 4. Crie sua conta pelo próprio app (`/cadastro`) e depois promova-a a

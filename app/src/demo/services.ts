@@ -76,6 +76,24 @@ export async function getContent(id: string): Promise<Content | null> {
   return store.content.find((item) => item.id === id) ?? null;
 }
 
+export async function getNeighbors(content: Content): Promise<{ previousId: string | null; nextId: string | null }> {
+  await delay(80);
+  const rows = sorted().filter((item) => item.type === content.type);
+  const index = rows.findIndex((item) => item.id === content.id);
+  return {
+    previousId: index > 0 ? rows[index - 1].id : null,
+    nextId: index >= 0 && index < rows.length - 1 ? rows[index + 1].id : null,
+  };
+}
+
+/**
+ * Na demonstração a "visita anterior" foi há dois dias e meio: os três itens
+ * mais recentes do exemplo aparecem com o selo Novo.
+ */
+export async function registerVisit(): Promise<string | null> {
+  return new Date(Date.now() - 2.5 * 86_400_000).toISOString();
+}
+
 export async function listRecent(limit = 6, type?: ContentType): Promise<Content[]> {
   await delay();
   const rows = type ? sorted().filter((item) => item.type === type) : sorted();
