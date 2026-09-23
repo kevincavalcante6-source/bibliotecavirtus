@@ -18,7 +18,7 @@ export function ContentCard({ content, priority }: { content: Content; priority?
   return (
     <article className="card">
       <button type="button" className="card__open" onClick={open} aria-label={`Abrir ${content.title}`}>
-        <MediaFrame content={content} src={content.thumbnail_url} priority={priority} />
+        <MediaFrame content={content} src={content.thumbnail_url} priority={priority} natural />
         <span className="card__overlay">
           <span>
             <Icon name="download" size={16} />

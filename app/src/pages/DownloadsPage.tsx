@@ -75,7 +75,7 @@ export function DownloadsPage() {
             {items.map(({ content, at }) => (
               <article className="card" key={content.id}>
                 <Link to={`/w/${content.id}`} state={{ background: location }} className="card__open">
-                  <MediaFrame content={content} src={content.thumbnail_url} />
+                  <MediaFrame content={content} src={content.thumbnail_url} natural />
                 </Link>
 
                 <button

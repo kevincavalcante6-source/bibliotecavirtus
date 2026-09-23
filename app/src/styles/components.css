@@ -59,9 +59,12 @@
 }
 
 /* ==================================================================== grid */
+/* Cada card tem a proporção real do seu arquivo, então as alturas variam.
+   Alinhar pela base mantém os títulos da mesma linha na mesma altura. */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
   gap: var(--s-5) var(--s-3);
 }
 @media (min-width: 700px) {
@@ -595,40 +598,34 @@
 .detail__back:hover {
   border-color: var(--border-hover);
 }
-/* A moldura acompanha a proporção do arquivo: no estreito quem limita é a
-   largura, no amplo é a altura. Em nenhum dos dois sobra faixa. */
+/* A moldura acompanha a proporção do arquivo e cabe inteira no palco:
+   a largura é o menor valor entre o espaço disponível e a altura-limite vezes
+   a proporção. Retrato, quadrado ou paisagem — nada sobra e nada é cortado. */
 .detail__frame {
+  --frame-h: 620px;
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 320px;
+  display: flex;
+  justify-content: center;
 }
 @media (min-width: 700px) {
   .detail__frame {
-    width: auto;
-    max-width: 100%;
-    height: 440px;
+    --frame-h: 440px;
   }
 }
 @media (min-width: 1200px) {
   .detail__frame {
-    height: 540px;
+    --frame-h: 540px;
   }
 }
 .detail__frame .media {
-  width: 100%;
+  flex: none;
+  width: min(100%, calc(var(--frame-h) * var(--ratio, 0.4615)));
   height: auto;
-  max-height: 100%;
   border-radius: var(--r-3);
   border-color: rgba(255, 255, 255, 0.12);
   box-shadow: 0 40px 80px rgba(0, 0, 0, 0.66);
-}
-@media (min-width: 700px) {
-  .detail__frame .media {
-    height: 100%;
-    width: auto;
-    max-width: 100%;
-  }
 }
 
 .detail__info {

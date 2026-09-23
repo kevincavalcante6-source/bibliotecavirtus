@@ -9,9 +9,9 @@ interface Props {
   className?: string;
   /**
    * `natural` faz a moldura assumir a proporção real do arquivo — nada de
-   * sobra em cima e embaixo. É o modo do detalhe e do destaque, onde a peça
-   * aparece sozinha. Nas listagens a moldura é fixa, para a grade ter ritmo:
-   * ali o vazio é preenchido pela própria arte desfocada.
+   * sobra em cima, embaixo ou dos lados. É o modo das listagens, do detalhe e
+   * do destaque. Sem ele a moldura é fixa: só as laterais desfocadas do
+   * carrossel usam, porque ali a arte é apenas ambientação.
    */
   natural?: boolean;
 }
@@ -26,7 +26,12 @@ export function MediaFrame({ content, src, priority = false, className, natural 
 
   const ratio = content.width && content.height ? content.width / content.height : null;
   const shape = !natural && content.type === "widget" ? " media--widget" : "";
-  const style = natural && ratio ? { aspectRatio: String(ratio) } : undefined;
+  // `--ratio` deixa o CSS dimensionar a moldura pelos dois lados (largura e
+  // altura disponíveis) sem nunca ultrapassar o espaço — e sem cortar.
+  const style =
+    natural && ratio
+      ? ({ aspectRatio: String(ratio), "--ratio": String(ratio) } as React.CSSProperties)
+      : undefined;
 
   return (
     <div className={`media${shape}${className ? ` ${className}` : ""}`} style={style}>
