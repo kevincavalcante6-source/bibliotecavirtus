@@ -905,6 +905,104 @@ ul {
   padding: 0;
 }
 
+/* ================================================================ acervo */
+.admin-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  align-items: center;
+}
+.admin-toolbar .search {
+  max-width: none;
+}
+.admin-list {
+  display: grid;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+}
+.admin-row {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  gap: var(--s-3);
+  align-items: center;
+  padding: var(--s-3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-2);
+  background: var(--near-black);
+  transition: border-color var(--transition);
+}
+.admin-row--danger {
+  border-color: rgba(201, 122, 106, 0.35);
+}
+.admin-row__thumb {
+  width: 44px;
+  height: 60px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background-color: var(--dark);
+  background-size: cover;
+  background-position: center;
+}
+.admin-row__title {
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.admin-row__meta {
+  margin-top: var(--s-1);
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.admin-row--danger .admin-row__meta {
+  color: var(--danger);
+}
+.admin-row__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  justify-content: flex-end;
+}
+.admin-row__form {
+  grid-column: 2 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px auto;
+  gap: var(--s-2);
+  align-items: center;
+}
+.admin-row__form input,
+.admin-row__form select {
+  min-height: 44px;
+  width: 100%;
+  padding: 0 var(--s-3);
+  background: var(--dark);
+  border: 1px solid var(--border);
+  border-radius: var(--r-1);
+  font-size: 14px;
+  outline: none;
+}
+.admin-row__form input:focus,
+.admin-row__form select:focus {
+  border-color: var(--border-hover);
+}
+@media (max-width: 700px) {
+  .admin-row {
+    grid-template-columns: 44px minmax(0, 1fr);
+  }
+  .admin-row > .admin-row__actions {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+  .admin-row__form {
+    grid-template-columns: 1fr;
+  }
+  .admin-row__form .admin-row__actions {
+    justify-content: flex-start;
+  }
+}
+
 /* ================================================================= upload */
 .dropzone {
   border: 1px dashed var(--border-hover);

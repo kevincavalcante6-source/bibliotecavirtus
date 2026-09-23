@@ -109,6 +109,32 @@ export async function deleteContent(id: string): Promise<void> {
   store.content = store.content.filter((item) => item.id !== id);
 }
 
+export const CONTENT_COLUMNS = "";
+
+// ----------------------------------------------------------- library admin --
+export async function updateContent(
+  id: string,
+  changes: { title: string; type: ContentType },
+): Promise<Content> {
+  await delay(200);
+  const item = store.content.find((entry) => entry.id === id);
+  if (!item) throw new Error("Conteúdo não encontrado.");
+  item.title = changes.title.trim();
+  item.type = changes.type;
+  item.updated_at = new Date().toISOString();
+  return { ...item };
+}
+
+export async function deleteContentAndFiles(content: Content): Promise<{ filesRemoved: boolean }> {
+  await delay(200);
+  store.content = store.content.filter((item) => item.id !== content.id);
+  store.favorites.delete(content.id);
+  store.downloads = store.downloads.filter((entry) => entry.id !== content.id);
+  write("virtus.demo.favs", [...store.favorites]);
+  write("virtus.demo.downloads", store.downloads);
+  return { filesRemoved: true };
+}
+
 // --------------------------------------------------------------- favorites --
 export async function listFavoriteIds(): Promise<string[]> {
   await delay(120);
@@ -161,6 +187,12 @@ export async function countDownloads(): Promise<number> {
   return store.downloads.length;
 }
 
+/** Tira da lista da pessoa; a contagem do conteúdo continua como estava. */
+export async function hideDownload(_userId: string, contentId: string): Promise<void> {
+  store.downloads = store.downloads.filter((entry) => entry.id !== contentId);
+  write("virtus.demo.downloads", store.downloads);
+}
+
 // ----------------------------------------------------------------- storage --
 export async function uploadWithProgress(
   _bucket: string,
@@ -187,6 +219,8 @@ export async function signedOriginalUrl(path: string): Promise<string> {
 }
 
 export async function removeOriginals(): Promise<void> {}
+
+export async function removeThumbnails(): Promise<void> {}
 
 // ---------------------------------------------------------------- profiles --
 const DEMO_PROFILE: Profile = {

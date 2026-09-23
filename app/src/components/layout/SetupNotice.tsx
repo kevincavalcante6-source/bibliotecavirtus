@@ -17,7 +17,7 @@ export function SetupNotice() {
           Crie um projeto em <code>supabase.com</code>.
         </li>
         <li>
-          Rode <code>supabase/migrations/0001_init.sql</code> no SQL Editor do projeto.
+          Rode os arquivos de <code>supabase/migrations/</code>, em ordem, no SQL Editor do projeto.
         </li>
         <li>
           Copie <code>.env.example</code> para <code>.env.local</code> e preencha{" "}

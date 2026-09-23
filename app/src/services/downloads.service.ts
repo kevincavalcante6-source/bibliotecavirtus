@@ -18,6 +18,7 @@ export async function listDownloads(userId: string): Promise<{ at: string; conte
       "id,user_id,content_id,created_at,content:content_id(id,title,type,file_url,thumbnail_url,width,height,file_size,mime_type,checksum,download_count,created_at,updated_at)",
     )
     .eq("user_id", userId)
+    .is("hidden_at", null)
     .order("created_at", { ascending: false })
     .limit(200);
   if (error) throw error;
@@ -37,7 +38,23 @@ export async function countDownloads(userId: string): Promise<number> {
   const { count, error } = await supabase
     .from("downloads")
     .select("id", { count: "exact", head: true })
-    .eq("user_id", userId);
+    .eq("user_id", userId)
+    .is("hidden_at", null);
   if (error) throw error;
   return count ?? 0;
+}
+
+/**
+ * Tira o conteúdo da lista da pessoa sem apagar o registro: o histórico some
+ * da tela, mas o download continua contando nas métricas. Se ela baixar de
+ * novo, o item volta, porque o novo registro nasce visível.
+ */
+export async function hideDownload(userId: string, contentId: string): Promise<void> {
+  const { error } = await supabase
+    .from("downloads")
+    .update({ hidden_at: new Date().toISOString() })
+    .eq("user_id", userId)
+    .eq("content_id", contentId)
+    .is("hidden_at", null);
+  if (error) throw error;
 }

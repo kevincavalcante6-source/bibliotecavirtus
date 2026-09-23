@@ -17,8 +17,10 @@ em vez de quebrar em silêncio.
 ## Preparando o Supabase
 
 1. Crie um projeto em [supabase.com](https://supabase.com).
-2. No **SQL Editor**, rode `supabase/migrations/0001_init.sql` inteiro. Ele cria
-   as tabelas, as políticas de RLS, as funções e os dois buckets de storage.
+2. No **SQL Editor**, rode os arquivos de `supabase/migrations/` **em ordem**,
+   cada um inteiro: `0001_init.sql` cria as tabelas, as políticas de RLS, as
+   funções e os dois buckets de storage; `0002_downloads_history.sql` permite
+   que cada pessoa tire itens do próprio histórico sem afetar a contagem.
 3. Em **Project Settings → API**, copie `Project URL` e `anon public` para
    `.env.local`.
 4. Crie sua conta pelo próprio app (`/cadastro`) e depois promova-a a

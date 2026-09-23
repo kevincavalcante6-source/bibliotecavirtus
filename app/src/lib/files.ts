@@ -71,6 +71,11 @@ export function objectPath(prefix: string, file: File, checksum: string): string
   return `${prefix}/${checksum.slice(0, 32)}.${ext}`;
 }
 
+/** O thumbnail mora no bucket público com o mesmo nome do original, em WebP. */
+export function thumbnailPathFor(originalPath: string): string {
+  return `${originalPath.replace(/\.[^.]+$/, "")}.webp`;
+}
+
 export function titleFromFilename(name: string): string {
   const base = name.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").trim();
   if (!base) return "Sem título";

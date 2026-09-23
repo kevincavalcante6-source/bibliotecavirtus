@@ -1,25 +1,47 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/auth/AuthProvider";
 import { MediaFrame } from "@/components/content/MediaFrame";
 import { GridSkeleton } from "@/components/states/LoadingState";
 import { EmptyState } from "@/components/states/EmptyState";
 import { ErrorState } from "@/components/states/ErrorState";
+import { useToast } from "@/components/feedback/ToastProvider";
 import { Icon } from "@/components/ui/Icon";
 import { useAsyncData } from "@/hooks/useAsyncData";
 import { useDownload } from "@/hooks/useDownload";
-import { listDownloads } from "@/services/downloads.service";
+import { hideDownload, listDownloads } from "@/services/downloads.service";
+import { readableError } from "@/lib/supabase";
 import { formatDate, plural } from "@/lib/format";
 
 export function DownloadsPage() {
   const { user } = useAuth();
   const location = useLocation();
+  const { notify, notifyError } = useToast();
   const { download, busyId } = useDownload();
   const { data, status, error, reload } = useAsyncData(
     () => (user ? listDownloads(user.id) : Promise.resolve([])),
     [user?.id],
   );
 
-  const items = data ?? [];
+  // Remoções desta visita, aplicadas na hora e desfeitas se o banco recusar.
+  const [hidden, setHidden] = useState<Set<string>>(() => new Set());
+  const items = (data ?? []).filter(({ content }) => !hidden.has(content.id));
+
+  async function remove(contentId: string, title: string) {
+    if (!user) return;
+    setHidden((current) => new Set(current).add(contentId));
+    try {
+      await hideDownload(user.id, contentId);
+      notify(`“${title}” saiu do seu histórico.`);
+    } catch (caught) {
+      setHidden((current) => {
+        const next = new Set(current);
+        next.delete(contentId);
+        return next;
+      });
+      notifyError(readableError(caught, "Não foi possível remover agora."));
+    }
+  }
 
   return (
     <>
@@ -41,8 +63,8 @@ export function DownloadsPage() {
         {status === "error" && <ErrorState message={error ?? undefined} onRetry={reload} />}
         {status === "ready" && items.length === 0 && (
           <EmptyState
-            title="Nenhum download ainda"
-            message="Abra um conteúdo e toque em Baixar: ele aparece aqui depois."
+            title="Nenhum download aqui"
+            message="Abra um conteúdo e toque em Baixar: ele aparece nesta lista."
             actionLabel="Ir para a biblioteca"
             actionTo="/biblioteca"
           />
@@ -55,6 +77,17 @@ export function DownloadsPage() {
                 <Link to={`/w/${content.id}`} state={{ background: location }} className="card__open">
                   <MediaFrame content={content} src={content.thumbnail_url} />
                 </Link>
+
+                <button
+                  type="button"
+                  className="card__fav"
+                  onClick={() => void remove(content.id, content.title)}
+                  aria-label={`Remover ${content.title} do histórico`}
+                  title="Remover do histórico"
+                >
+                  <Icon name="close" size={16} />
+                </button>
+
                 <div className="card__meta">
                   <h3>{content.title}</h3>
                   <p>Baixado em {formatDate(at)}</p>

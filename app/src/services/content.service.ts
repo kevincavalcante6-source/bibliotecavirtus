@@ -3,7 +3,7 @@ import type { Content, ContentType, NewContentInput } from "@/types/models";
 
 export const PAGE_SIZE = 24;
 
-const COLUMNS =
+export const CONTENT_COLUMNS =
   "id,title,type,file_url,thumbnail_url,width,height,file_size,mime_type,checksum,download_count,created_at,updated_at";
 
 export interface ListParams {
@@ -28,7 +28,7 @@ export async function listContent({
 }: ListParams): Promise<Page<Content>> {
   let query = supabase
     .from("content")
-    .select(COLUMNS, { count: "exact" })
+    .select(CONTENT_COLUMNS, { count: "exact" })
     .order("created_at", { ascending: false })
     .range(page * pageSize, page * pageSize + pageSize - 1);
 
@@ -45,7 +45,7 @@ export async function listContent({
 }
 
 export async function getContent(id: string): Promise<Content | null> {
-  const { data, error } = await supabase.from("content").select(COLUMNS).eq("id", id).maybeSingle();
+  const { data, error } = await supabase.from("content").select(CONTENT_COLUMNS).eq("id", id).maybeSingle();
   if (error) throw error;
   return (data as Content) ?? null;
 }
@@ -54,7 +54,7 @@ export async function getContent(id: string): Promise<Content | null> {
 export async function listRecent(limit = 6, type?: ContentType): Promise<Content[]> {
   let query = supabase
     .from("content")
-    .select(COLUMNS)
+    .select(CONTENT_COLUMNS)
     .order("created_at", { ascending: false })
     .limit(limit);
   if (type) query = query.eq("type", type);
@@ -66,13 +66,13 @@ export async function listRecent(limit = 6, type?: ContentType): Promise<Content
 
 export async function listByIds(ids: string[]): Promise<Content[]> {
   if (ids.length === 0) return [];
-  const { data, error } = await supabase.from("content").select(COLUMNS).in("id", ids);
+  const { data, error } = await supabase.from("content").select(CONTENT_COLUMNS).in("id", ids);
   if (error) throw error;
   return (data ?? []) as Content[];
 }
 
 export async function createContent(input: NewContentInput): Promise<Content> {
-  const { data, error } = await supabase.from("content").insert(input).select(COLUMNS).single();
+  const { data, error } = await supabase.from("content").insert(input).select(CONTENT_COLUMNS).single();
   if (error) throw error;
   return data as Content;
 }

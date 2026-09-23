@@ -75,3 +75,9 @@ export async function removeOriginals(paths: string[]): Promise<void> {
   const { error } = await supabase.storage.from(BUCKET_ORIGINALS).remove(paths);
   if (error) throw error;
 }
+
+export async function removeThumbnails(paths: string[]): Promise<void> {
+  if (paths.length === 0) return;
+  const { error } = await supabase.storage.from(BUCKET_THUMBNAILS).remove(paths);
+  if (error) throw error;
+}

@@ -14,6 +14,7 @@ import { SignupPage } from "@/pages/auth/SignupPage";
 import { NewPasswordPage, RecoverPage } from "@/pages/auth/RecoverPages";
 import { AdminLayout } from "@/pages/admin/AdminLayout";
 import { AdminDashboardPage } from "@/pages/admin/AdminDashboardPage";
+import { AdminContentPage } from "@/pages/admin/AdminContentPage";
 import { AdminUploadPage } from "@/pages/admin/AdminUploadPage";
 import { AdminBulkUploadPage } from "@/pages/admin/AdminBulkUploadPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
@@ -72,6 +73,7 @@ export function App() {
             }
           >
             <Route index element={<AdminDashboardPage />} />
+            <Route path="conteudos" element={<AdminContentPage />} />
             <Route path="upload" element={<AdminUploadPage />} />
             <Route path="upload-em-massa" element={<AdminBulkUploadPage />} />
           </Route>

@@ -1,5 +1,5 @@
 import { BUCKET_ORIGINALS, BUCKET_THUMBNAILS } from "@/lib/supabase";
-import { makeThumbnail, objectPath, readImageSize, sha256, validateImage } from "@/lib/files";
+import { makeThumbnail, objectPath, readImageSize, sha256, thumbnailPathFor, validateImage } from "@/lib/files";
 import { createContent, findExistingChecksums } from "@/services/content.service";
 import { publicThumbnailUrl, uploadWithProgress } from "@/services/storage.service";
 import type { Content, ContentType } from "@/types/models";
@@ -57,7 +57,7 @@ export async function uploadContentFile({
 
   let thumbnailUrl: string | null = null;
   if (thumbnail) {
-    const thumbPath = `${originalPath.replace(/\.[^.]+$/, "")}.webp`;
+    const thumbPath = thumbnailPathFor(originalPath);
     await uploadWithProgress(BUCKET_THUMBNAILS, thumbPath, thumbnail, undefined, signal);
     thumbnailUrl = publicThumbnailUrl(thumbPath);
   }
