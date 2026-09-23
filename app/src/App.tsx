@@ -19,6 +19,7 @@ import { AdminContentPage } from "@/pages/admin/AdminContentPage";
 import { AdminUploadPage } from "@/pages/admin/AdminUploadPage";
 import { AdminBulkUploadPage } from "@/pages/admin/AdminBulkUploadPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
+import { GuidePage } from "@/pages/GuidePage";
 
 export function App() {
   const location = useLocation();
@@ -35,6 +36,7 @@ export function App() {
           <Route path="biblioteca" element={<RequireAccess><LibraryPage /></RequireAccess>} />
           <Route path="widgets" element={<RequireAccess><WidgetsPage /></RequireAccess>} />
           <Route path="w/:id" element={<RequireAccess><DetailPage /></RequireAccess>} />
+          <Route path="como-aplicar" element={<RequireAccess><GuidePage /></RequireAccess>} />
 
           <Route path="login" element={<LoginPage />} />
           <Route path="cadastro" element={<SignupPage />} />

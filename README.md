@@ -138,3 +138,18 @@ Sensação desejada: *"Eu quero isso porque combina comigo."*
 - Subir os wallpapers e widgets reais pela área administrativa
 - Nenhuma prova social, número, depoimento, bônus, order bump, upsell ou escassez foi criado —
   esses elementos não existem hoje e não devem ser inventados
+
+## Testar no ar (depois da Vercel)
+
+Coisas que só dão para conferir com o site publicado, num aparelho de verdade:
+
+- **iPhone — salvar nas Fotos:** abrir um wallpaper, tocar em Baixar. Deve abrir o
+  menu de compartilhar com "Salvar imagem"; conferir que a imagem chega às Fotos em
+  resolução original. Testar no Safari **e** no Chrome. Se o menu não abrir, o botão
+  cai no download comum (app Arquivos) — nada quebra, mas vale anotar em qual navegador.
+- **iPhone — fechar o menu sem salvar:** o contador de downloads não deve subir.
+- **Instalar como app:** iPhone (Safari → compartilhar → Adicionar à Tela de Início) e
+  Android (Chrome → ⋮ → Instalar app). Conferir ícone, nome "Virtus" e abertura em
+  tela cheia; entrar com e-mail e senha na primeira vez.
+- **Android e PC:** Baixar deve continuar baixando o arquivo direto.
+- **Guia "Como aplicar":** revisar os textos com o que você já orienta aos compradores.

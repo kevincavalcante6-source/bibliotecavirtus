@@ -8,6 +8,8 @@ import { EmptyState } from "@/components/states/EmptyState";
 import { useAuth } from "@/auth/AuthProvider";
 import { useFavoriteToggle } from "@/hooks/useFavoriteToggle";
 import { useDownload } from "@/hooks/useDownload";
+import { usePreparedOriginal } from "@/hooks/usePreparedOriginal";
+import { savesToPhotosViaShare } from "@/lib/device";
 import { getContent } from "@/services/content.service";
 import { signedOriginalUrl } from "@/services/storage.service";
 import { readableError } from "@/lib/supabase";
@@ -46,6 +48,8 @@ export function ContentDetail({ contentId, onClose }: Props) {
   const [reloadKey, setReloadKey] = useState(0);
 
   const { download, busyId } = useDownload((_id, total) => setDownloads(total));
+  const toPhotos = savesToPhotosViaShare();
+  const prepared = usePreparedOriginal(content, toPhotos ? fullSrc : null);
 
   useEffect(() => {
     let active = true;
@@ -173,7 +177,7 @@ export function ContentDetail({ contentId, onClose }: Props) {
               <button
                 type="button"
                 className="btn btn--gold btn--block"
-                onClick={() => void download(content)}
+                onClick={() => void download(content, prepared.current)}
                 disabled={busyId === content.id}
               >
                 <Icon name="download" size={18} />
@@ -181,6 +185,11 @@ export function ContentDetail({ contentId, onClose }: Props) {
               </button>
               <FavoriteButton content={content} />
             </div>
+
+            <p className="detail__help">
+              {toPhotos && <>No iPhone, toque em “Salvar imagem” para guardar direto nas Fotos. </>}
+              <Link to="/como-aplicar">Como aplicar no celular</Link>
+            </p>
 
             <div className="spec">
               <div>

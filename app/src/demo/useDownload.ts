@@ -22,7 +22,8 @@ export function useDownload(onCounted?: (contentId: string, total: number) => vo
   const [busyId, setBusyId] = useState<string | null>(null);
 
   const download = useCallback(
-    async (content: Content) => {
+    // O segundo argumento (arquivo preparado para o iPhone) não se aplica aqui.
+    async (content: Content, _prepared?: unknown) => {
       if (!session) {
         notify("Entre na sua conta para baixar.");
         navigate("/login", { state: { from: `/w/${content.id}` } });

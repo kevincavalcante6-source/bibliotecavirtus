@@ -88,6 +88,9 @@ export function AppShell() {
                   <Link to="/widgets">Widgets</Link>
                 </li>
                 <li>
+                  <Link to="/como-aplicar">Como aplicar</Link>
+                </li>
+                <li>
                   {session ? <Link to="/perfil">Perfil</Link> : <Link to="/login">Entrar</Link>}
                 </li>
               </ul>

@@ -665,6 +665,21 @@
   gap: var(--s-3);
   margin-top: var(--s-2);
 }
+.detail__help {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.detail__help a {
+  color: var(--secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--border-hover);
+  transition: color var(--transition);
+}
+.detail__help a:hover {
+  color: var(--text);
+}
 .spec {
   margin-top: var(--s-4);
   border-top: 1px solid var(--border);
@@ -679,6 +694,24 @@
 }
 .spec span {
   color: var(--muted);
+}
+.spec span,
+.spec b {
+  white-space: nowrap;
+}
+
+/* Celulares estreitos (iPhone SE, 320px): menos moldura em volta do painel
+   para os botões caberem numa linha só. */
+@media (max-width: 399px) {
+  .detail__panel {
+    padding: var(--s-3);
+  }
+  .detail__info {
+    padding: var(--s-2) 0;
+  }
+  .detail__actions .btn {
+    padding-inline: var(--s-4);
+  }
 }
 .spec b {
   font-weight: 500;
@@ -1093,4 +1126,100 @@ ul {
   font-size: 13px;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
+}
+
+/* =================================================================== guia */
+.segmented {
+  display: inline-flex;
+  padding: 4px;
+  gap: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-2);
+  background: var(--near-black);
+}
+.segmented button {
+  min-height: 40px;
+  padding: 0 var(--s-5);
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color var(--transition), background-color var(--transition);
+}
+.segmented button:hover {
+  color: var(--text);
+}
+.segmented button.is-active {
+  background: var(--dark);
+  color: var(--text);
+}
+
+.guide__list {
+  display: grid;
+  gap: var(--s-4);
+  max-width: 720px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.guide__step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s-5);
+  padding: var(--s-6) var(--s-5);
+  border: 1px solid var(--border);
+  border-radius: var(--r-3);
+  background: var(--near-black);
+}
+@media (min-width: 700px) {
+  .guide__step {
+    padding: var(--s-6) var(--s-7);
+  }
+}
+.guide__index {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  padding-top: 5px;
+}
+.guide__step h2 {
+  font-size: 18px;
+  line-height: 1.35;
+}
+.guide__step ul {
+  display: grid;
+  gap: var(--s-2);
+  margin: var(--s-3) 0 0;
+  padding-left: 1.1em;
+  color: var(--secondary);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.guide__step ul li::marker {
+  color: var(--disabled);
+}
+.guide__note {
+  margin-top: var(--s-4);
+  padding-left: var(--s-3);
+  border-left: 1px solid var(--gold-dark);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.guide__foot {
+  margin-top: var(--s-7);
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.guide__foot a {
+  color: var(--secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--border-hover);
 }

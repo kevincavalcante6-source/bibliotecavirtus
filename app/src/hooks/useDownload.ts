@@ -5,6 +5,9 @@ import { useToast } from "@/components/feedback/ToastProvider";
 import { registerDownload } from "@/services/downloads.service";
 import { signedOriginalUrl } from "@/services/storage.service";
 import { readableError } from "@/lib/supabase";
+import { savesToPhotosViaShare } from "@/lib/device";
+import { shareToPhotos } from "@/lib/shareToPhotos";
+import type { PreparedFile } from "@/hooks/usePreparedOriginal";
 import type { Content } from "@/types/models";
 
 function fileNameFor(content: Content): string {
@@ -20,8 +23,9 @@ function fileNameFor(content: Content): string {
 
 /**
  * Entrega o arquivo original, íntegro: URL assinada do bucket privado, sem
- * recompressão e sem redimensionamento. O registro no banco acontece antes do
- * arquivo abrir, para que o histórico e o contador não dependam do navegador.
+ * recompressão e sem redimensionamento. No download comum o registro no banco
+ * acontece antes do arquivo abrir; no iPhone, depois que a pessoa escolhe o
+ * que fazer no menu — quem fecha o menu sem salvar não conta como download.
  */
 export function useDownload(onCounted?: (contentId: string, total: number) => void) {
   const { session } = useAuth();
@@ -30,7 +34,7 @@ export function useDownload(onCounted?: (contentId: string, total: number) => vo
   const [busyId, setBusyId] = useState<string | null>(null);
 
   const download = useCallback(
-    async (content: Content) => {
+    async (content: Content, prepared?: PreparedFile | null) => {
       if (!session) {
         notify("Entre na sua conta para baixar.");
         navigate("/login", { state: { from: `/w/${content.id}` } });
@@ -39,6 +43,15 @@ export function useDownload(onCounted?: (contentId: string, total: number) => vo
 
       setBusyId(content.id);
       try {
+        if (savesToPhotosViaShare()) {
+          const result = await shareToPhotos(prepared ? await prepared : null, fileNameFor(content));
+          if (result === "cancelled") return;
+          if (result === "shared") {
+            onCounted?.(content.id, await registerDownload(content.id));
+            return;
+          }
+        }
+
         const total = await registerDownload(content.id);
         const url = await signedOriginalUrl(content.file_url, fileNameFor(content));
         onCounted?.(content.id, total);
