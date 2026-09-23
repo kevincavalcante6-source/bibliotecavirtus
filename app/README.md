@@ -34,6 +34,24 @@ em vez de quebrar em silêncio.
 5. Opcional, para desenvolvimento: em **Authentication → Providers → Email**,
    desligue *Confirm email* para entrar sem confirmar o endereço.
 
+## Publicando na Vercel
+
+1. **Add New Project** → importe o repositório.
+2. **Root Directory**: `app` (o projeto não está na raiz do repositório).
+   A Vercel detecta o Vite sozinha: build `npm run build`, saída `dist`.
+3. **Environment Variables**: `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`,
+   os mesmos valores do `.env.local`.
+4. Depois do primeiro deploy, no Supabase, em **Authentication → URL
+   Configuration**: coloque o domínio da Vercel em *Site URL* e adicione
+   `https://SEU-DOMINIO/**` em *Redirect URLs*. Sem isso, os links de
+   confirmação e de recuperação de senha que chegam por e-mail apontam para
+   `localhost`.
+
+O `vercel.json` já cuida das rotas: sem ele, abrir direto `/biblioteca` ou
+recarregar qualquer página que não seja a inicial devolveria 404. Ele também
+define cache longo para os arquivos com hash em `/assets` e três cabeçalhos
+de segurança básicos.
+
 ## Scripts
 
 | Comando | O que faz |
