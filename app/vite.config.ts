@@ -23,6 +23,7 @@ export default defineConfig(({ mode }) => {
               { find: /^@\/services\/.*$/, replacement: at("demo/services.ts") },
               { find: "@/lib/supabase", replacement: at("demo/supabase.ts") },
               { find: "@/auth/AuthProvider", replacement: at("demo/auth.tsx") },
+              { find: "@/hooks/useDownload", replacement: at("demo/useDownload.ts") },
             ]
           : []),
         { find: "@", replacement: src },

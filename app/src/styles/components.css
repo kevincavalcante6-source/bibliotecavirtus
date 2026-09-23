@@ -342,6 +342,7 @@
   z-index: 3;
   height: 400px;
   aspect-ratio: 9 / 19.5;
+  max-width: 100%;
   animation: showcase-in 240ms ease both;
 }
 @keyframes showcase-in {
@@ -594,13 +595,18 @@
 .detail__back:hover {
   border-color: var(--border-hover);
 }
+/* A moldura acompanha a proporção do arquivo: no estreito quem limita é a
+   largura, no amplo é a altura. Em nenhum dos dois sobra faixa. */
 .detail__frame {
   position: relative;
   z-index: 2;
-  height: 300px;
+  width: 100%;
+  max-width: 320px;
 }
 @media (min-width: 700px) {
   .detail__frame {
+    width: auto;
+    max-width: 100%;
     height: 440px;
   }
 }
@@ -610,11 +616,19 @@
   }
 }
 .detail__frame .media {
-  height: 100%;
-  width: auto;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
   border-radius: var(--r-3);
   border-color: rgba(255, 255, 255, 0.12);
   box-shadow: 0 40px 80px rgba(0, 0, 0, 0.66);
+}
+@media (min-width: 700px) {
+  .detail__frame .media {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+  }
 }
 
 .detail__info {

@@ -155,7 +155,7 @@ export function ContentDetail({ contentId, onClose }: Props) {
             </button>
 
             <div className="detail__frame">
-              <MediaFrame content={content} src={display} priority />
+              <MediaFrame content={content} src={display} priority natural />
             </div>
           </div>
 

@@ -109,14 +109,22 @@ export function RecentShowcase({ items }: { items: Content[] }) {
 
           <div className="showcase__fade" aria-hidden="true" />
 
-          <div className="showcase__feature" key={front.id}>
+          <div
+            className="showcase__feature"
+            key={front.id}
+            style={
+              front.width && front.height
+                ? { aspectRatio: String(front.width / front.height) }
+                : undefined
+            }
+          >
             <button
               type="button"
               className="showcase__front"
               onClick={() => navigate(`/w/${front.id}`, { state: { background: location } })}
               aria-label={`Abrir ${front.title}`}
             >
-              <MediaFrame content={front} src={front.thumbnail_url} priority />
+              <MediaFrame content={front} src={front.thumbnail_url} priority natural />
               <span className="showcase__caption">
                 <em>NOVO</em>
                 <b>{front.title}</b>
