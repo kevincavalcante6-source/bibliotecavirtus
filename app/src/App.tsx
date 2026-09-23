@@ -2,7 +2,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import type { Location } from "react-router-dom";
 import { AppShell } from "@/components/layout/AppShell";
 import { DetailOverlay } from "@/components/content/DetailOverlay";
-import { RequireAdmin, RequireAuth } from "@/auth/guards";
+import { RequireAccess, RequireAdmin, RequireAuth } from "@/auth/guards";
 import { HomePage } from "@/pages/HomePage";
 import { LibraryPage, WidgetsPage } from "@/pages/CollectionPage";
 import { DetailPage } from "@/pages/DetailPage";
@@ -29,10 +29,10 @@ export function App() {
     <>
       <Routes location={background ?? location}>
         <Route element={<AppShell />}>
-          <Route index element={<HomePage />} />
-          <Route path="biblioteca" element={<LibraryPage />} />
-          <Route path="widgets" element={<WidgetsPage />} />
-          <Route path="w/:id" element={<DetailPage />} />
+          <Route index element={<RequireAccess><HomePage /></RequireAccess>} />
+          <Route path="biblioteca" element={<RequireAccess><LibraryPage /></RequireAccess>} />
+          <Route path="widgets" element={<RequireAccess><WidgetsPage /></RequireAccess>} />
+          <Route path="w/:id" element={<RequireAccess><DetailPage /></RequireAccess>} />
 
           <Route path="login" element={<LoginPage />} />
           <Route path="cadastro" element={<SignupPage />} />
@@ -42,17 +42,17 @@ export function App() {
           <Route
             path="favoritos"
             element={
-              <RequireAuth>
+              <RequireAccess>
                 <FavoritesPage />
-              </RequireAuth>
+              </RequireAccess>
             }
           />
           <Route
             path="downloads"
             element={
-              <RequireAuth>
+              <RequireAccess>
                 <DownloadsPage />
-              </RequireAuth>
+              </RequireAccess>
             }
           />
           <Route
@@ -84,7 +84,7 @@ export function App() {
 
       {background && (
         <Routes>
-          <Route path="/w/:id" element={<DetailOverlay />} />
+          <Route path="/w/:id" element={<RequireAccess><DetailOverlay /></RequireAccess>} />
         </Routes>
       )}
     </>

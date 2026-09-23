@@ -15,7 +15,7 @@ export function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  const from = (location.state as { from?: string } | null)?.from ?? "/biblioteca";
+  const from = (location.state as { from?: string } | null)?.from ?? "/";
   if (session) return <Navigate to={from} replace />;
 
   async function onSubmit(event: React.FormEvent) {
@@ -37,10 +37,11 @@ export function LoginPage() {
     <div className="wrap">
       <div className="auth">
         <div>
-          <div className="label label--accent">Acesso</div>
+          <div className="label label--accent">Biblioteca Virtus</div>
           <h1 style={{ marginTop: "var(--s-4)" }}>Entrar</h1>
           <p className="lede" style={{ marginTop: "var(--s-3)" }}>
-            Sua conta guarda favoritos e downloads em qualquer aparelho.
+            Acesso exclusivo de quem adquiriu a Biblioteca Virtus. Entre com o e-mail usado
+            na compra.
           </p>
         </div>
 
@@ -80,7 +81,7 @@ export function LoginPage() {
           <Link to="/recuperar">Esqueci minha senha</Link>
         </p>
         <p className="auth__foot">
-          Ainda não tem conta? <Link to="/cadastro">Criar conta</Link>
+          Primeiro acesso depois da compra? <Link to="/cadastro">Criar conta</Link>
         </p>
       </div>
     </div>

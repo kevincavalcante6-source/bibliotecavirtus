@@ -29,6 +29,8 @@ Favoritos · Meus downloads · Admin (painel, envio individual, envio em massa).
 
 ### O que já funciona de ponta a ponta
 
+- Acesso exclusivo de quem comprou: a Cakto avisa o site a cada compra
+  aprovada, reembolso ou chargeback, e o banco libera ou revoga pelo e-mail.
 - Autenticação real (Supabase Auth): criar conta, entrar, sair, sessão
   persistente com refresh de token, recuperação de senha, edição do nome.
 - Biblioteca e Widgets com busca, paginação por rolagem, estados de carregando,
@@ -131,8 +133,8 @@ Sensação desejada: *"Eu quero isso porque combina comigo."*
 
 ## Pendências
 
-- Criar o projeto Supabase e rodar a migração (instruções em `app/README.md`)
+- Criar o projeto Supabase, rodar as migrações e publicar a função da Cakto
+  (instruções em `app/README.md`)
 - Subir os wallpapers e widgets reais pela área administrativa
-- Modalidade de cobrança — marcada como `[DEFINIR MODALIDADE DE ACESSO]` na tela de Acesso
 - Nenhuma prova social, número, depoimento, bônus, order bump, upsell ou escassez foi criado —
   esses elementos não existem hoje e não devem ser inventados

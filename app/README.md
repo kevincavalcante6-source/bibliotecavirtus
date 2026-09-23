@@ -20,7 +20,8 @@ em vez de quebrar em silêncio.
 2. No **SQL Editor**, rode os arquivos de `supabase/migrations/` **em ordem**,
    cada um inteiro: `0001_init.sql` cria as tabelas, as políticas de RLS, as
    funções e os dois buckets de storage; `0002_downloads_history.sql` permite
-   que cada pessoa tire itens do próprio histórico sem afetar a contagem.
+   que cada pessoa tire itens do próprio histórico sem afetar a contagem;
+   `0003_access_control.sql` restringe a biblioteca a quem comprou.
 3. Em **Project Settings → API**, copie `Project URL` e `anon public` para
    `.env.local`.
 4. Crie sua conta pelo próprio app (`/cadastro`) e depois promova-a a
@@ -33,8 +34,80 @@ em vez de quebrar em silêncio.
    O papel só muda por SQL ou pela `service_role`: o cliente não tem privilégio
    de escrita nessa coluna.
 
-5. Opcional, para desenvolvimento: em **Authentication → Providers → Email**,
-   desligue *Confirm email* para entrar sem confirmar o endereço.
+5. Em **Authentication → Providers → Email**, mantenha **Confirm email
+   ligado**. Não é opcional: o acesso é liberado pelo e-mail da compra, e só
+   um e-mail confirmado conta. Com a confirmação desligada, qualquer pessoa
+   poderia criar conta com o e-mail de um comprador e herdar o acesso dele.
+
+## Acesso por compra (Cakto)
+
+A biblioteca é exclusiva de quem comprou. O fluxo:
+
+1. A pessoa compra na Cakto.
+2. A Cakto avisa a função `cakto-webhook`, que libera o e-mail do comprador
+   na tabela `entitlements`. Reembolso e chargeback revogam.
+3. A pessoa recebe o e-mail da Cakto com o link do site, cria a conta **com o
+   mesmo e-mail da compra**, confirma o endereço e entra.
+
+Quem entra sem compra aprovada vê uma tela explicando o que fazer, e o banco
+recusa todo o conteúdo — a proteção é das políticas de RLS, não da tela.
+
+### Configurando
+
+1. **Publique a função** com a verificação de JWT desligada (a Cakto não envia
+   token do Supabase; a autenticação é o segredo no corpo):
+
+   ```bash
+   supabase functions deploy cakto-webhook --no-verify-jwt
+   ```
+
+   Pelo painel também dá: **Edge Functions → Deploy a new function**, colando
+   `index.ts` e `handler.ts`, e desligando *Enforce JWT verification*.
+
+2. **Segredos** em **Edge Functions → Secrets**:
+   - `CAKTO_WEBHOOK_SECRET` — o mesmo segredo que você cadastrar no webhook
+     da Cakto.
+   - `CAKTO_PRODUCT_IDS` — opcional. Se a sua conta Cakto vende outros
+     produtos, liste aqui os ids que dão acesso à biblioteca, separados por
+     vírgula. Vazio, qualquer produto da conta libera.
+
+3. **Na Cakto**, crie o webhook apontando para
+   `https://SEU-PROJETO.supabase.co/functions/v1/cakto-webhook`, com os
+   eventos **Compra aprovada**, **Reembolso** e **Chargeback**.
+
+4. **Teste antes de vender.** Use o envio de teste da Cakto e confira a tabela
+   `cakto_events` no Supabase. A coluna `outcome` diz o que aconteceu:
+
+   | outcome | significado |
+   | --- | --- |
+   | `granted` | acesso liberado |
+   | `revoked` | acesso revogado (reembolso ou chargeback) |
+   | `no_email` | o e-mail não foi encontrado no evento — veja abaixo |
+   | `other_product` | produto fora de `CAKTO_PRODUCT_IDS` |
+   | `ignored_event` | evento que não mexe em acesso |
+
+   O evento chega cru na coluna `payload`. Se aparecer `no_email`, o e-mail
+   veio num campo que a função ainda não procura: o caminho esperado é
+   `data.customer.email`, e a lista de alternativas está em `handler.ts`.
+
+### Exceções pelo SQL Editor
+
+Liberar alguém à mão (cortesia, e-mail digitado errado na compra):
+
+```sql
+insert into public.entitlements (email, status, source)
+values ('pessoa@exemplo.com', 'active', 'manual')
+on conflict (email) do update set status = 'active', revoked_at = null;
+```
+
+Revogar:
+
+```sql
+update public.entitlements set status = 'revoked', revoked_at = now()
+where email = 'pessoa@exemplo.com';
+```
+
+O e-mail vai sempre em minúsculas.
 
 ## Publicando na Vercel
 
@@ -62,6 +135,7 @@ de segurança básicos.
 | `npm run build` | typecheck + build de produção |
 | `npm run preview` | serve o build |
 | `npm run typecheck` | só a checagem de tipos |
+| `npm run test:webhook` | testes da lógica do webhook da Cakto |
 
 ## Organização
 

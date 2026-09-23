@@ -35,6 +35,7 @@ export function readableError(error: unknown, fallback = "Não foi possível com
   };
   if (map[message]) return map[message];
   if (message.includes("duplicate key")) return "Esse conteúdo já está na biblioteca.";
+  if (message.includes("acesso não liberado")) return "Seu acesso ainda não foi liberado para este e-mail.";
   if (message.includes("row-level security") || message.includes("42501")) {
     return "Você não tem permissão para esta operação.";
   }

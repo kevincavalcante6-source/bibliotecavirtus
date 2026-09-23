@@ -5,7 +5,7 @@ import { useAuth } from "@/auth/AuthProvider";
 const navClass = ({ isActive }: { isActive: boolean }) => (isActive ? "is-active" : undefined);
 
 export function AppShell() {
-  const { session, isAdmin } = useAuth();
+  const { session, isAdmin, hasAccess } = useAuth();
 
   return (
     <>
@@ -17,15 +17,19 @@ export function AppShell() {
           </Link>
 
           <nav className="top-nav">
-            <NavLink to="/biblioteca" className={navClass}>
-              Biblioteca
-            </NavLink>
-            <NavLink to="/widgets" className={navClass}>
-              Widgets
-            </NavLink>
-            <NavLink to="/favoritos" className={navClass}>
-              Favoritos
-            </NavLink>
+            {hasAccess && (
+              <>
+                <NavLink to="/biblioteca" className={navClass}>
+                  Biblioteca
+                </NavLink>
+                <NavLink to="/widgets" className={navClass}>
+                  Widgets
+                </NavLink>
+                <NavLink to="/favoritos" className={navClass}>
+                  Favoritos
+                </NavLink>
+              </>
+            )}
             {isAdmin && (
               <NavLink to="/admin" className={navClass}>
                 Admin
@@ -42,9 +46,15 @@ export function AppShell() {
             )}
           </nav>
 
-          <NavLink className="icon-btn" to="/biblioteca" aria-label="Buscar na biblioteca">
-            <Icon name="search" />
-          </NavLink>
+          {hasAccess ? (
+            <NavLink className="icon-btn" to="/biblioteca" aria-label="Buscar na biblioteca">
+              <Icon name="search" />
+            </NavLink>
+          ) : (
+            <NavLink className="btn btn--secondary btn--sm site-header__enter" to={session ? "/perfil" : "/login"}>
+              {session ? "Perfil" : "Entrar"}
+            </NavLink>
+          )}
         </div>
       </header>
 
@@ -116,6 +126,7 @@ export function AppShell() {
         </div>
       </footer>
 
+      {hasAccess && (
       <nav className="tabbar" aria-label="Navegação principal">
         <NavLink to="/" end className={navClass}>
           <Icon name="home" size={20} />
@@ -134,6 +145,7 @@ export function AppShell() {
           {session ? "Perfil" : "Entrar"}
         </NavLink>
       </nav>
+      )}
     </>
   );
 }

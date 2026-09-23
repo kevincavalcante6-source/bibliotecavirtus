@@ -415,6 +415,13 @@ img {
   }
 }
 
+/* No mobile, sem a barra inferior, o "Entrar" fica visível no topo. */
+@media (min-width: 900px) {
+  .site-header__enter {
+    display: none;
+  }
+}
+
 .tabbar {
   position: fixed;
   left: 0;

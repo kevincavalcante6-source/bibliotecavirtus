@@ -16,7 +16,7 @@ export function SignupPage() {
   const [pending, setPending] = useState(false);
   const [confirmationSent, setConfirmationSent] = useState(false);
 
-  if (session) return <Navigate to="/biblioteca" replace />;
+  if (session) return <Navigate to="/" replace />;
 
   async function onSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -32,7 +32,7 @@ export function SignupPage() {
         setConfirmationSent(true);
       } else {
         notify("Conta criada.");
-        navigate("/biblioteca", { replace: true });
+        navigate("/", { replace: true });
       }
     } catch (caught) {
       setError(readableError(caught, "Não foi possível criar a conta."));
@@ -48,7 +48,7 @@ export function SignupPage() {
           <div className="label label--accent">Acesso</div>
           <h1 style={{ marginTop: "var(--s-4)" }}>Criar conta</h1>
           <p className="lede" style={{ marginTop: "var(--s-3)" }}>
-            Favoritos e downloads ficam vinculados à sua conta.
+            Use o mesmo e-mail da compra — é ele que libera o seu acesso.
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export function SignupPage() {
             </div>
 
             <div className="field">
-              <label htmlFor="email">E-mail</label>
+              <label htmlFor="email">E-mail da compra</label>
               <input
                 id="email"
                 type="email"

@@ -18,6 +18,9 @@ interface AuthContextValue {
   profile: Profile | null;
   loading: boolean;
   isAdmin: boolean;
+  hasAccess: boolean;
+  accessChecking: boolean;
+  refreshAccess: () => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, displayName: string) => Promise<{ needsConfirmation: boolean }>;
   signOut: () => Promise<void>;
@@ -75,6 +78,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       profile: email ? profile : null,
       loading: false,
       isAdmin: Boolean(email) && profile?.role === "admin",
+      // Só na demonstração: um e-mail com "semcompra" mostra a tela de quem
+      // ainda não tem compra aprovada.
+      hasAccess: Boolean(email) && !/semcompra/i.test(email ?? ""),
+      accessChecking: false,
+      async refreshAccess() {},
 
       async signIn(address) {
         await enter(address);

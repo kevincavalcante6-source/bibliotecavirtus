@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
 import { getProfile, updateDisplayName as persistDisplayName } from "@/services/profiles.service";
+import { checkAccess } from "@/services/access.service";
 import type { Profile } from "@/types/models";
 
 interface AuthContextValue {
@@ -11,6 +12,10 @@ interface AuthContextValue {
   profile: Profile | null;
   loading: boolean;
   isAdmin: boolean;
+  /** Comprou (ou é admin) e confirmou o e-mail: pode usar a biblioteca. */
+  hasAccess: boolean;
+  accessChecking: boolean;
+  refreshAccess: () => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, displayName: string) => Promise<{ needsConfirmation: boolean }>;
   signOut: () => Promise<void>;
@@ -26,7 +31,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  // O resultado guarda a quem se refere: logo após o login a sessão já existe
+  // mas a verificação ainda não voltou, e isso conta como "verificando" — nunca
+  // como "sem acesso", que faria a tela de bloqueio piscar para quem comprou.
+  const [access, setAccess] = useState<{ uid: string | null; state: "checking" | "granted" | "denied" }>(
+    { uid: null, state: "denied" },
+  );
   const loadedFor = useRef<string | null>(null);
+  const accessTicket = useRef(0);
 
   // A sessão vem do Supabase (JWT + refresh token em storage gerido pelo SDK)
   // e é revalidada no servidor a cada requisição. Nada aqui concede acesso.
@@ -60,6 +72,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  const loadAccess = useCallback(async (uid: string) => {
+    const ticket = ++accessTicket.current;
+    setAccess({ uid, state: "checking" });
+    let granted = false;
+    try {
+      granted = await checkAccess();
+    } catch {
+      granted = false;
+    }
+    if (ticket === accessTicket.current) setAccess({ uid, state: granted ? "granted" : "denied" });
+  }, []);
+
+  useEffect(() => {
+    if (!userId) {
+      accessTicket.current += 1;
+      setAccess({ uid: null, state: "denied" });
+      return;
+    }
+    void loadAccess(userId);
+  }, [userId, loadAccess]);
+
   useEffect(() => {
     if (!userId) {
       setProfile(null);
@@ -78,6 +111,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       profile,
       loading,
       isAdmin: profile?.role === "admin",
+      hasAccess: access.uid === userId && access.state === "granted",
+      accessChecking: userId !== null && (access.uid !== userId || access.state === "checking"),
+      async refreshAccess() {
+        if (userId) await loadAccess(userId);
+      },
 
       async signIn(email, password) {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -120,7 +158,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (userId) await loadProfile(userId);
       },
     }),
-    [session, profile, loading, userId, loadProfile],
+    [session, profile, loading, userId, loadProfile, access, loadAccess],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

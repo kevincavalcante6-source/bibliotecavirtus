@@ -241,6 +241,12 @@ export async function updateDisplayName(_userId: string, displayName: string): P
   return { ...DEMO_PROFILE, display_name: displayName };
 }
 
+// ------------------------------------------------------------------ access --
+/** Na demonstração, quem entra é tratado como comprador. */
+export async function checkAccess(): Promise<boolean> {
+  return true;
+}
+
 // ------------------------------------------------------------------- admin --
 export async function fetchAdminStats(): Promise<AdminStats> {
   await delay();
