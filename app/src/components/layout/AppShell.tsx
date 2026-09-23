@@ -2,6 +2,9 @@ import { NavLink, Link, Outlet } from "react-router-dom";
 import { Icon } from "@/components/ui/Icon";
 import { useAuth } from "@/auth/AuthProvider";
 
+/** Os atalhos de busca abrem a biblioteca já com o campo de busca pronto. */
+const FOCUS_SEARCH = { focusSearch: true };
+
 const navClass = ({ isActive }: { isActive: boolean }) => (isActive ? "is-active" : undefined);
 
 export function AppShell() {
@@ -47,7 +50,7 @@ export function AppShell() {
           </nav>
 
           {hasAccess ? (
-            <NavLink className="icon-btn" to="/biblioteca" aria-label="Buscar na biblioteca">
+            <NavLink className="icon-btn" to="/biblioteca" state={FOCUS_SEARCH} aria-label="Buscar na biblioteca">
               <Icon name="search" />
             </NavLink>
           ) : (
@@ -132,7 +135,7 @@ export function AppShell() {
           <Icon name="home" size={20} />
           Início
         </NavLink>
-        <NavLink to="/biblioteca" className={navClass}>
+        <NavLink to="/biblioteca" state={FOCUS_SEARCH} className={navClass}>
           <Icon name="search" size={20} />
           Buscar
         </NavLink>

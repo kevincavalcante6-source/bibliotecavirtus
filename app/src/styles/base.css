@@ -486,10 +486,17 @@ img {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--s-6) var(--s-5);
 }
+/* No celular o contato ocupa a linha inteira: o e-mail cabe sem quebrar. */
+.site-footer__cols > :nth-child(3) {
+  grid-column: 1 / -1;
+}
 @media (min-width: 620px) {
   .site-footer__cols {
     grid-template-columns: repeat(3, auto);
     gap: var(--s-8);
+  }
+  .site-footer__cols > :nth-child(3) {
+    grid-column: auto;
   }
 }
 .site-footer__title {
@@ -512,7 +519,7 @@ img {
   font-size: 14px;
   color: var(--secondary);
   transition: color var(--transition);
-  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 .site-footer__cols a:hover {
   color: var(--text);

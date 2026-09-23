@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { ContentGrid } from "@/components/content/ContentGrid";
 import { GridSkeleton } from "@/components/states/LoadingState";
 import { EmptyState } from "@/components/states/EmptyState";
@@ -23,6 +24,14 @@ export function CollectionPage({ type, eyebrow, title, lede, searchPlaceholder }
   const search = useDebouncedValue(term);
   const feed = useContentFeed(type, search);
   const isWidget = type === "widget";
+  const location = useLocation();
+  const input = useRef<HTMLInputElement | null>(null);
+  const focusSearch = Boolean((location.state as { focusSearch?: boolean } | null)?.focusSearch);
+
+  // Vindo de "Buscar": o campo já recebe o foco (no celular, abre o teclado).
+  useEffect(() => {
+    if (focusSearch) input.current?.focus({ preventScroll: true });
+  }, [focusSearch, location.key]);
 
   return (
     <>
@@ -37,6 +46,7 @@ export function CollectionPage({ type, eyebrow, title, lede, searchPlaceholder }
             Buscar
           </label>
           <input
+            ref={input}
             id="busca"
             type="search"
             value={term}

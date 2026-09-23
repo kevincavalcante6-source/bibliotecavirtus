@@ -1,6 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import type { Location } from "react-router-dom";
 import { AppShell } from "@/components/layout/AppShell";
+import { ScrollManager } from "@/components/layout/ScrollManager";
 import { DetailOverlay } from "@/components/content/DetailOverlay";
 import { RequireAccess, RequireAdmin, RequireAuth } from "@/auth/guards";
 import { HomePage } from "@/pages/HomePage";
@@ -27,6 +28,7 @@ export function App() {
 
   return (
     <>
+      <ScrollManager />
       <Routes location={background ?? location}>
         <Route element={<AppShell />}>
           <Route index element={<RequireAccess><HomePage /></RequireAccess>} />
