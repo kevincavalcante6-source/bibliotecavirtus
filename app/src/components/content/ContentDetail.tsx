@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MediaFrame } from "@/components/content/MediaFrame";
 import { Icon } from "@/components/ui/Icon";
@@ -10,6 +10,7 @@ import { useFavoriteToggle } from "@/hooks/useFavoriteToggle";
 import { useDownload } from "@/hooks/useDownload";
 import { usePreparedOriginal } from "@/hooks/usePreparedOriginal";
 import { useBrowse } from "@/hooks/useBrowse";
+import type { Direction } from "@/hooks/useBrowse";
 import { savesToPhotosViaShare } from "@/lib/device";
 import { getContent } from "@/services/content.service";
 import { signedOriginalUrl } from "@/services/storage.service";
@@ -55,6 +56,12 @@ export function ContentDetail({ contentId, onClose }: Props) {
   const toPhotos = savesToPhotosViaShare();
   const prepared = usePreparedOriginal(content, toPhotos ? fullSrc : null);
   const { previousId, nextId, go, direction } = useBrowse(content);
+  // A animação de entrada pertence ao item que chega — decidida no instante
+  // em que ele entra. Se viesse direto da navegação, o item que está saindo
+  // também animaria, e a troca pareceria acontecer duas vezes.
+  const [enter, setEnter] = useState<Direction | null>(null);
+  const directionRef = useRef(direction);
+  directionRef.current = direction;
 
   // Trocando pelas setas, o item atual fica na tela até o próximo chegar:
   // nada de tela de carregamento piscando entre um e outro.
@@ -74,6 +81,8 @@ export function ContentDetail({ contentId, onClose }: Props) {
           setStatus("missing");
           return;
         }
+        const switching = shownId.current !== null && shownId.current !== item.id;
+        setEnter(switching ? directionRef.current : null);
         shownId.current = item.id;
         setContent(item);
         setFullSrc(null);
@@ -143,13 +152,30 @@ export function ContentDetail({ contentId, onClose }: Props) {
     const start = touch.current;
     touch.current = null;
     if (!start) return;
+    const dx = event.changedTouches[0].clientX - start.x;
+    const direction: Direction = dx < 0 ? 1 : -1;
+    const target = direction === 1 ? nextId : previousId;
+    if (start.axis === "x" && Math.abs(dx) > SWIPE_THRESHOLD && target) {
+      // Troca: a arte fica onde o dedo soltou até o próximo item entrar —
+      // voltar ao centro antes faria um vai-e-volta.
+      go(direction);
+      return;
+    }
     if (frame.current) {
       frame.current.style.transition = "";
       frame.current.style.transform = "";
     }
-    const dx = event.changedTouches[0].clientX - start.x;
-    if (start.axis === "x" && Math.abs(dx) > SWIPE_THRESHOLD) go(dx < 0 ? 1 : -1);
   }
+
+  // O próximo item chegou (ou a troca falhou): a moldura volta ao lugar sem
+  // transição, e quem se move é só a animação de entrada do item novo.
+  useLayoutEffect(() => {
+    if (!frame.current) return;
+    frame.current.style.transition = "none";
+    frame.current.style.transform = "";
+    void frame.current.offsetWidth;
+    frame.current.style.transition = "";
+  }, [content?.id, status]);
 
   if (status === "loading") {
     return (
@@ -228,7 +254,7 @@ export function ContentDetail({ contentId, onClose }: Props) {
             <div className="detail__frame" ref={frame}>
               <div
                 key={content.id}
-                className={`detail__swap${direction ? ` detail__swap--${direction === 1 ? "next" : "prev"}` : ""}`}
+                className={`detail__swap${enter ? ` detail__swap--${enter === 1 ? "next" : "prev"}` : ""}`}
               >
                 <MediaFrame key={content.id} content={content} src={display} priority natural />
               </div>
