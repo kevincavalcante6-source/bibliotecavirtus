@@ -20,11 +20,10 @@ Em qualquer etapa, é só chamar que fazemos juntos.
 
 - [ ] Criar o projeto em [supabase.com](https://supabase.com). Anotar a senha do
       banco num lugar seguro.
-- [ ] **SQL Editor:** rodar as migrações **em ordem**, cada arquivo inteiro:
-  - [ ] `supabase/migrations/0001_init.sql`
-  - [ ] `supabase/migrations/0002_downloads_history.sql`
-  - [ ] `supabase/migrations/0003_access_control.sql`
-  - [ ] `supabase/migrations/0004_visits.sql`
+- [ ] **SQL Editor → New query:** colar o arquivo
+      [`supabase/setup-completo.sql`](supabase/setup-completo.sql) **inteiro** e
+      clicar em **Run**, uma vez só. Ele já traz as 4 partes do banco na ordem
+      certa. Se aparecer erro, nada fica pela metade — me mande o print.
 - [ ] **Project Settings → API:** copiar `Project URL` e a chave `anon public`
       (vão para a Vercel no passo 3).
 - [ ] **Authentication → Providers → Email:** conferir que **Confirm email está
@@ -67,9 +66,9 @@ Em qualquer etapa, é só chamar que fazemos juntos.
 - [ ] Usar um remetente com a sua marca (ex.: `acesso@seudominio.com`).
 
 ### 4.3 Textos dos e-mails em português
-- [ ] **Authentication → Email Templates:** traduzir e ajustar
-      *Confirm signup* e *Reset password* (vêm em inglês).
-      *(Posso escrever os textos no tom da marca.)*
+- [ ] **Authentication → Email Templates:** colar os modelos prontos da pasta
+      [`supabase/email-templates/`](supabase/email-templates/) — *Confirm signup*
+      e *Reset Password*, com os assuntos indicados no `LEIA-ME.md` de lá.
 
 ## 5. Sua conta de administrador e o conteúdo
 

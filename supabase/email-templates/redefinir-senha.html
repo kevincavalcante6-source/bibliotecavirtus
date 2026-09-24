@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="supported-color-schemes" content="dark" />
+    <title>Biblioteca Virtus</title>
+  </head>
+  <body style="margin:0;padding:0;background:#050505;">
+    <!-- Texto de prévia (aparece ao lado do assunto na caixa de entrada) -->
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Crie uma nova senha para a sua conta da Biblioteca Virtus.</div>
+
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#050505;">
+      <tr>
+        <td align="center" style="padding:40px 16px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:520px;background:#0A0A0A;border:1px solid #1F1F1E;border-radius:16px;">
+            <tr>
+              <td style="padding:40px 36px 8px;font-family:Inter,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;">
+                <img src="{{ .SiteURL }}/icon-192.png" width="48" height="48" alt="Virtus Mind" style="display:block;border:0;border-radius:11px;" />
+                <p style="margin:28px 0 0;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#C8A96A;">Biblioteca Virtus</p>
+                <h1 style="margin:12px 0 20px;font-size:26px;line-height:1.25;font-weight:700;color:#F5F5F0;">Vamos criar uma nova senha.</h1>
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#A8A8A2;">Recebemos um pedido para redefinir a senha da sua conta.</p>
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#A8A8A2;">Toque no botão abaixo para escolher uma nova senha. Por segurança, o link expira em pouco tempo.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:12px 36px 8px;font-family:Inter,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;">
+                <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:15px 28px;background:#F5F5F0;border-radius:12px;font-size:15px;font-weight:600;color:#050505;text-decoration:none;">Criar nova senha</a>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:24px 36px 36px;font-family:Inter,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;">
+                <p style="margin:0 0 8px;font-size:13px;line-height:1.6;color:#6F6F69;">Se o botão não funcionar, copie e cole este endereço no navegador:</p>
+                <p style="margin:0 0 24px;font-size:13px;line-height:1.5;word-break:break-all;"><a href="{{ .ConfirmationURL }}" style="color:#A8A8A2;text-decoration:underline;">{{ .ConfirmationURL }}</a></p>
+                <p style="margin:0;padding-top:20px;border-top:1px solid #1F1F1E;font-size:13px;line-height:1.6;color:#6F6F69;">Se não foi você que pediu, ignore este e-mail: sua senha continua a mesma.</p>
+              </td>
+            </tr>
+          </table>
+
+          <p style="margin:24px 0 0;font-family:Inter,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#6F6F69;">
+            Biblioteca Virtus · Virtus Mind<br />
+            Dúvidas: <a href="mailto:mindvirtus24@gmail.com" style="color:#A8A8A2;">mindvirtus24@gmail.com</a>
+          </p>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
