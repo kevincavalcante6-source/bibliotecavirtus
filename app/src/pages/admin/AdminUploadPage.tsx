@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { useToast } from "@/components/feedback/ToastProvider";
 import { readImageSize, titleFromFilename, validateImage } from "@/lib/files";
 import type { ImageSize } from "@/lib/files";
 import { ratioLabel, sameFormat } from "@/lib/aspect";
+import { readTitle, releaseOcr } from "@/lib/ocr";
 import { useWallpaperStandard } from "@/hooks/useWallpaperStandard";
 import { formatBytes } from "@/lib/format";
 import { readableError } from "@/lib/supabase";
@@ -22,6 +23,12 @@ export function AdminUploadPage() {
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<string | null>(null);
   const [size, setSize] = useState<ImageSize | null>(null);
+  const [reading, setReading] = useState(false);
+  const [titleFromArt, setTitleFromArt] = useState(false);
+  const titleEdited = useRef(false);
+  const pickId = useRef(0);
+
+  useEffect(() => () => void releaseOcr(), []);
   const standard = useWallpaperStandard();
 
   // Só avisa: o arquivo sobe inteiro do mesmo jeito. É para nenhum wallpaper
@@ -34,6 +41,8 @@ export function AdminUploadPage() {
     setDone(null);
     if (preview) URL.revokeObjectURL(preview);
     setSize(null);
+    pickId.current += 1;
+    setReading(false);
     if (!selected) {
       setFile(null);
       setPreview(null);
@@ -48,10 +57,24 @@ export function AdminUploadPage() {
     }
     setFile(selected);
     setPreview(URL.createObjectURL(selected));
+    setTitleFromArt(false);
+    titleEdited.current = false;
+    setTitle(titleFromFilename(selected.name));
+
+    // A frase da arte vira o título sugerido — se você não tiver digitado antes.
+    const id = ++pickId.current;
+    setReading(true);
+    void readTitle(selected).then((found) => {
+      if (id !== pickId.current) return;
+      setReading(false);
+      if (found && !titleEdited.current) {
+        setTitle(found);
+        setTitleFromArt(true);
+      }
+    });
     readImageSize(selected)
       .then(setSize)
       .catch(() => setSize(null));
-    if (!title) setTitle(titleFromFilename(selected.name));
   }
 
   async function onSubmit(event: React.FormEvent) {
@@ -112,8 +135,14 @@ export function AdminUploadPage() {
           type="text"
           value={title}
           maxLength={120}
-          onChange={(event) => setTitle(event.target.value)}
+          onChange={(event) => {
+            titleEdited.current = true;
+            setTitleFromArt(false);
+            setTitle(event.target.value);
+          }}
         />
+        {reading && <span className="hint">Lendo a frase da arte…</span>}
+        {!reading && titleFromArt && <span className="hint">Título lido da arte — confira antes de publicar.</span>}
       </div>
 
       <div className="field">

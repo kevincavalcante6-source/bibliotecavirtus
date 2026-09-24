@@ -107,10 +107,14 @@ export function AdminBulkUploadPage() {
               type="button"
               className="btn btn--primary"
               onClick={() => void onStart()}
-              disabled={queue.running || queue.summary.pending === 0}
+              disabled={queue.running || queue.summary.pending === 0 || queue.summary.reading > 0}
             >
               <Icon name="upload" size={18} />
-              {queue.running ? "Enviando…" : `Enviar ${queue.summary.pending} arquivo(s)`}
+              {queue.running
+                ? "Enviando…"
+                : queue.summary.reading > 0
+                  ? `Lendo os títulos… ${queue.summary.total - queue.summary.reading}/${queue.summary.total}`
+                  : `Enviar ${queue.summary.pending} arquivo(s)`}
             </button>
             <button
               type="button"
@@ -126,6 +130,11 @@ export function AdminBulkUploadPage() {
               {queue.summary.duplicated > 0 && ` · ${plural(queue.summary.duplicated, "duplicado", "duplicados")}`}
             </span>
           </div>
+
+          <p className="upload-hint">
+            Os títulos vêm da frase escrita em cada arte. Confira antes de enviar — é só tocar no
+            título para corrigir.
+          </p>
 
           {offCount > 0 && standard && (
             <p className="notice notice--warn">
@@ -157,7 +166,7 @@ export function AdminBulkUploadPage() {
                     className="queue__name"
                     value={item.title}
                     aria-label={`Título de ${item.file.name}`}
-                    disabled={item.status === "uploading" || item.status === "done"}
+                    disabled={item.status === "uploading" || item.status === "done" || item.reading}
                     onChange={(event) => queue.setTitle(item.id, event.target.value)}
                     style={{
                       width: "100%",
@@ -176,7 +185,7 @@ export function AdminBulkUploadPage() {
                           : ""
                     }`}
                   >
-                    {STATUS_LABEL[item.status]} · {formatBytes(item.file.size)}
+                    {item.reading ? "Lendo o texto da arte…" : STATUS_LABEL[item.status]} · {formatBytes(item.file.size)}
                     {item.error && ` · ${item.error}`}
                     {offFormat(item) && <span className="queue__warn"> · formato {offFormat(item)}</span>}
                   </div>

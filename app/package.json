@@ -9,13 +9,15 @@
     "preview": "vite preview",
     "typecheck": "tsc -b --pretty",
     "test:webhook": "esbuild ../supabase/functions/cakto-webhook/handler.ts --format=esm --log-level=warning --outfile=../supabase/functions/cakto-webhook/handler.build.mjs && node --test ../supabase/functions/cakto-webhook/handler.test.mjs",
-    "test:share": "esbuild src/lib/shareToPhotos.ts --format=esm --outfile=tests/.build/shareToPhotos.mjs --log-level=warning && node --test tests/shareToPhotos.test.mjs"
+    "test:share": "esbuild src/lib/shareToPhotos.ts --format=esm --outfile=tests/.build/shareToPhotos.mjs --log-level=warning && node --test tests/shareToPhotos.test.mjs",
+    "test:ocr": "esbuild src/lib/ocrTitle.ts --format=esm --outfile=tests/.build/ocrTitle.mjs --log-level=warning && node --test tests/ocrTitle.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.47.10",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-router-dom": "6.28.0"
+    "react-router-dom": "6.28.0",
+    "tesseract.js": "^5.1.1"
   },
   "devDependencies": {
     "@types/react": "18.3.12",

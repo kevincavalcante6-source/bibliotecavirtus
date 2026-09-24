@@ -1327,3 +1327,9 @@ ul {
 .queue__warn {
   color: var(--accent);
 }
+
+.upload-hint {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
