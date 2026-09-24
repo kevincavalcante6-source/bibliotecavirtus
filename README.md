@@ -133,6 +133,9 @@ Sensação desejada: *"Eu quero isso porque combina comigo."*
 
 ## Pendências
 
+**Checklist completo do lançamento (Supabase, Vercel, Cakto, testes):
+[`LANCAMENTO.md`](LANCAMENTO.md).**
+
 - Criar o projeto Supabase, rodar as migrações e publicar a função da Cakto
   (instruções em `app/README.md`)
 - Subir os wallpapers e widgets reais pela área administrativa
