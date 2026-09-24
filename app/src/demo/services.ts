@@ -94,6 +94,12 @@ export async function registerVisit(): Promise<string | null> {
   return new Date(Date.now() - 2.5 * 86_400_000).toISOString();
 }
 
+export async function listWallpaperSizes(): Promise<{ width: number; height: number }[]> {
+  return store.content
+    .filter((item) => item.type === "wallpaper" && item.width && item.height)
+    .map((item) => ({ width: item.width!, height: item.height! }));
+}
+
 export async function listRecent(limit = 6, type?: ContentType): Promise<Content[]> {
   await delay();
   const rows = type ? sorted().filter((item) => item.type === type) : sorted();

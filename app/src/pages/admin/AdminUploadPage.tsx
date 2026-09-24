@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { useToast } from "@/components/feedback/ToastProvider";
-import { titleFromFilename, validateImage } from "@/lib/files";
+import { readImageSize, titleFromFilename, validateImage } from "@/lib/files";
+import type { ImageSize } from "@/lib/files";
+import { ratioLabel, sameFormat } from "@/lib/aspect";
+import { useWallpaperStandard } from "@/hooks/useWallpaperStandard";
 import { formatBytes } from "@/lib/format";
 import { readableError } from "@/lib/supabase";
 import { DuplicateError, uploadContentFile } from "@/services/upload.service";
@@ -18,11 +21,19 @@ export function AdminUploadPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<string | null>(null);
+  const [size, setSize] = useState<ImageSize | null>(null);
+  const standard = useWallpaperStandard();
+
+  // Só avisa: o arquivo sobe inteiro do mesmo jeito. É para nenhum wallpaper
+  // entrar com outro formato sem você perceber.
+  const offFormat =
+    type === "wallpaper" && standard && size && !sameFormat(size, standard) ? ratioLabel(size) : null;
 
   function pick(selected: File | null) {
     setError(null);
     setDone(null);
     if (preview) URL.revokeObjectURL(preview);
+    setSize(null);
     if (!selected) {
       setFile(null);
       setPreview(null);
@@ -37,6 +48,9 @@ export function AdminUploadPage() {
     }
     setFile(selected);
     setPreview(URL.createObjectURL(selected));
+    readImageSize(selected)
+      .then(setSize)
+      .catch(() => setSize(null));
     if (!title) setTitle(titleFromFilename(selected.name));
   }
 
@@ -109,6 +123,14 @@ export function AdminUploadPage() {
           <option value="widget">Widget</option>
         </select>
       </div>
+
+      {offFormat && size && standard && (
+        <p className="notice notice--warn">
+          <b>Formato diferente do padrão.</b> Este arquivo é {offFormat} ({size.width} × {size.height}); a
+          maioria dos wallpapers da biblioteca é {standard.label}. Ele pode ser publicado assim — vai
+          aparecer inteiro, mas com outro tamanho nas listas.
+        </p>
+      )}
 
       {busy && (
         <div className="bar" aria-label="Progresso do envio">

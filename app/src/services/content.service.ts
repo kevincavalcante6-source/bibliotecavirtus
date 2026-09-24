@@ -85,6 +85,19 @@ export async function getNeighbors(content: Content): Promise<Neighbors> {
   };
 }
 
+/** Largura e altura dos wallpapers publicados — base do aviso de formato no envio. */
+export async function listWallpaperSizes(): Promise<{ width: number; height: number }[]> {
+  const { data, error } = await supabase
+    .from("content")
+    .select("width, height")
+    .eq("type", "wallpaper")
+    .not("width", "is", null)
+    .not("height", "is", null)
+    .limit(5000);
+  if (error) throw error;
+  return (data ?? []) as { width: number; height: number }[];
+}
+
 /** Recém-adicionados: sempre derivado de created_at, nunca de lista manual. */
 export async function listRecent(limit = 6, type?: ContentType): Promise<Content[]> {
   let query = supabase

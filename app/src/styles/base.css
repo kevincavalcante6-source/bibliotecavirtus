@@ -348,6 +348,15 @@ img {
   border-color: rgba(201, 122, 106, 0.35);
   color: var(--danger);
 }
+.notice--warn {
+  border-color: rgba(200, 169, 106, 0.35);
+  color: var(--secondary);
+  line-height: 1.55;
+}
+.notice--warn b {
+  color: var(--accent);
+  font-weight: 600;
+}
 .notice--success {
   border-color: rgba(143, 168, 122, 0.3);
   color: var(--success);
@@ -373,9 +382,16 @@ img {
 }
 .brand {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: var(--s-3);
   min-width: 0;
+}
+/* O leão da Virtus Mind — o mesmo do ícone do app e da prévia do link. */
+.brand__mark {
+  flex: none;
+  width: auto;
+  height: 24px;
+  margin-right: 2px;
 }
 .brand b {
   font-size: 12px;

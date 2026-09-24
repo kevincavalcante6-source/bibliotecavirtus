@@ -1,6 +1,7 @@
 import { NavLink, Link, Outlet } from "react-router-dom";
 import { Icon } from "@/components/ui/Icon";
 import { useAuth } from "@/auth/AuthProvider";
+import symbol from "@/assets/virtus-simbolo.png";
 
 /** A lupa do topo abre a biblioteca já com o campo de busca pronto. */
 const FOCUS_SEARCH = { focusSearch: true };
@@ -15,6 +16,7 @@ export function AppShell() {
       <header className="site-header">
         <div className="wrap">
           <Link className="brand" to="/" aria-label="Biblioteca Virtus — início">
+            <img className="brand__mark" src={symbol} alt="" width={17} height={24} />
             <b>BIBLIOTECA VIRTUS</b>
             <span>VIRTUS MIND</span>
           </Link>

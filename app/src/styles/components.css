@@ -1322,3 +1322,8 @@ ul {
   text-underline-offset: 3px;
   text-decoration-color: var(--border-hover);
 }
+
+/* Arquivo fora do formato padrão da coleção (envio em massa). */
+.queue__warn {
+  color: var(--accent);
+}

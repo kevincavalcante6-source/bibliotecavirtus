@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { useToast } from "@/components/feedback/ToastProvider";
 import { MAX_FILES_PER_BATCH, useUploadQueue } from "@/hooks/useUploadQueue";
-import { formatBytes } from "@/lib/format";
+import { formatBytes, plural } from "@/lib/format";
+import { ratioLabel, sameFormat, standardOf } from "@/lib/aspect";
+import { useWallpaperStandard } from "@/hooks/useWallpaperStandard";
 import type { ContentType } from "@/types/models";
 import type { QueueItem } from "@/hooks/useUploadQueue";
 
@@ -19,6 +21,22 @@ export function AdminBulkUploadPage() {
   const queue = useUploadQueue(type);
   const { notify, notifyError } = useToast();
   const [dragging, setDragging] = useState(false);
+  const published = useWallpaperStandard();
+
+  // Padrão: o formato da coleção publicada. Numa biblioteca ainda vazia, o da
+  // maioria desta leva (a partir de 3 arquivos). Widgets variam de propósito.
+  const standard = useMemo(() => {
+    if (type !== "wallpaper") return null;
+    if (published) return published;
+    const sizes = queue.items.flatMap((item) => (item.size ? [item.size] : []));
+    return sizes.length >= 3 ? standardOf(sizes) : null;
+  }, [type, published, queue.items]);
+
+  const offFormat = (item: QueueItem) =>
+    standard && item.size && item.status !== "error" && item.status !== "duplicate" && !sameFormat(item.size, standard)
+      ? ratioLabel(item.size)
+      : null;
+  const offCount = queue.items.filter((item) => offFormat(item)).length;
 
   async function receive(fileList: FileList | null) {
     if (!fileList || fileList.length === 0) return;
@@ -105,9 +123,21 @@ export function AdminBulkUploadPage() {
             <span className="upload-summary">
               {queue.summary.done}/{queue.summary.total} publicados
               {queue.summary.failed > 0 && ` · ${queue.summary.failed} com erro`}
-              {queue.summary.duplicated > 0 && ` · ${queue.summary.duplicated} duplicados`}
+              {queue.summary.duplicated > 0 && ` · ${plural(queue.summary.duplicated, "duplicado", "duplicados")}`}
             </span>
           </div>
+
+          {offCount > 0 && standard && (
+            <p className="notice notice--warn">
+              <b>
+                {offCount === 1 ? "1 arquivo está" : `${offCount} arquivos estão`} fora do padrão
+                ({standard.label}).
+              </b>{" "}
+              {offCount === 1
+                ? "Está marcado na lista. Pode ser enviado assim — aparece inteiro, mas com outro tamanho nas listas. Se preferir, remova e exporte de novo."
+                : "Estão marcados na lista. Podem ser enviados assim — aparecem inteiros, mas com outro tamanho nas listas. Se preferir, remova e exporte de novo."}
+            </p>
+          )}
 
           <div className="bar bar--total" aria-label="Progresso geral">
             <i style={{ width: `${Math.round(queue.summary.overall * 100)}%` }} />
@@ -148,6 +178,7 @@ export function AdminBulkUploadPage() {
                   >
                     {STATUS_LABEL[item.status]} · {formatBytes(item.file.size)}
                     {item.error && ` · ${item.error}`}
+                    {offFormat(item) && <span className="queue__warn"> · formato {offFormat(item)}</span>}
                   </div>
                   {item.status === "uploading" && (
                     <div className="bar">

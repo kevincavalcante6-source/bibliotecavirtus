@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import { sha256, titleFromFilename, validateImage } from "@/lib/files";
+import { readImageSize, sha256, titleFromFilename, validateImage } from "@/lib/files";
+import type { ImageSize } from "@/lib/files";
 import { DuplicateError, uploadContentFile } from "@/services/upload.service";
 import { readableError } from "@/lib/supabase";
 import type { ContentType } from "@/types/models";
@@ -18,6 +19,8 @@ export interface QueueItem {
   progress: number;
   error?: string;
   previewUrl: string;
+  /** Lido na hora de entrar na fila — base do aviso de formato. */
+  size: ImageSize | null;
 }
 
 let sequence = 0;
@@ -53,6 +56,7 @@ export function useUploadQueue(type: ContentType) {
         const invalid = validateImage(file);
         const hash = invalid ? null : await sha256(file);
         const duplicated = hash !== null && seen.has(hash);
+        const size = invalid ? null : await readImageSize(file).catch(() => null);
         if (hash) seen.add(hash);
 
         next.push({
@@ -63,6 +67,7 @@ export function useUploadQueue(type: ContentType) {
           progress: 0,
           error: invalid ?? (duplicated ? "Arquivo repetido nesta seleção." : undefined),
           previewUrl: URL.createObjectURL(file),
+          size,
         });
       }
 
