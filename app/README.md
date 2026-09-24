@@ -116,7 +116,11 @@ O e-mail vai sempre em minúsculas.
 2. **Root Directory**: `app` (o projeto não está na raiz do repositório).
    A Vercel detecta o Vite sozinha: build `npm run build`, saída `dist`.
 3. **Environment Variables**: `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`,
-   os mesmos valores do `.env.local`.
+   os mesmos valores do `.env.local`, e `VITE_SITE_URL` com o endereço
+   público do site (ex.: `https://biblioteca.virtusmind.com`, sem barra no
+   fim). Ele entra nas tags de prévia do link: sem ele o WhatsApp mostra
+   título e descrição, mas não a imagem. Se o domínio mudar, atualize e faça
+   um novo deploy.
 4. Depois do primeiro deploy, no Supabase, em **Authentication → URL
    Configuration**: coloque o domínio da Vercel em *Site URL* e adicione
    `https://SEU-DOMINIO/**` em *Redirect URLs*. Sem isso, os links de

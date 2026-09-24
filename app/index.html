@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#050505" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <!-- Aberto pelo ícone da tela de início: tela cheia, sem a barra do navegador. -->
@@ -14,9 +15,27 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta
       name="description"
-      content="Biblioteca digital de wallpapers e widgets. Seu ambiente, sua mente, seu propósito."
+      content="Wallpapers e widgets criados para transformar o ambiente que acompanha você todos os dias."
     />
     <title>Biblioteca Virtus</title>
+
+    <!-- Prévia do link (WhatsApp, e-mail, redes). O WhatsApp só mostra a imagem
+         com endereço completo: %SITE_URL% vem de VITE_SITE_URL na Vercel. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Biblioteca Virtus" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content="Biblioteca Virtus" />
+    <meta
+      property="og:description"
+      content="Wallpapers e widgets criados para transformar o ambiente que acompanha você todos os dias."
+    />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:image" content="%SITE_URL%/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Biblioteca Virtus — Seu ambiente. Sua mente. Seu propósito." />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"

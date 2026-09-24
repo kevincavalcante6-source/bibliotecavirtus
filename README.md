@@ -153,3 +153,7 @@ Coisas que só dão para conferir com o site publicado, num aparelho de verdade:
   tela cheia; entrar com e-mail e senha na primeira vez.
 - **Android e PC:** Baixar deve continuar baixando o arquivo direto.
 - **Guia "Como aplicar":** revisar os textos com o que você já orienta aos compradores.
+- **Prévia do link:** colar o endereço do site numa conversa do WhatsApp e conferir
+  imagem, título e descrição (com `VITE_SITE_URL` configurado na Vercel). O WhatsApp
+  guarda a prévia por um tempo; para testar de novo depois de mudar, use o endereço
+  com `?v=2` no fim.
