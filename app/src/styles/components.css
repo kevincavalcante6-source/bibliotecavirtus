@@ -4,7 +4,7 @@
    e a imagem original fica nítida e inteira na frente (object-fit: contain). */
 .media {
   position: relative;
-  aspect-ratio: 9 / 19.5;
+  aspect-ratio: 9 / 16;
   border-radius: var(--r-3);
   overflow: hidden;
   background: var(--near-black);
@@ -307,7 +307,7 @@
   left: 50%;
   z-index: 1;
   height: 116%;
-  aspect-ratio: 9 / 19.5;
+  aspect-ratio: 9 / 16;
   padding: 0;
   border: 0;
   background: none;
@@ -362,7 +362,7 @@
   position: relative;
   z-index: 3;
   height: 400px;
-  aspect-ratio: 9 / 19.5;
+  aspect-ratio: 9 / 16;
   max-width: 100%;
   animation: showcase-in 240ms ease both;
 }

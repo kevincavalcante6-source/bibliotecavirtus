@@ -15,7 +15,7 @@ export function GridSkeleton({ count = 8, widget = false }: { count?: number; wi
         <div key={index} className="card">
           <div
             className="skeleton"
-            style={{ aspectRatio: widget ? "1 / 1" : "9 / 19.5", width: "100%" }}
+            style={{ aspectRatio: widget ? "1 / 1" : "9 / 16", width: "100%" }}
           />
           <div className="skeleton" style={{ height: 14, width: "60%", borderRadius: 6 }} />
         </div>
