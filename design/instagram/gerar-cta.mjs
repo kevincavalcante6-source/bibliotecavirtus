@@ -11,7 +11,7 @@ const files = readdirSync(dir).filter((f) => mime(f)).sort().map((f) => join(dir
 const COLS = 6, ROWS = 3, N = COLS * ROWS;
 const walls = Array.from({ length: N }, (_, i) => uri(files[i % files.length]));
 const logo = uri('/home/user/bibliotecavirtus/design/brand/virtusmind-simbolo-branco.png');
-const bg = bgPath && bgPath !== '-' ? `url(${uri(bgPath)}) center/cover` : 'radial-gradient(120% 60% at 50% 0%, #2a2419 0%, #0d0c0a 45%, #050505 100%)';
+const bg = bgPath && bgPath !== '-' ? `url(${uri(bgPath)}) center/cover` : 'radial-gradient(120% 60% at 50% 0%, #2a2a2a 0%, #0e0e0e 45%, #050505 100%)';
 const font = fontPath ? `@font-face{font-family:Inter;src:url(${uri(fontPath)}) format('woff2');font-weight:100 900}` : '';
 
 const html = `<!doctype html><html><head><style>${font}
@@ -25,7 +25,7 @@ body{width:1080px;height:1350px;overflow:hidden;background:#050505;font-family:I
 .brand b{font-size:15px;font-weight:600;letter-spacing:.26em}
 .top span{font-size:13px;letter-spacing:.28em;color:#A8A8A2}
 h1{position:absolute;left:58px;right:58px;top:118px;font-size:150px;line-height:1;font-weight:800;letter-spacing:-.05em;text-align:center}
-.sub{position:absolute;left:0;right:0;top:286px;text-align:center;font-size:17px;font-weight:600;letter-spacing:.42em;color:#C8A96A}
+.sub{position:absolute;left:0;right:0;top:286px;text-align:center;font-size:17px;font-weight:600;letter-spacing:.42em;color:#A8A8A2}
 .grid{position:absolute;left:62px;right:62px;top:350px;display:grid;grid-template-columns:repeat(${COLS},1fr);gap:18px 14px}
 .phone{position:relative;border-radius:24px;padding:5px;background:#0b0b0b;border:1px solid rgba(255,255,255,.18);box-shadow:0 18px 40px rgba(0,0,0,.6)}
 .screen{position:relative;aspect-ratio:9/16;border-radius:19px;overflow:hidden;background:#000}
@@ -46,7 +46,7 @@ h1{position:absolute;left:58px;right:58px;top:118px;font-size:150px;line-height:
 <h1>${headline}</h1>
 <div class="sub">E WIDGETS PARA O SEU CELULAR</div>
 <div class="grid">${walls.map((w) => `<div class="phone"><div class="screen"><img src="${w}"><div class="island"></div><div class="clock"><small>quinta-feira, 24 de setembro</small><b>9:41</b></div><div class="bar"></div></div></div>`).join('')}</div>
-<div class="cta">ACESSE PELO <span class="mark">LINK<svg viewBox="0 0 200 100" preserveAspectRatio="none"><path d="M18 58 C 14 22, 88 8, 142 14 C 196 20, 204 66, 150 84 C 96 100, 22 92, 12 62 C 6 44, 40 26, 70 22" fill="none" stroke="#C8A96A" stroke-width="3.2" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg></span> NA BIO.</div>
+<div class="cta">ACESSE PELO <span class="mark">LINK<svg viewBox="0 0 200 100" preserveAspectRatio="none"><path d="M18 58 C 14 22, 88 8, 142 14 C 196 20, 204 66, 150 84 C 96 100, 22 92, 12 62 C 6 44, 40 26, 70 22" fill="none" stroke="#F5F5F0" stroke-width="3.2" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg></span> NA BIO.</div>
 </body></html>`;
 
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
