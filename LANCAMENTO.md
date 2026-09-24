@@ -10,11 +10,11 @@ Em qualquer etapa, é só chamar que fazemos juntos.
 
 ---
 
-## 1. Código na branch principal
+## 1. Código no GitHub
 
-- [ ] Levar o trabalho da branch `claude/biblioteca-virtus-positioning-1ozo0c`
-      para a `main` (Pull Request + merge). A Vercel publica o site a partir da
-      `main`. *(Posso abrir o Pull Request quando você pedir.)*
+- [x] O código está na branch `claude/biblioteca-virtus-positioning-1ozo0c`, que
+      hoje é a **única e principal** branch do repositório. A Vercel publica a
+      partir dela — nada a fazer aqui.
 
 ## 2. Supabase — banco de dados
 
