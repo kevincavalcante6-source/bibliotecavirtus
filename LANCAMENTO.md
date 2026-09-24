@@ -81,6 +81,9 @@ Em qualquer etapa, é só chamar que fazemos juntos.
 - [ ] Subir os wallpapers e widgets reais pelo **Admin** (envio em massa: até
       35 arquivos por vez). Manter todos os wallpapers no **mesmo formato**
       (hoje, 9 : 16).
+- [ ] Conferir os títulos na fila antes de enviar: eles vêm da frase escrita
+      em cada arte (a leitura baixa o leitor na primeira vez — alguns segundos).
+      Letras muito estilizadas podem sair trocadas; é só tocar no título e corrigir.
 - [ ] Revisar títulos pelo **Admin → Conteúdos**.
 
 ## 6. Cakto — liberar o acesso automaticamente
