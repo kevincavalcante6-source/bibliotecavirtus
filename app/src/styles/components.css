@@ -1076,11 +1076,17 @@ ul {
 .admin-row__thumb {
   width: 44px;
   height: 60px;
+  padding: 0;
   border-radius: 6px;
   border: 1px solid var(--border);
   background-color: var(--dark);
   background-size: cover;
   background-position: center;
+  cursor: zoom-in;
+  transition: border-color var(--transition);
+}
+.admin-row__thumb:hover {
+  border-color: var(--border-hover);
 }
 .admin-row__title {
   font-size: 14px;
@@ -1180,11 +1186,17 @@ ul {
 .queue__thumb {
   width: 44px;
   height: 60px;
+  padding: 0;
   border-radius: 6px;
   background: var(--dark);
   background-size: cover;
   background-position: center;
   border: 1px solid var(--border);
+  cursor: zoom-in;
+  transition: border-color var(--transition);
+}
+.queue__thumb:hover {
+  border-color: var(--border-hover);
 }
 .queue__name {
   font-size: 14px;
@@ -1337,7 +1349,103 @@ ul {
 }
 
 .upload-hint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
   font-size: 13px;
   line-height: 1.5;
   color: var(--muted);
+}
+.upload-hint p {
+  flex: 1 1 280px;
+}
+
+/* ============================================================ revisor
+   A arte grande na tela para conferir a frase e corrigir o título. */
+.reviewer {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--s-4) calc(var(--s-4) + env(safe-area-inset-bottom, 0px));
+  background: rgba(5, 5, 5, 0.96);
+  backdrop-filter: blur(6px);
+  animation: overlay-in 200ms ease both;
+}
+.reviewer__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+}
+/* A arte ocupa o espaço entre o topo e o campo, inteira (contain), sem
+   nunca passar por baixo do título. */
+.reviewer__stage {
+  position: relative;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+.reviewer__stage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+}
+.reviewer__empty {
+  color: var(--muted);
+  font-size: 13px;
+}
+.reviewer__form {
+  display: grid;
+  gap: var(--s-3);
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+}
+.reviewer__input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 var(--s-4);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--r-2);
+  background: var(--near-black);
+  color: var(--text);
+  font: inherit;
+  font-size: 17px;
+  font-weight: 500;
+}
+.reviewer__input:focus {
+  outline: none;
+  border-color: rgba(245, 245, 240, 0.45);
+}
+.reviewer__input:disabled {
+  opacity: 0.6;
+}
+.reviewer__note {
+  font-size: 13px;
+  color: var(--muted);
+}
+.reviewer__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+.reviewer__hint {
+  font-size: 12px;
+  color: var(--disabled);
+  text-align: center;
+}
+@media (hover: none) {
+  .reviewer__hint {
+    display: none;
+  }
 }

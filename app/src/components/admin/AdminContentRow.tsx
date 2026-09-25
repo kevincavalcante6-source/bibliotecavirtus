@@ -10,12 +10,14 @@ interface Props {
   content: Content;
   onSaved: (content: Content) => void;
   onDeleted: (id: string) => void;
+  /** Abre a arte grande para revisar o título. */
+  onOpen?: () => void;
 }
 
 type Mode = "view" | "edit" | "confirm";
 
 /** Uma linha do acervo: ver, editar no lugar ou excluir com confirmação. */
-export function AdminContentRow({ content, onSaved, onDeleted }: Props) {
+export function AdminContentRow({ content, onSaved, onDeleted, onOpen }: Props) {
   const { notify, notifyError } = useToast();
   const [mode, setMode] = useState<Mode>("view");
   const [title, setTitle] = useState(content.title);
@@ -66,10 +68,12 @@ export function AdminContentRow({ content, onSaved, onDeleted }: Props) {
 
   return (
     <li className={`admin-row${mode === "confirm" ? " admin-row--danger" : ""}`}>
-      <span
+      <button
+        type="button"
         className="admin-row__thumb"
         style={content.thumbnail_url ? { backgroundImage: `url("${content.thumbnail_url}")` } : undefined}
-        aria-hidden="true"
+        onClick={onOpen}
+        aria-label={`Ver ${content.title} em tamanho grande`}
       />
 
       {mode === "edit" ? (

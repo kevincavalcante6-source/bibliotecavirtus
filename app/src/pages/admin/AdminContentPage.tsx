@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { AdminContentRow } from "@/components/admin/AdminContentRow";
+import { TitleReviewer } from "@/components/admin/TitleReviewer";
+import { useToast } from "@/components/feedback/ToastProvider";
+import { updateContent } from "@/services/library-admin.service";
+import { readableError } from "@/lib/supabase";
 import { LoadingState } from "@/components/states/LoadingState";
 import { EmptyState } from "@/components/states/EmptyState";
 import { ErrorState } from "@/components/states/ErrorState";
@@ -26,6 +30,8 @@ export function AdminContentPage() {
   // a lista reflete na hora sem recarregar e sem perder a posição.
   const [edited, setEdited] = useState<Record<string, Content>>({});
   const [removed, setRemoved] = useState<Set<string>>(() => new Set());
+  const [review, setReview] = useState<number | null>(null);
+  const { notifyError } = useToast();
 
   const items = feed.items
     .filter((item) => !removed.has(item.id))
@@ -88,6 +94,7 @@ export function AdminContentPage() {
               content={item}
               onSaved={(updated) => setEdited((current) => ({ ...current, [updated.id]: updated }))}
               onDeleted={(id) => setRemoved((current) => new Set(current).add(id))}
+              onOpen={() => setReview(items.indexOf(item))}
             />
           ))}
         </ul>
@@ -104,6 +111,25 @@ export function AdminContentPage() {
             {feed.status === "loading-more" ? "Carregando…" : "Carregar mais"}
           </button>
         </div>
+      )}
+      {review !== null && items.length > 0 && (
+        <TitleReviewer
+          items={items.map((item) => ({ id: item.id, src: item.thumbnail_url, title: item.title, editable: true }))}
+          index={Math.min(review, items.length - 1)}
+          onIndex={setReview}
+          onClose={() => setReview(null)}
+          onSave={async (id, title) => {
+            const target = items.find((item) => item.id === id);
+            if (!target) return;
+            try {
+              const updated = await updateContent(id, { title, type: target.type });
+              setEdited((current) => ({ ...current, [updated.id]: updated }));
+            } catch (error) {
+              notifyError(readableError(error, "Não foi possível salvar o título."));
+              throw error;
+            }
+          }}
+        />
       )}
     </div>
   );

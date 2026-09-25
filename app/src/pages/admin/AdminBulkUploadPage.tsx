@@ -3,6 +3,8 @@ import { Icon } from "@/components/ui/Icon";
 import { useToast } from "@/components/feedback/ToastProvider";
 import { MAX_FILES_PER_BATCH, useUploadQueue } from "@/hooks/useUploadQueue";
 import { formatBytes, plural } from "@/lib/format";
+import { TitleReviewer } from "@/components/admin/TitleReviewer";
+import type { ReviewItem } from "@/components/admin/TitleReviewer";
 import { ratioLabel, sameFormat, standardOf } from "@/lib/aspect";
 import { useWallpaperStandard } from "@/hooks/useWallpaperStandard";
 import type { ContentType } from "@/types/models";
@@ -21,6 +23,19 @@ export function AdminBulkUploadPage() {
   const queue = useUploadQueue(type);
   const { notify, notifyError } = useToast();
   const [dragging, setDragging] = useState(false);
+  const [review, setReview] = useState<number | null>(null);
+
+  const reviewItems: ReviewItem[] = queue.items.map((item) => ({
+    id: item.id,
+    src: item.previewUrl,
+    title: item.title,
+    editable: !item.reading && item.status !== "uploading" && item.status !== "done",
+    note: item.reading
+      ? "Lendo o texto da arte…"
+      : item.status === "done"
+        ? "Já publicado — para mudar o título, use Admin → Conteúdos."
+        : undefined,
+  }));
   const published = useWallpaperStandard();
 
   // Padrão: o formato da coleção publicada. Numa biblioteca ainda vazia, o da
@@ -131,10 +146,20 @@ export function AdminBulkUploadPage() {
             </span>
           </div>
 
-          <p className="upload-hint">
-            Os títulos vêm da frase escrita em cada arte. Confira antes de enviar — é só tocar no
-            título para corrigir.
-          </p>
+          <div className="upload-hint">
+            <p>
+              Os títulos vêm da frase escrita em cada arte. Confira antes de enviar: toque numa
+              miniatura para ver a arte grande e corrigir o título.
+            </p>
+            <button
+              type="button"
+              className="btn btn--secondary btn--sm"
+              onClick={() => setReview(0)}
+              disabled={queue.running}
+            >
+              Revisar títulos um a um
+            </button>
+          </div>
 
           {offCount > 0 && standard && (
             <p className="notice notice--warn">
@@ -155,10 +180,12 @@ export function AdminBulkUploadPage() {
           <ul className="queue">
             {queue.items.map((item) => (
               <li key={item.id} className="queue__row">
-                <span
+                <button
+                  type="button"
                   className="queue__thumb"
                   style={{ backgroundImage: `url("${item.previewUrl}")` }}
-                  aria-hidden="true"
+                  onClick={() => setReview(queue.items.indexOf(item))}
+                  aria-label={`Ver ${item.title} em tamanho grande`}
                 />
 
                 <div style={{ minWidth: 0 }}>
@@ -228,6 +255,15 @@ export function AdminBulkUploadPage() {
             ))}
           </ul>
         </>
+      )}
+      {review !== null && reviewItems.length > 0 && (
+        <TitleReviewer
+          items={reviewItems}
+          index={Math.min(review, reviewItems.length - 1)}
+          onIndex={setReview}
+          onClose={() => setReview(null)}
+          onSave={(id, title) => queue.setTitle(id, title)}
+        />
       )}
     </div>
   );
