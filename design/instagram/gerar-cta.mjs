@@ -1,13 +1,22 @@
 // Gera o post de CTA (1080 × 1350, 4:5) com wallpapers reais em celulares.
 // Uso: node gerar-cta.mjs <pasta-com-wallpapers> <fundo.png|-> <saida.png> [titulo] [fonte.woff2]
 import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { extname, join } from 'node:path';
 
 const [dir, bgPath, out, headline = 'WALLPAPERS', fontPath] = process.argv.slice(2);
 const mime = (p) => ({ '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp' })[extname(p).toLowerCase()];
 const uri = (p) => `data:${mime(p) ?? 'font/woff2'};base64,` + readFileSync(p).toString('base64');
-const files = readdirSync(dir).filter((f) => mime(f)).sort().map((f) => join(dir, f));
+// ordem.txt (um arquivo por linha) define a sequência da grade; sem ele, ordem alfabética.
+const orderFile = join(dir, 'ordem.txt');
+const names = existsSync(orderFile)
+  ? readFileSync(orderFile, 'utf8').split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#'))
+  : readdirSync(dir).filter((f) => mime(f)).sort();
+const files = names.map((f) => join(dir, f));
+// MOCKUPS=1: as imagens já são celulares recortados (fundo transparente) —
+// entram como estão, sem moldura nem relógio desenhados por cima.
+const MOCKUPS = process.env.MOCKUPS === '1';
+const MOCK_RATIO = 0.48;
 const COLS = 6, ROWS = 3, N = COLS * ROWS;
 const walls = Array.from({ length: N }, (_, i) => uri(files[i % files.length]));
 const logo = uri('/home/user/bibliotecavirtus/design/brand/virtusmind-simbolo-branco.png');
@@ -28,6 +37,8 @@ h1{position:absolute;left:58px;right:58px;top:112px;font-weight:800;letter-spaci
 h1 span{display:block;width:max-content;margin:0 auto;line-height:.88;white-space:nowrap}
 .sub{position:absolute;left:0;right:0;top:0;text-align:center;font-size:17px;font-weight:600;letter-spacing:.42em;color:#A8A8A2}
 .grid{position:absolute;left:0;top:0;display:grid;grid-template-columns:repeat(${COLS},var(--pw));gap:var(--gy) var(--gx)}
+.mock{position:relative;aspect-ratio:${MOCK_RATIO};filter:drop-shadow(0 18px 26px rgba(0,0,0,.65))}
+.mock img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .phone{position:relative;border-radius:24px;padding:5px;background:#0b0b0b;border:1px solid rgba(255,255,255,.18);box-shadow:0 18px 40px rgba(0,0,0,.6)}
 .screen{position:relative;aspect-ratio:9/16;border-radius:19px;overflow:hidden;background:#000}
 .screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
@@ -46,7 +57,7 @@ h1 span{display:block;width:max-content;margin:0 auto;line-height:.88;white-spac
 <div class="top"><div class="brand"><img src="${logo}"><b>BIBLIOTECA VIRTUS</b></div><span>VIRTUS MIND</span></div>
 <h1>${headline.split('\\n').map((l) => `<span>${l}</span>`).join('')}</h1>
 <div class="sub">E WIDGETS PARA O SEU CELULAR</div>
-<div class="grid">${walls.map((w) => `<div class="phone"><div class="screen"><img src="${w}"><div class="island"></div><div class="clock"><small>quinta-feira, 24 de setembro</small><b>9:41</b></div><div class="bar"></div></div></div>`).join('')}</div>
+<div class="grid">${walls.map((w) => MOCKUPS ? `<div class="mock"><img src="${w}"></div>` : `<div class="phone"><div class="screen"><img src="${w}"><div class="island"></div><div class="clock"><small>quinta-feira, 24 de setembro</small><b>9:41</b></div><div class="bar"></div></div></div>`).join('')}</div>
 <div class="cta">ACESSE PELO <span class="mark">LINK<svg viewBox="0 0 200 100" preserveAspectRatio="none"><path d="M18 58 C 14 22, 88 8, 142 14 C 196 20, 204 66, 150 84 C 96 100, 22 92, 12 62 C 6 44, 40 26, 70 22" fill="none" stroke="#F5F5F0" stroke-width="3.2" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg></span> NA BIO.</div>
 </body></html>`;
 
@@ -56,7 +67,7 @@ await page.setContent(html);
 await page.evaluate(() => document.fonts.ready);
 // Layout: cada linha do título ocupa a largura (até 170px de fonte); a grade
 // ocupa o espaço entre o subtítulo e a chamada, sempre com as artes em 9:16.
-await page.evaluate(({ COLS, ROWS }) => {
+await page.evaluate(({ COLS, ROWS, MOCKUPS, MOCK_RATIO }) => {
   const W = 1080, MAX_W = 950;
   // Todas as linhas com o mesmo corpo: o maior em que a linha mais longa cabe.
   const lines = [...document.querySelectorAll('h1 span')];
@@ -70,9 +81,11 @@ await page.evaluate(({ COLS, ROWS }) => {
   const bottom = document.querySelector('.cta').getBoundingClientRect().top - 44;
   const gy = 16, gx = 14, chrome = 12;
   let ph = (bottom - top - gy * (ROWS - 1)) / ROWS;
-  let pw = (ph - chrome) * 9 / 16 + chrome;
+  const widthOf = (h) => (MOCKUPS ? h * MOCK_RATIO : (h - chrome) * 9 / 16 + chrome);
+  const heightOf = (w) => (MOCKUPS ? w / MOCK_RATIO : (w - chrome) * 16 / 9 + chrome);
+  let pw = widthOf(ph);
   const maxPw = (W - 2 * 60 - gx * (COLS - 1)) / COLS;
-  if (pw > maxPw) { pw = maxPw; ph = (pw - chrome) * 16 / 9 + chrome; }
+  if (pw > maxPw) { pw = maxPw; ph = heightOf(pw); }
   const grid = document.querySelector('.grid');
   grid.style.setProperty('--pw', pw + 'px'); grid.style.setProperty('--gx', gx + 'px'); grid.style.setProperty('--gy', gy + 'px');
   const gridW = COLS * pw + gx * (COLS - 1), gridH = ROWS * ph + gy * (ROWS - 1);
@@ -81,7 +94,7 @@ await page.evaluate(({ COLS, ROWS }) => {
   const scale = pw / 160;
   for (const c of document.querySelectorAll('.clock b')) c.style.fontSize = 34 * scale + 'px';
   for (const c of document.querySelectorAll('.clock small')) c.style.fontSize = 7.5 * scale + 'px';
-}, { COLS, ROWS });
+}, { COLS, ROWS, MOCKUPS, MOCK_RATIO });
 // Como no iPhone: relógio escuro quando o topo da arte é claro.
 await page.evaluate(async () => {
   for (const img of document.querySelectorAll('.screen img')) {

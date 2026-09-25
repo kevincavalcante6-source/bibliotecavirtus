@@ -1,0 +1,20 @@
+# Ordem da grade (6 por linha). Cores alternadas: vermelho, branco, preto, azul.
+# De fora: mockup-12 (Sonhe alto) e mockup-20 (Deus está comigo) — cinzas parecidos com outros.
+mockup-02.png
+mockup-04.png
+mockup-05.png
+mockup-07.png
+mockup-03.png
+mockup-16.png
+mockup-06.png
+mockup-08.png
+mockup-01.png
+mockup-21.png
+mockup-18.png
+mockup-15.png
+mockup-10.png
+mockup-14.png
+mockup-17.png
+mockup-09.png
+mockup-11.png
+mockup-19.png

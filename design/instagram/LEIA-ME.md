@@ -14,3 +14,14 @@ node design/instagram/gerar-cta.mjs <pasta-com-wallpapers> <fundo.png ou -> <sai
 - Título: use `\n` para quebrar linha (ex.: `'+250\nWALLPAPERS'`); as linhas ficam com o
   mesmo tamanho, o maior que couber. Número só se for o total real da coleção.
 - A grade (6 × 3) se ajusta sozinha ao espaço entre o título e a chamada.
+
+## Com mockups prontos (celulares já montados, fundo preto)
+
+```bash
+# 1. recorta cada celular do fundo preto (fica transparente)
+node design/instagram/recortar-mockups.mjs design/instagram/insumos/wallpapers design/instagram/insumos/recortes
+# 2. gera o post usando os recortes como estão
+MOCKUPS=1 node design/instagram/gerar-cta.mjs design/instagram/insumos/recortes design/instagram/insumos/fundo.webp design/instagram/cta-final.png '+250\nWALLPAPERS' design/brand/fonts/inter-latin.woff2
+```
+
+A ordem da grade está em `insumos/recortes/ordem.txt` (um arquivo por linha).
