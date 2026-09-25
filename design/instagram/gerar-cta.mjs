@@ -24,9 +24,10 @@ body{width:1080px;height:1350px;overflow:hidden;background:#050505;font-family:I
 .brand img{height:40px}
 .brand b{font-size:15px;font-weight:600;letter-spacing:.26em}
 .top span{font-size:13px;letter-spacing:.28em;color:#A8A8A2}
-h1{position:absolute;left:58px;right:58px;top:118px;font-size:150px;line-height:1;font-weight:800;letter-spacing:-.05em;text-align:center}
-.sub{position:absolute;left:0;right:0;top:286px;text-align:center;font-size:17px;font-weight:600;letter-spacing:.42em;color:#A8A8A2}
-.grid{position:absolute;left:62px;right:62px;top:350px;display:grid;grid-template-columns:repeat(${COLS},1fr);gap:18px 14px}
+h1{position:absolute;left:58px;right:58px;top:112px;font-weight:800;letter-spacing:-.05em;text-align:center}
+h1 span{display:block;width:max-content;margin:0 auto;line-height:.88;white-space:nowrap}
+.sub{position:absolute;left:0;right:0;top:0;text-align:center;font-size:17px;font-weight:600;letter-spacing:.42em;color:#A8A8A2}
+.grid{position:absolute;left:0;top:0;display:grid;grid-template-columns:repeat(${COLS},var(--pw));gap:var(--gy) var(--gx)}
 .phone{position:relative;border-radius:24px;padding:5px;background:#0b0b0b;border:1px solid rgba(255,255,255,.18);box-shadow:0 18px 40px rgba(0,0,0,.6)}
 .screen{position:relative;aspect-ratio:9/16;border-radius:19px;overflow:hidden;background:#000}
 .screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
@@ -43,7 +44,7 @@ h1{position:absolute;left:58px;right:58px;top:118px;font-size:150px;line-height:
 </style></head><body>
 <div class="bg"></div><div class="grain"></div>
 <div class="top"><div class="brand"><img src="${logo}"><b>BIBLIOTECA VIRTUS</b></div><span>VIRTUS MIND</span></div>
-<h1>${headline}</h1>
+<h1>${headline.split('\\n').map((l) => `<span>${l}</span>`).join('')}</h1>
 <div class="sub">E WIDGETS PARA O SEU CELULAR</div>
 <div class="grid">${walls.map((w) => `<div class="phone"><div class="screen"><img src="${w}"><div class="island"></div><div class="clock"><small>quinta-feira, 24 de setembro</small><b>9:41</b></div><div class="bar"></div></div></div>`).join('')}</div>
 <div class="cta">ACESSE PELO <span class="mark">LINK<svg viewBox="0 0 200 100" preserveAspectRatio="none"><path d="M18 58 C 14 22, 88 8, 142 14 C 196 20, 204 66, 150 84 C 96 100, 22 92, 12 62 C 6 44, 40 26, 70 22" fill="none" stroke="#F5F5F0" stroke-width="3.2" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg></span> NA BIO.</div>
@@ -53,6 +54,34 @@ const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromi
 const page = await browser.newPage({ viewport: { width: 1080, height: 1350 } });
 await page.setContent(html);
 await page.evaluate(() => document.fonts.ready);
+// Layout: cada linha do título ocupa a largura (até 170px de fonte); a grade
+// ocupa o espaço entre o subtítulo e a chamada, sempre com as artes em 9:16.
+await page.evaluate(({ COLS, ROWS }) => {
+  const W = 1080, MAX_W = 950;
+  // Todas as linhas com o mesmo corpo: o maior em que a linha mais longa cabe.
+  const lines = [...document.querySelectorAll('h1 span')];
+  lines.forEach((line) => (line.style.fontSize = '100px'));
+  const size = Math.min(170, ...lines.map((line) => (100 * MAX_W) / line.getBoundingClientRect().width));
+  lines.forEach((line) => (line.style.fontSize = size + 'px'));
+  const h1 = document.querySelector('h1').getBoundingClientRect();
+  const sub = document.querySelector('.sub');
+  sub.style.top = h1.bottom + 22 + 'px';
+  const top = sub.getBoundingClientRect().bottom + 40;
+  const bottom = document.querySelector('.cta').getBoundingClientRect().top - 44;
+  const gy = 16, gx = 14, chrome = 12;
+  let ph = (bottom - top - gy * (ROWS - 1)) / ROWS;
+  let pw = (ph - chrome) * 9 / 16 + chrome;
+  const maxPw = (W - 2 * 60 - gx * (COLS - 1)) / COLS;
+  if (pw > maxPw) { pw = maxPw; ph = (pw - chrome) * 16 / 9 + chrome; }
+  const grid = document.querySelector('.grid');
+  grid.style.setProperty('--pw', pw + 'px'); grid.style.setProperty('--gx', gx + 'px'); grid.style.setProperty('--gy', gy + 'px');
+  const gridW = COLS * pw + gx * (COLS - 1), gridH = ROWS * ph + gy * (ROWS - 1);
+  grid.style.left = (W - gridW) / 2 + 'px';
+  grid.style.top = top + (bottom - top - gridH) / 2 + 'px';
+  const scale = pw / 160;
+  for (const c of document.querySelectorAll('.clock b')) c.style.fontSize = 34 * scale + 'px';
+  for (const c of document.querySelectorAll('.clock small')) c.style.fontSize = 7.5 * scale + 'px';
+}, { COLS, ROWS });
 // Como no iPhone: relógio escuro quando o topo da arte é claro.
 await page.evaluate(async () => {
   for (const img of document.querySelectorAll('.screen img')) {
