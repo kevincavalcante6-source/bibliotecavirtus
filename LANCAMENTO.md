@@ -85,6 +85,10 @@ Em qualquer etapa, é só chamar que fazemos juntos.
       em cada arte (a leitura baixa o leitor na primeira vez — alguns segundos).
       Letras muito estilizadas podem sair trocadas; é só tocar no título e corrigir.
 - [ ] Revisar títulos pelo **Admin → Conteúdos**.
+- [ ] Se aparecer o aviso de **arquivos pesados** em **Admin → Conteúdos**,
+      tocar em **Otimizar agora**: converte para JPG de alta qualidade na
+      mesma resolução e libera espaço no plano do Supabase. Os envios novos
+      já saem otimizados.
 
 ## 6. Cakto — liberar o acesso automaticamente
 

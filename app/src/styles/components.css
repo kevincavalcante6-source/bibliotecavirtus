@@ -1449,3 +1449,29 @@ ul {
     display: none;
   }
 }
+
+/* Aviso de arquivos pesados no acervo. */
+.heavy-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-bottom: var(--s-5);
+}
+.heavy-panel > div,
+.heavy-panel > span {
+  flex: 1 1 320px;
+}
+.heavy-panel--done {
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.heavy-panel--done > span {
+  flex: 1 1 auto;
+}
+.heavy-panel--done > svg {
+  flex: none;
+  margin-top: 3px;
+}

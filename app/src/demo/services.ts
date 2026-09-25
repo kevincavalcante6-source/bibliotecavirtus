@@ -149,6 +149,17 @@ export async function updateContent(
   return { ...item };
 }
 
+export const HEAVY_BYTES = 1.5 * 1024 * 1024;
+
+/** Na demonstração os arquivos de exemplo já são leves. */
+export async function listHeavyContent(): Promise<Content[]> {
+  return [];
+}
+
+export async function reoptimizeContent(content: Content) {
+  return { content, before: content.file_size ?? 0, after: content.file_size ?? 0, outcome: "already-light" as const };
+}
+
 export async function deleteContentAndFiles(content: Content): Promise<{ filesRemoved: boolean }> {
   await delay(200);
   store.content = store.content.filter((item) => item.id !== content.id);

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AdminContentRow } from "@/components/admin/AdminContentRow";
 import { TitleReviewer } from "@/components/admin/TitleReviewer";
+import { HeavyFilesPanel } from "@/components/admin/HeavyFilesPanel";
 import { useToast } from "@/components/feedback/ToastProvider";
 import { updateContent } from "@/services/library-admin.service";
 import { readableError } from "@/lib/supabase";
@@ -40,6 +41,8 @@ export function AdminContentPage() {
 
   return (
     <div>
+      <HeavyFilesPanel onUpdated={(updated) => setEdited((current) => ({ ...current, [updated.id]: updated }))} />
+
       <div className="admin-toolbar">
         <div className="search" style={{ flex: "1 1 280px" }}>
           <Icon name="search" />
