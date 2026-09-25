@@ -94,6 +94,11 @@ export function ContentDetail({ contentId, onClose }: Props) {
         if (session) {
           try {
             const url = await signedOriginalUrl(item.file_url);
+            // A prévia fica na tela até o original terminar de baixar: a
+            // troca acontece já com a imagem pronta, sem piscar.
+            const original = new Image();
+            original.src = url;
+            await original.decode().catch(() => undefined);
             if (active) setFullSrc(url);
           } catch {
             /* mantém o thumbnail */
@@ -233,10 +238,12 @@ export function ContentDetail({ contentId, onClose }: Props) {
             onTouchEnd={onTouchEnd}
             onTouchCancel={onTouchEnd}
           >
-            {display && (
+            {/* A ambientação é desfocada: a prévia (já em cache pela grade)
+                basta, e aparece na hora — o original só entra na frente. */}
+            {content.thumbnail_url && (
               <div
                 className="detail__ambient"
-                style={{ backgroundImage: `url("${display}")` }}
+                style={{ backgroundImage: `url("${content.thumbnail_url}")` }}
                 aria-hidden="true"
               />
             )}

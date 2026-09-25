@@ -764,6 +764,14 @@
   gap: var(--s-3);
   margin-top: var(--s-2);
 }
+/* Favoritado: o coração preenche, igual ao dos cards. */
+.detail__actions .btn[aria-pressed="true"] {
+  border-color: rgba(200, 169, 106, 0.4);
+}
+.detail__actions .btn[aria-pressed="true"] svg {
+  color: var(--accent);
+  fill: currentColor;
+}
 .detail__help {
   font-size: 13px;
   line-height: 1.5;
