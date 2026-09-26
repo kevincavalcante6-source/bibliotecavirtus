@@ -8,6 +8,29 @@ import type { Content } from "@/types/models";
 type Phase = "idle" | "running" | "done";
 
 /**
+ * Arquivos já avaliados que ficaram como estavam (transparência ou sem ganho),
+ * por id → caminho do arquivo. Assim o aviso não volta toda vez por causa
+ * deles; se o arquivo for trocado, o caminho muda e ele é avaliado de novo.
+ */
+const CHECKED_KEY = "virtus.admin.optimize-checked";
+
+function readChecked(): Record<string, string> {
+  try {
+    return JSON.parse(localStorage.getItem(CHECKED_KEY) ?? "{}") as Record<string, string>;
+  } catch {
+    return {};
+  }
+}
+
+function writeChecked(checked: Record<string, string>) {
+  try {
+    localStorage.setItem(CHECKED_KEY, JSON.stringify(checked));
+  } catch {
+    /* sem armazenamento: o aviso só volta a aparecer */
+  }
+}
+
+/**
  * Aviso no acervo quando há originais pesados, com a otimização em lote:
  * um arquivo por vez, mostrando o avanço e quanto espaço foi economizado.
  */
@@ -16,11 +39,14 @@ export function HeavyFilesPanel({ onUpdated }: { onUpdated: (content: Content) =
   const [heavy, setHeavy] = useState<Content[] | null>(null);
   const [phase, setPhase] = useState<Phase>("idle");
   const [position, setPosition] = useState(0);
-  const [totals, setTotals] = useState({ before: 0, after: 0, converted: 0, kept: 0, failed: 0 });
+  const [totals, setTotals] = useState({ before: 0, after: 0, converted: 0, transparent: 0, notSmaller: 0, failed: 0 });
 
   useEffect(() => {
     listHeavyContent()
-      .then(setHeavy)
+      .then((items) => {
+        const checked = readChecked();
+        setHeavy(items.filter((item) => checked[item.id] !== item.file_url));
+      })
       .catch(() => setHeavy([]));
   }, []);
 
@@ -31,7 +57,8 @@ export function HeavyFilesPanel({ onUpdated }: { onUpdated: (content: Content) =
   async function run() {
     if (!heavy) return;
     setPhase("running");
-    const sum = { before: 0, after: 0, converted: 0, kept: 0, failed: 0 };
+    const sum = { before: 0, after: 0, converted: 0, transparent: 0, notSmaller: 0, failed: 0 };
+    const checked = readChecked();
     for (let i = 0; i < heavy.length; i++) {
       setPosition(i + 1);
       try {
@@ -41,7 +68,12 @@ export function HeavyFilesPanel({ onUpdated }: { onUpdated: (content: Content) =
         if (result.outcome === "converted") {
           sum.converted += 1;
           onUpdated(result.content);
-        } else sum.kept += 1;
+        } else {
+          if (result.outcome === "transparent") sum.transparent += 1;
+          else sum.notSmaller += 1;
+          checked[result.content.id] = result.content.file_url;
+          writeChecked(checked);
+        }
       } catch {
         sum.failed += 1;
         sum.before += heavy[i].file_size ?? 0;
@@ -60,7 +92,10 @@ export function HeavyFilesPanel({ onUpdated }: { onUpdated: (content: Content) =
         <span>
           Pronto: {formatBytes(totals.before)} → <b>{formatBytes(totals.after)}</b>.{" "}
           {plural(totals.converted, "arquivo otimizado", "arquivos otimizados")}
-          {totals.kept > 0 && `, ${plural(totals.kept, "mantido", "mantidos")} como estava (transparência ou sem ganho)`}
+          {totals.notSmaller > 0 &&
+            `, ${plural(totals.notSmaller, "mantido porque já estava bem comprimido", "mantidos porque já estavam bem comprimidos")}`}
+          {totals.transparent > 0 &&
+            `, ${plural(totals.transparent, "mantido por ter transparência", "mantidos por terem transparência")}`}
           {totals.failed > 0 && `, ${plural(totals.failed, "com erro", "com erro")}`}.
         </span>
       </div>
