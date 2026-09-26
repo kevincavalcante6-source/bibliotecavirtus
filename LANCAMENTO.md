@@ -102,6 +102,8 @@ Em qualquer etapa, é só chamar que fazemos juntos.
       a Cakto não manda token do Supabase; quem autentica é a frase secreta.
 - [ ] Copiar o endereço da função
       (`https://SEU-PROJETO.supabase.co/functions/v1/cakto-webhook`).
+      Se o painel publicou com outro nome (ex.: `clever-function`), tudo bem:
+      use o endereço que ele mostrar.
 
 ### 6.2 Webhook (na Cakto) e frase secreta
 - [ ] Criar o webhook na Cakto com o endereço da função.
