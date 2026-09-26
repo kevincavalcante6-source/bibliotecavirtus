@@ -60,9 +60,10 @@ Em qualquer etapa, é só chamar que fazemos juntos.
 ### 4.2 Envio de e-mail de verdade (SMTP)
 - [ ] Configurar um **SMTP próprio** em **Authentication → SMTP Settings**
       (por exemplo, Resend, Brevo ou o provedor do seu e-mail).
-      ⚠️ O envio padrão do Supabase é só para testes e tem limite muito baixo
-      por hora: com várias vendas no mesmo dia, compradores ficariam sem o
-      e-mail de confirmação e não conseguiriam entrar.
+      ⚠️ O envio padrão do Supabase é só para testes: entrega apenas para os
+      e-mails da equipe do projeto e tem limite muito baixo por hora. Sem SMTP
+      próprio, compradores não recebem o e-mail de confirmação e não
+      conseguem entrar.
 - [ ] Usar um remetente com a sua marca (ex.: `acesso@seudominio.com`).
 
 ### 4.3 Textos dos e-mails em português
