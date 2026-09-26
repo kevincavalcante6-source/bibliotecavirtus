@@ -94,20 +94,24 @@ Em qualquer etapa, é só chamar que fazemos juntos.
 ## 6. Cakto — liberar o acesso automaticamente
 
 ### 6.1 Função que recebe o aviso da Cakto (no Supabase)
-- [ ] Publicar a função `cakto-webhook` com a verificação de JWT **desligada**
-      (pelo terminal: `supabase functions deploy cakto-webhook --no-verify-jwt`,
-      ou pelo painel desligando *Enforce JWT verification*).
-- [ ] **Edge Functions → Secrets:**
-  - [ ] `CAKTO_WEBHOOK_SECRET` → uma frase longa inventada por você (a mesma
-        vai na Cakto). Guardar num lugar seguro.
+- [ ] **Edge Functions → Deploy a new function → Via Editor**, com o nome
+      `cakto-webhook`. Apagar o exemplo e colar o arquivo
+      [`supabase/cakto-webhook-painel.ts`](supabase/cakto-webhook-painel.ts)
+      inteiro. (Pelo terminal: `supabase functions deploy cakto-webhook --no-verify-jwt`.)
+- [ ] Nas configurações da função, **desligar** *Enforce JWT verification*:
+      a Cakto não manda token do Supabase; quem autentica é a frase secreta.
+- [ ] Copiar o endereço da função
+      (`https://SEU-PROJETO.supabase.co/functions/v1/cakto-webhook`).
+
+### 6.2 Webhook (na Cakto) e frase secreta
+- [ ] Criar o webhook na Cakto com o endereço da função.
+- [ ] Marcar os eventos **Compra aprovada**, **Reembolso** e **Chargeback**.
+- [ ] Frase secreta: se a Cakto gerar uma, copiar; se pedir para digitar,
+      inventar uma frase longa. Guardar num lugar seguro e não mandar para ninguém.
+- [ ] **Supabase → Edge Functions → Secrets:**
+  - [ ] `CAKTO_WEBHOOK_SECRET` → a mesma frase secreta da Cakto.
   - [ ] `CAKTO_PRODUCT_IDS` → *opcional*: só se a sua conta Cakto vende outros
         produtos. Lista os ids que dão acesso à biblioteca.
-
-### 6.2 Webhook (na Cakto)
-- [ ] Criar o webhook com a URL
-      `https://SEU-PROJETO.supabase.co/functions/v1/cakto-webhook`
-- [ ] Marcar os eventos **Compra aprovada**, **Reembolso** e **Chargeback**.
-- [ ] Colocar a mesma frase secreta de `CAKTO_WEBHOOK_SECRET`.
 
 ### 6.3 E-mail que o comprador recebe
 - [ ] No e-mail/entrega do produto na Cakto, colocar o link
